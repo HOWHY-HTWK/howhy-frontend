@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import axiosClient from '../axios-client'
 import './App.css'
 import QuestionBox from './components/Question'
@@ -9,19 +7,27 @@ import QuestionsTimeline from './components/QuestionsTimeline'
 function App() {
   const [videoData, setVideoData] = useState(null)
   const [userAnswer, setUserAnswer] = useState(null);
+  const [jumpToTime, setTime] = useState(null);
+  const [timecodes, setTimecodes] = useState([])
   var allVideoData = null;
-  var timecodes = [];
   fetchQuestionsData();
-  listenForTimeUpdate();
-  
+
   useEffect(() => {
     processAnswer()
   }, [userAnswer]);
 
+  useEffect(() => {
+    iframe.contentWindow.postMessage({ 'seek': jumpToTime }, '*');
+  }, [jumpToTime])
+
+  // useEffect(() => {
+  //   listenForTimeUpdate(timecodes);
+  // }, [timecodes])
+
   return (
     <div id="wrapper">
-        <iframe id="iframe" src="https://mediaserver.htwk-leipzig.de/permalink/v12663c723847flqwp36/iframe"></iframe>
-        <QuestionsTimeline id="questionsTimeline"></QuestionsTimeline>
+      <iframe id="iframe" src="https://mediaserver.htwk-leipzig.de/permalink/v12663c723847flqwp36/iframe"></iframe>
+      {timecodes != null ? (<QuestionsTimeline id="questionsTimeline" timecodes={timecodes} setTime={setTime}></QuestionsTimeline>) : null}
       {displayQuestion()}
     </div>
   )
@@ -55,22 +61,22 @@ function App() {
   }
 
   function makeTimecodesList(questions) {
-    timecodes = [];
+    let localtimecodes = [];
     for (let step = 0; step < questions.length; step++) {
-      timecodes.push(questions[step].timecode)
+      localtimecodes.push(questions[step].timecode)
     }
-        //Das Anzeigen der Fragen wird gestartet 
-    listenForTimeUpdate();
-    
+    //Das Anzeigen der Fragen wird gestartet 
+    listenForTimeUpdate(localtimecodes);
+    setTimecodes(localtimecodes);
   }
 
-  function listenForTimeUpdate() {
+  function listenForTimeUpdate(localtimecodes) {
     window.addEventListener('message', function (event) {
       // Check that the message comes from the player iframe.
       // Handle event data.
       if ('time' in event.data) {
-        console.log('New player time:', event.data.time)
-        setQuestions(event.data.time);
+        console.log('New player time:', event.data.time);
+        setQuestion(event.data.time, localtimecodes);
       } else if ('state' in event.data) {
         console.log('New player state:', event.data.state)
       } else if ('duration' in event.data) {
@@ -79,9 +85,9 @@ function App() {
     }, false)
   }
 
-  function setQuestions(time) {
-    for (let step = 0; step < timecodes.length; step++) {
-      if (Math.floor(time) == timecodes[step]) {
+  function setQuestion(time, localtimecodes) {
+    for (let step = 0; step < localtimecodes.length; step++) {
+      if (Math.floor(time) == localtimecodes[step]) {
         //Die Frage mit dem entsprechenden Index wird angezeigt
         setVideoData(allVideoData.data[step]);
       }

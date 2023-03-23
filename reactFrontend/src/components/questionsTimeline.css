@@ -1,0 +1,23 @@
+#timelineWwrapper {
+    width: 100%;
+    gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+#timecode {
+    width: 1.8rem;
+    height: 1.8rem;
+    text-align: center;
+    color: white;
+    background-color: rgba(39,75,177,.8);
+    border-radius: 1rem;
+    vertical-align: middle;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
