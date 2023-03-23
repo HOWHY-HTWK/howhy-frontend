@@ -2,22 +2,18 @@ import React, { useState, useEffect } from 'react'
 import './questions.css'
 
 
-export default function Question(props) {
-  const [videoData, setVideoData] = useState('')
+export default function QuestionBox({questionData, setUserAnswer}) {
 
-  useEffect(() => { 
-    setVideoData(props);
-    
-}, []);
-
+  const listItems = questionData.answers.map(answer => <div class="questionElements answer">{answer}</div>);
   return (
       <div id="question">
-    <div id="questionText"> {videoData.question}</div>
-    <div id="question_wrapper"></div>
-    <div id="answerbuttonWrapper">
-      <div id="answerbutton">Antwort abschicken</div>
-    </div>
-  </div>
-
+        <div class="questionElements" id="questionText"> {questionData.question}</div>
+        <div id="answersWrapper">
+          {listItems}
+        </div>
+        <div id="answerbuttonWrapper">
+          <div class="questionElements" id="answerbutton" onClick={() => setUserAnswer([1])}>Antwort abschicken</div>
+        </div>
+      </div>
   )
 }
