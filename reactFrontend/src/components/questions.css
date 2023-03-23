@@ -1,9 +1,9 @@
 
-
 #question{
     background-color: transparent;
     margin-top: 20px;
     overflow: visible;
+    padding: 1rem;
 }
 
 .questionElements{

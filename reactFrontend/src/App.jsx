@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import axiosClient from '../axios-client'
 import './App.css'
 import QuestionBox from './components/Question'
+import QuestionsTimeline from './components/QuestionsTimeline'
 
 function App() {
   const [videoData, setVideoData] = useState(null)
@@ -11,19 +12,18 @@ function App() {
   var allVideoData = null;
   var timecodes = [];
   fetchQuestionsData();
+  listenForTimeUpdate();
   
   useEffect(() => {
     processAnswer()
   }, [userAnswer]);
 
   return (
-    <>
-      <div id="videoframe">
+    <div id="wrapper">
         <iframe id="iframe" src="https://mediaserver.htwk-leipzig.de/permalink/v12663c723847flqwp36/iframe"></iframe>
-        </div>
-        <div id="question_div"></div>
+        <QuestionsTimeline id="questionsTimeline"></QuestionsTimeline>
       {displayQuestion()}
-    </>
+    </div>
   )
 
   function processAnswer() {
@@ -44,34 +44,27 @@ function App() {
     return null;
   }
 
-
   function fetchQuestionsData() {
     useEffect(() => {
       axiosClient.get("videoDatas/8")
         .then((response) => {
           allVideoData = response.data;
-          processJson(response.data.data);
+          makeTimecodesList(response.data.data);
         })
     }, [])
   }
 
-  function processJson(questions) {
+  function makeTimecodesList(questions) {
     timecodes = [];
     for (let step = 0; step < questions.length; step++) {
       timecodes.push(questions[step].timecode)
     }
         //Das Anzeigen der Fragen wird gestartet 
-    listeForTimeUpdate();
+    listenForTimeUpdate();
+    
   }
 
-  function fkt_play() {
-    iframe.contentWindow.postMessage('play', '*');
-  }
-  function fkt_pause() {
-    iframe.contentWindow.postMessage('pause', '*');
-  }
-
-  function listeForTimeUpdate() {
+  function listenForTimeUpdate() {
     window.addEventListener('message', function (event) {
       // Check that the message comes from the player iframe.
       // Handle event data.
@@ -93,6 +86,13 @@ function App() {
         setVideoData(allVideoData.data[step]);
       }
     }
+  }
+
+  function fkt_play() {
+    iframe.contentWindow.postMessage('play', '*');
+  }
+  function fkt_pause() {
+    iframe.contentWindow.postMessage('pause', '*');
   }
 
 
