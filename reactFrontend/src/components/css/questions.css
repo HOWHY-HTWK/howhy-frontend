@@ -12,7 +12,7 @@
     padding: 10px;
     background-color: rgba(216,110,169);
     text-align: center;
-    /* border: 2px solid transparent; */
+    border: 2px solid transparent;
     color: white;
     transition: 0.1s;
 }
@@ -38,6 +38,10 @@
 #answerbutton{
     margin-top: 20px;
     float: right;
+}
+
+.whiteborder{
+    border-color: white;
 }
 
 

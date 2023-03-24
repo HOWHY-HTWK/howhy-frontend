@@ -1,10 +1,33 @@
 import React, { useState, useEffect } from 'react'
-import './questions.css'
+import './css/questions.css'
 
 
 export default function QuestionBox({questionData, setUserAnswer}) {
 
-  const answers = questionData.answers.map(answer => <div className="questionElements answer">{answer}</div>);
+  var selected = Array.from({length: questionData.answers.length},() => false);
+  const [selectedAnswers, setselectedAnswers] = useState(selected);
+  const answers = questionData.answers.map((answer, index) => <div key={index} className={`questionElements answer ${selectedAnswers[index] ? "whiteborder" : "" }`} onClick={() => selectAnswer(index)}>{answer}</div>);
+  
+  function selectAnswer(index){
+    var arr = selectedAnswers.slice(0);
+    arr[index] = arr[index] == false ? true : false;
+    setselectedAnswers(arr);
+  }
+  useEffect(() => {
+    console.log(selectedAnswers)
+  }, [selectedAnswers])
+  
+  function sendAnswer(){
+    var answerIndexes = [];
+    for (let step = 0; step < selectedAnswers.length; step++) {
+      if(selectedAnswers[step]){
+        answerIndexes.push(step);
+      }
+    }
+    setUserAnswer(answerIndexes);
+    console.log(answerIndexes);
+  }
+  
   return (
       <div id="question">
         <div className="questionElements" id="questionText"> {questionData.question}</div>
@@ -12,7 +35,7 @@ export default function QuestionBox({questionData, setUserAnswer}) {
           {answers}
         </div>
         <div id="answerbuttonWrapper">
-          <div className="questionElements" id="answerbutton" onClick={() => setUserAnswer([1])}>Antwort abschicken</div>
+          <div className="questionElements" id="answerbutton" onClick={() => sendAnswer()}>Antwort abschicken</div>
         </div>
       </div>
   )
