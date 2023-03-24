@@ -40,7 +40,7 @@ function App() {
           setAnswerCorrect(response.data.success)
           setTimeout(function() {
             setAnswerCorrect(null)
-          }, 1000);
+          }, 2000);
           fkt_play()
         })
     }
