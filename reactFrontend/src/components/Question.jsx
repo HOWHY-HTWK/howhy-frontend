@@ -13,8 +13,8 @@ export default function QuestionBox({questionData, setUserAnswer}) {
     arr[index] = arr[index] == false ? true : false;
     setselectedAnswers(arr);
   }
+
   useEffect(() => {
-    console.log(selectedAnswers)
   }, [selectedAnswers])
   
   function sendAnswer(){
@@ -25,9 +25,9 @@ export default function QuestionBox({questionData, setUserAnswer}) {
       }
     }
     setUserAnswer(answerIndexes);
-    console.log(answerIndexes);
+    
   }
-  
+
   return (
       <div id="question">
         <div className="questionElements" id="questionText"> {questionData.question}</div>
