@@ -47,7 +47,7 @@ export default function QuestionBox({ questionData, setVideoData, videoId }) {
   function answerFeedback() {
     if (answerCorrect != null) {
       return (
-        <div>{answerCorrect ? "Richtig!" : "Leider Falsch"}</div>
+        <div className="questionElements">{answerCorrect ? "Richtig!" : "Leider Falsch"}</div>
       )
     } else {
       return (
