@@ -17,7 +17,7 @@ function App() {
   return (
     <div id="wrapper">
       <iframe ref={iframe} id="iframe" src="https://mediaserver.htwk-leipzig.de/permalink/v12663c723847flqwp36/iframe"></iframe>
-      {timecodes != null ? (<QuestionsTimeline id="questionsTimeline" timecodes={timecodes} jumpToTime={() => utils.jumpToTime(iframe)}></QuestionsTimeline>) : null}
+      {timecodes != null ? (<QuestionsTimeline id="questionsTimeline" timecodes={timecodes} jumpToTime={(time) => utils.jumpToTime(iframe, time)}></QuestionsTimeline>) : null}
       {displayQuestion()}
     </div>
   )

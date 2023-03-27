@@ -29,6 +29,6 @@ export function pauseVideo(iframe) {
     }
 }
 
-export function jumpToTime(iframe) {
+export function jumpToTime(iframe, time) {
     iframe.current.contentWindow.postMessage({ 'seek': time }, '*');
   }

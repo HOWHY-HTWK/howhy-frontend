@@ -51,7 +51,7 @@ export default function QuestionBox({ questionData, setVideoData, videoId }) {
     } else {
       return (
         <div id="question">
-          <div className="questionElements" id="questionText"> {questionData.question}</div>
+          <div className="questionElements questionText"> {questionData.question}</div>
           <div id="answersWrapper">
             {answers}
           </div>
