@@ -1,39 +1,36 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import axiosClient from '../axios-client'
 import './App.css'
 import QuestionBox from './components/Question'
 import QuestionsTimeline from './components/QuestionsTimeline'
+import * as utils from './utils.js'
 
 function App() {
   const [questionData, setQuestionData] = useState(null)
   const [timecodes, setTimecodes] = useState([])
-  const videoId = 456;
+  const iframe = useRef(null);
 
-  var allVideoData = null;
+  const videoId = 456;
 
   fetchQuestionsData();
 
   return (
     <div id="wrapper">
-      <iframe id="iframe" src="https://mediaserver.htwk-leipzig.de/permalink/v12663c723847flqwp36/iframe"></iframe>
-      {timecodes != null ? (<QuestionsTimeline id="questionsTimeline" timecodes={timecodes} jumpToTime={jumpToTime}></QuestionsTimeline>) : null}
+      <iframe ref={iframe} id="iframe" src="https://mediaserver.htwk-leipzig.de/permalink/v12663c723847flqwp36/iframe"></iframe>
+      {timecodes != null ? (<QuestionsTimeline id="questionsTimeline" timecodes={timecodes} jumpToTime={() => utils.jumpToTime(iframe)}></QuestionsTimeline>) : null}
       {displayQuestion()}
     </div>
   )
 
-  function jumpToTime(time) {
-    iframe.contentWindow.postMessage({ 'seek': time }, '*');
-  }
-
   function displayQuestion() {
     if (questionData != null) {
-      fkt_pause();
+      utils.pauseVideo(iframe);
       return (
         <QuestionBox questionData={questionData} setVideoData={setQuestionData} videoId={videoId}></QuestionBox>
       )
     }
     else {
-      fkt_play();
+      utils.playVideo(iframe);
       return null;
     }
 }
@@ -42,29 +39,21 @@ function fetchQuestionsData() {
   useEffect(() => {
     axiosClient.get(`videoDatas/byVideoId/${videoId}`)
       .then((response) => {
-        allVideoData = response.data;
-        makeTimecodesList(response.data.data);
+        var localtimecodes = utils.makeTimecodesList(response.data.data);
+        listenForTimeUpdate(localtimecodes, response.data);
+        setTimecodes(localtimecodes);
       })
   }, [])
 }
 
-function makeTimecodesList(questions) {
-  let localtimecodes = [];
-  for (let step = 0; step < questions.length; step++) {
-    localtimecodes.push(questions[step].timecode)
-  }
-  //Das Anzeigen der Fragen wird gestartet 
-  listenForTimeUpdate(localtimecodes);
-  setTimecodes(localtimecodes);
-}
-
-function listenForTimeUpdate(localtimecodes) {
+function listenForTimeUpdate(localtimecodes, allVideoData) {
   window.addEventListener('message', function (event) {
     // Check that the message comes from the player iframe.
     // Handle event data.
     if ('time' in event.data) {
       // console.log('New player time:', event.data.time);
-      setQuestion(event.data.time, localtimecodes);
+      var videoData = utils.setQuestion(event.data.time, localtimecodes, allVideoData);
+      setQuestionData(videoData);
     } else if ('state' in event.data) {
       // console.log('New player state:', event.data.state)
     } else if ('duration' in event.data) {
@@ -73,25 +62,6 @@ function listenForTimeUpdate(localtimecodes) {
   }, false)
 }
 
-function setQuestion(time, localtimecodes) {
-  for (let step = 0; step < localtimecodes.length; step++) {
-    if (Math.floor(time) == localtimecodes[step]) {
-      //Die Frage mit dem entsprechenden Index wird angezeigt
-      var videoData = allVideoData.data[step]
-      videoData.index = step;
-      setQuestionData(videoData);
-    }
-  }
-}
-
-function fkt_play() {
-  if(document.querySelector("iframe") != null){
-    iframe.contentWindow.postMessage('play', '*');
-  }
-}
-function fkt_pause() {
-  iframe.contentWindow.postMessage('pause', '*');
-}
 }
 
 export default App
