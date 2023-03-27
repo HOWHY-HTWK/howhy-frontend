@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import './css/questions.css'
+import './css/questionEditor.css'
 import axiosClient from '../../axios-client'
 import * as utils from '../utils'
 
 
-export default function QuestionEditor() {
+export default function QuestionEditor({saveQuestion}) {
   const basequestion = {
     'question': '',
     'answers': [{ "id": 0, "text": '' }],
@@ -24,15 +25,19 @@ export default function QuestionEditor() {
       </div>
       <div id="answersWrapper">
         {getAnswers()}
+      <div className="addAnswer btn" onClick={addAnswer}>+</div>
+
       </div>
-      <div className=" addAnswer" onClick={addAnswer}>+</div>
-      <div onClick={saveQuestion}>Frage speichern</div>
+      <div className="btn saveQuestion" onClick={saveQuestionAndReset}>Frage speichern</div>
 
     </div>
   )
 
-  function saveQuestion(){
-    
+  function saveQuestionAndReset(){
+      var tempquestion = question;
+      localStorage.setItem('question', null);
+      saveQuestion(tempquestion);
+
   }
 
   function getNewId(){
