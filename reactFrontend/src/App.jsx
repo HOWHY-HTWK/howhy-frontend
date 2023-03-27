@@ -5,7 +5,7 @@ import QuestionBox from './components/Question'
 import QuestionsTimeline from './components/QuestionsTimeline'
 
 function App() {
-  const [videoData, setVideoData] = useState(null)
+  const [questionData, setQuestionData] = useState(null)
   const [timecodes, setTimecodes] = useState([])
   const videoId = 456;
 
@@ -26,10 +26,10 @@ function App() {
   }
 
   function displayQuestion() {
-    if (videoData != null) {
+    if (questionData != null) {
       fkt_pause();
       return (
-        <QuestionBox questionData={videoData} setVideoData={setVideoData} videoId={videoId}></QuestionBox>
+        <QuestionBox questionData={questionData} setVideoData={setQuestionData} videoId={videoId}></QuestionBox>
       )
     }
     else {
@@ -79,7 +79,7 @@ function setQuestion(time, localtimecodes) {
       //Die Frage mit dem entsprechenden Index wird angezeigt
       var videoData = allVideoData.data[step]
       videoData.index = step;
-      setVideoData(videoData);
+      setQuestionData(videoData);
     }
   }
 }

@@ -7,8 +7,12 @@ export default function EditQuestions() {
   return (
     <>
         <div>EditQuestions</div>
-        {/* <iframe id="iframe" src={`https://mediaserver.htwk-leipzig.de/permalink/${id}/iframe/#start=30`} allowFullScreen={false} ></iframe> */}
-        <iframe id="iframe" src="https://mediaserver.htwk-leipzig.de/permalink/v12663c723847flqwp36/iframe/"></iframe>
+        <iframe id="iframe" src={`https://mediaserver.htwk-leipzig.de/permalink/${id}/iframe/`} allowFullScreen={false} ></iframe>
+        <button onClick={addQuestion}>add Question</button>
     </>
   )
+
+  function addQuestion(){
+    
+  }
 }

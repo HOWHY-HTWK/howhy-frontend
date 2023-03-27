@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './css/questions.css'
 import axiosClient from '../../axios-client'
 
-export default function QuestionBox({ questionData, setVideoData, videoId }) {
+export default function QuestionEditor({ questionData, setVideoData, videoId }) {
   var selected = Array.from({ length: questionData.answers.length }, () => false);
 
   const [selectedAnswers, setselectedAnswers] = useState(selected);
