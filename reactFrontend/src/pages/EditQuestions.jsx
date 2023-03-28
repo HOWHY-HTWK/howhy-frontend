@@ -9,15 +9,19 @@ import './editQuestions.css'
 export default function EditQuestions() {
   const queryParameters = new URLSearchParams(window.location.search)
   const currentQuestionEditor = JSON.parse(localStorage.getItem('question'))
+
   const [editedQuestion, seteditedQuestion] = useState( currentQuestionEditor != null ? 'multipleChoice' : null)
-  const [questionType, setquestionType] = useState('multipleChoice');
+  const [questionType, setquestionType] = useState('multipleChoice')
   const [timecodes, setTimecodes] = useState([])
+  const [videoData, setvideoData] = useState(null)
 
   const selectBox = useRef(null);
   const videoId = queryParameters.get("id")
   const iframe = useRef(null);
+  const time = useRef(null);
 
   fetchQuestionsData()
+  listenForTimeUpdate();
 
   return (
     <div id="wrapper">
@@ -32,9 +36,12 @@ export default function EditQuestions() {
     useEffect(() => {
       axiosClient.get(`videoDatas/byVideoId/${videoId}`)
         .then((response) => {
-          var localtimecodes = utils.makeTimecodesList(response.data.data);
-          setTimecodes(localtimecodes);
+          console.log(response.data)
+          var localtimecodes = utils.makeTimecodesList(response.data.data)
+          setTimecodes(localtimecodes)
+          setvideoData(response.data)
         })
+        //TODO Fail
     }, [])
   }
 
@@ -54,35 +61,45 @@ export default function EditQuestions() {
 
   function saveQuestion(question) {
     if(question != null){
-      console.log(question);
-      // var request = {
-      //   "questionIndex": questionData.index,
-      //   "answers": answer
-      // }
-      // axiosClient.post(`videoDatas/${videoId}`, request)
-      //   .then((response) => {
-      //     setAnswerCorrect(response.data.success)
-      //     setTimeout(function () {
-      //       seteditedQuestion(null)
+
+      // console.log(question);
+
+      var request = videoData
+
+      var reqQuestion = {
+        "answers": question.answers.map((answer) => answer.text),
+        "question": question.question,
+        "timecode": question.timecode
+        
+      }
+
+      request.data.push(reqQuestion)
+
+      console.log(request)
+
+      axiosClient.post(`videoDatas`, request)
+        .then((response) => {
+          setTimeout(function () {
+            console.log(response)
+            seteditedQuestion(null)
             
-      //     }, 2000);
+          }, 2000);
 
-      //   })
+        })
       seteditedQuestion(null)
-
-    } else{
+        
+    } else {
       seteditedQuestion(null)
-
     }
-
 
     }
   
 
   function displayQuestionEditor() {
     if (editedQuestion == 'multipleChoice') {
+
       return (
-        <QuestionEditor saveQuestion={saveQuestion}></QuestionEditor>
+        <QuestionEditor saveQuestion={saveQuestion} time={time.current}></QuestionEditor>
       )
     }
   }
@@ -91,5 +108,15 @@ export default function EditQuestions() {
 
     seteditedQuestion(questionType);
 
+  }
+
+  function listenForTimeUpdate(localtimecodes, allVideoData) {
+    window.addEventListener('message', function (event) {
+      if ('time' in event.data) {
+        time.current = event.data.time
+      } else if ('state' in event.data) {
+      } else if ('duration' in event.data) {
+      }
+    }, false)
   }
 }

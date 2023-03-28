@@ -6,7 +6,6 @@ export default function QuestionsTimeline({ timecodes, jumpToTime }) {
 
     return (
         <>
-            {/* <button onClick={() => setTime(3)}>3</button> */}
             <div id="timelineWwrapper">{questions}</div>
         </>
     )

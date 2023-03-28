@@ -5,11 +5,12 @@ import axiosClient from '../../axios-client'
 import * as utils from '../utils'
 
 
-export default function QuestionEditor({ saveQuestion }) {
+export default function QuestionEditor({ saveQuestion, time }) {
   const basequestion = {
     'question': '',
     'answers': [{ "id": 0, "text": '' }],
-    'correctAnswers': ['']
+    'correctAnswers': [''],
+    'timecode': time
   }
   const localquestion = JSON.parse(localStorage.getItem('question'));
   const [question, setQuestion] = useState(localquestion == null ? basequestion : localquestion);
@@ -61,7 +62,7 @@ export default function QuestionEditor({ saveQuestion }) {
       question.answers.map((answer) =>
         <div className="questionElements" key={answer.id}>
           <div className="delete" onClick={() => deleteAnswer(answer.id)}>
-            <div>x</div>
+            <div className='deleteSymbol'>X</div>
           </div>
           <input className="input questionElements change" placeholder="Antwort hier eingeben" value={answer.text} onInput={e => handleAnswerChange(answer.id, e.target.value)}></input>
         </div>

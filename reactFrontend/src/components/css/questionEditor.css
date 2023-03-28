@@ -29,6 +29,9 @@
     align-items: center;
 }
 
+.deleteSymbol{
+}
+
 .addAnswer {
     width: 3rem;
     height: 3rem;
