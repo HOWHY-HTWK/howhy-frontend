@@ -1,7 +1,15 @@
 .selector{
     margin: 1rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    background-color: aliceblue;
+    cursor: pointer;
+
 }
 
 .addBtn{
     height: 2rem;
+    border-radius: 0.5rem;
+    background-color: lightgreen;
+    cursor: pointer;
 }
