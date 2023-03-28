@@ -22,6 +22,7 @@ export default function EditQuestions() {
   const iframe = useRef(null);
   const time = useRef(null);
 
+
   fetchQuestionsData()
   listenForTimeUpdate();
 
@@ -38,14 +39,18 @@ export default function EditQuestions() {
     useEffect(() => {
       axiosClient.get(`videoDatas/byVideoId/${videoId}`)
         .then((response) => {
-          console.log(response.data)
-          var localtimecodes = utils.makeTimecodesList(response.data.data)
-          setTimecodes(localtimecodes)
-          setvideoData(response.data)
+          initData(response);
         }).catch((error) => {
 
         })
     }, [])
+  }
+
+  function initData(response) {
+    console.log(response.data)
+    var localtimecodes = utils.makeTimecodesList(response.data.data)
+    setTimecodes(localtimecodes)
+    setvideoData(response.data)
   }
 
   function displayAddQuestion() {
@@ -93,16 +98,11 @@ export default function EditQuestions() {
       request.data.push(reqQuestion)
       request.correctAnswerIndexes.push(correctAnswers)
 
-      // console.log(request)
-
       axiosClient.post(`videoDatas`, request)
         .then((response) => {
-          setTimeout(function () {
+          seteditedQuestion(null)
+          initData(response);
             console.log(response)
-            seteditedQuestion(null)
-
-          }, 2000);
-
         })
     } else {
       seteditedQuestion(null)

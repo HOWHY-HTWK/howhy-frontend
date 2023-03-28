@@ -17,6 +17,7 @@
     display: grid;
     position: relative;
     overflow: visible;
+    cursor: pointer;
 }
 
 .questionText {
@@ -24,6 +25,7 @@
     border: 3px solid rgba(216, 110, 169);
     background-color: white;
     margin-bottom: 20px;
+    cursor: default;
 }
 
 #answersWrapper {
@@ -40,6 +42,7 @@
 #answerbutton {
     margin-top: 20px;
     float: right;
+    cursor: pointer;
 }
 
 .whiteborder {
