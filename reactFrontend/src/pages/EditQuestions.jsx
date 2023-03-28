@@ -53,7 +53,8 @@ export default function EditQuestions() {
   }
 
   function saveQuestion(question) {
-    console.log(question);
+    if(question != null){
+      console.log(question);
       // var request = {
       //   "questionIndex": questionData.index,
       //   "answers": answer
@@ -67,7 +68,13 @@ export default function EditQuestions() {
       //     }, 2000);
 
       //   })
-        seteditedQuestion(null)
+      seteditedQuestion(null)
+
+    } else{
+      seteditedQuestion(null)
+
+    }
+
 
     }
   

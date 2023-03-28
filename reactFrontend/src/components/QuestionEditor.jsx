@@ -5,7 +5,7 @@ import axiosClient from '../../axios-client'
 import * as utils from '../utils'
 
 
-export default function QuestionEditor({saveQuestion}) {
+export default function QuestionEditor({ saveQuestion }) {
   const basequestion = {
     'question': '',
     'answers': [{ "id": 0, "text": '' }],
@@ -25,23 +25,31 @@ export default function QuestionEditor({saveQuestion}) {
       </div>
       <div id="answersWrapper">
         {getAnswers()}
-      <div className="addAnswer btn" onClick={addAnswer}>+</div>
-
+        <div className="addAnswer btn" onClick={addAnswer}>+</div>
       </div>
-      <div className="btn saveQuestion" onClick={saveQuestionAndReset}>Frage speichern</div>
+      <div className='buttonWrapper'>
+        <div className="btn saveQuestion cancel" onClick={cancelAndReset}>Abbrechen</div>
+        <div className="btn saveQuestion " onClick={saveQuestionAndReset}>Frage speichern</div>
+      </div>
+
+
 
     </div>
   )
 
-  function saveQuestionAndReset(){
-      var tempquestion = question;
-      localStorage.setItem('question', null);
-      saveQuestion(tempquestion);
-
+  function saveQuestionAndReset() {
+    var tempquestion = question;
+    localStorage.setItem('question', null);
+    saveQuestion(tempquestion);
   }
 
-  function getNewId(){
-    return question.answers[question.answers.length-1].id +1;
+  function cancelAndReset(){
+    localStorage.setItem('question', null);
+    saveQuestion(null);
+  }
+
+  function getNewId() {
+    return question.answers[question.answers.length - 1].id + 1;
   }
 
   function addAnswer() {
