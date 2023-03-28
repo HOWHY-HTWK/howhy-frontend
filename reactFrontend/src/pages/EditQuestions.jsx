@@ -10,13 +10,15 @@ export default function EditQuestions() {
   const queryParameters = new URLSearchParams(window.location.search)
   const currentQuestionEditor = JSON.parse(localStorage.getItem('question'))
 
-  const [editedQuestion, seteditedQuestion] = useState( currentQuestionEditor != null ? 'multipleChoice' : null)
+  const [editedQuestion, seteditedQuestion] = useState(currentQuestionEditor != null ? 'multipleChoice' : null)
   const [questionType, setquestionType] = useState('multipleChoice')
   const [timecodes, setTimecodes] = useState([])
   const [videoData, setvideoData] = useState(null)
 
   const selectBox = useRef(null);
   const videoId = queryParameters.get("id")
+  //TODO change when login is done
+  const creator = "alex";
   const iframe = useRef(null);
   const time = useRef(null);
 
@@ -40,8 +42,9 @@ export default function EditQuestions() {
           var localtimecodes = utils.makeTimecodesList(response.data.data)
           setTimecodes(localtimecodes)
           setvideoData(response.data)
+        }).catch((error) => {
+
         })
-        //TODO Fail
     }, [])
   }
 
@@ -56,44 +59,56 @@ export default function EditQuestions() {
           <button className="addBtn" onClick={addQuestion}>{questionType}-Frage zum aktuellen Zeitpunk hinzufügen</button>
         </>
       )
-    } 
+    }
   }
 
   function saveQuestion(question) {
-    if(question != null){
+    if (question != null) {
 
-      // console.log(question);
+      if (videoData != null) {
+        var request = videoData
+      } else {
+        var request = {
+          "videoId": videoId,
+          "creator": creator,
+          "data": [],
+          "correctAnswerIndexes": []
+        }
+      }
 
-      var request = videoData
+      var correctAnswers = [];
+
+      for (let step = 0; step < question.answers.length; step++) {
+        if (question.answers[step].correct) {
+          correctAnswers.push(step)
+        }
+      }
 
       var reqQuestion = {
         "answers": question.answers.map((answer) => answer.text),
         "question": question.question,
-        "timecode": question.timecode
-        
+        "timecode": question.timecode,
       }
 
       request.data.push(reqQuestion)
+      request.correctAnswerIndexes.push(correctAnswers)
 
-      console.log(request)
+      // console.log(request)
 
       axiosClient.post(`videoDatas`, request)
         .then((response) => {
           setTimeout(function () {
             console.log(response)
             seteditedQuestion(null)
-            
+
           }, 2000);
 
         })
-      seteditedQuestion(null)
-        
     } else {
       seteditedQuestion(null)
     }
+  }
 
-    }
-  
 
   function displayQuestionEditor() {
     if (editedQuestion == 'multipleChoice') {

@@ -3,19 +3,22 @@ import './css/questions.css'
 import './css/questionEditor.css'
 import axiosClient from '../../axios-client'
 import * as utils from '../utils'
+import { MdClose, MdAdd, MdCheck } from "react-icons/md"
 
 
 export default function QuestionEditor({ saveQuestion, time }) {
   const basequestion = {
     'question': '',
-    'answers': [{ "id": 0, "text": '' }],
+    'answers': [{ "id": 0, "text": '', "correct": false }],
     'correctAnswers': [''],
     'timecode': time
   }
+
   const localquestion = JSON.parse(localStorage.getItem('question'));
   const [question, setQuestion] = useState(localquestion == null ? basequestion : localquestion);
 
   useEffect(() => {
+    // console.log(question)
     localStorage.setItem('question', JSON.stringify(question));
   }, [question]);
 
@@ -26,17 +29,46 @@ export default function QuestionEditor({ saveQuestion, time }) {
       </div>
       <div id="answersWrapper">
         {getAnswers()}
-        <div className="addAnswer btn" onClick={addAnswer}>+</div>
+
       </div>
+      <MdAdd className='addAnswer' onClick={addAnswer}></MdAdd>
+
       <div className='buttonWrapper'>
         <div className="btn saveQuestion cancel" onClick={cancelAndReset}>Abbrechen</div>
         <div className="btn saveQuestion " onClick={saveQuestionAndReset}>Frage speichern</div>
       </div>
-
-
-
     </div>
   )
+
+  function getAnswers() {
+    return (
+      question.answers.map((answer) =>
+        <div className="questionElements" key={answer.id}>
+          {question.answers.length > 1 ?
+                      <div className="circle delete" onClick={() => deleteAnswer(answer.id)}>
+                      <MdClose></MdClose>
+                    </div>
+            : null}
+
+          {answer.correct ? <div className='circle answerCorrect correct' onClick={()=> toggleCorrect(answer.id)}>richtig</div>
+            : <div className='circle answerCorrect' onClick={()=> toggleCorrect(answer.id)}>falsch</div>
+          }
+          <input className="input questionElements change" placeholder="Antwort hier eingeben" value={answer.text} onInput={e => handleAnswerChange(answer.id, e.target.value)}></input>
+        </div>
+      ));
+  }
+
+  function toggleCorrect(id) {
+    const newAnswer = question.answers.map((answer) => {
+      if (answer.id === id) {
+        let correct = answer.correct ? false : true;
+        return { ...answer, correct: correct};
+      } else {
+        return answer;
+      }
+    });
+    setQuestion({ ...question, answers: newAnswer });
+  }
 
   function saveQuestionAndReset() {
     var tempquestion = question;
@@ -44,7 +76,7 @@ export default function QuestionEditor({ saveQuestion, time }) {
     saveQuestion(tempquestion);
   }
 
-  function cancelAndReset(){
+  function cancelAndReset() {
     localStorage.setItem('question', null);
     saveQuestion(null);
   }
@@ -54,19 +86,7 @@ export default function QuestionEditor({ saveQuestion, time }) {
   }
 
   function addAnswer() {
-    setQuestion({ ...question, answers: [...question.answers, { id: getNewId(), text: '' }] });
-  }
-
-  function getAnswers() {
-    return (
-      question.answers.map((answer) =>
-        <div className="questionElements" key={answer.id}>
-          <div className="delete" onClick={() => deleteAnswer(answer.id)}>
-            <div className='deleteSymbol'>X</div>
-          </div>
-          <input className="input questionElements change" placeholder="Antwort hier eingeben" value={answer.text} onInput={e => handleAnswerChange(answer.id, e.target.value)}></input>
-        </div>
-      ));
+    setQuestion({ ...question, answers: [...question.answers, { id: getNewId(), text: '', correct: false}] });
   }
 
   function deleteAnswer(id) {
@@ -76,7 +96,7 @@ export default function QuestionEditor({ saveQuestion, time }) {
   function handleAnswerChange(key, input) {
     const newAnswer = question.answers.map((answer) => {
       if (answer.id === key) {
-        return { id: answer.id, text: input };
+        return { ...answer, text: input };
       } else {
         return answer;
       }
