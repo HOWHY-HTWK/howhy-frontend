@@ -12,4 +12,5 @@
     border-radius: 0.5rem;
     background-color: lightgreen;
     cursor: pointer;
+    border: 1px solid black;
 }
