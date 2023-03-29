@@ -12,24 +12,22 @@ export default function EditQuestions() {
 
   const [editedQuestion, seteditedQuestion] = useState(currentQuestionEditor != null ? 'multipleChoice' : null)
   const [questionType, setquestionType] = useState('multipleChoice')
-  const [timecodes, setTimecodes] = useState([])
   const [videoData, setvideoData] = useState(null)
 
-  const selectBox = useRef(null);
+  const selectBox = useRef(null)
   const videoId = queryParameters.get("id")
   //TODO change when login is done
   const creator = "alex";
-  const iframe = useRef(null);
-  const time = useRef(null);
-
+  const iframe = useRef(null)
+  const time = useRef(null)
 
   fetchQuestionsData()
-  listenForTimeUpdate();
+  listenForTimeUpdate()
 
   return (
     <div id="wrapper">
       <iframe ref={iframe} id="iframe" src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe/`} allowFullScreen={false} ></iframe>
-      {timecodes != null ? (<QuestionsTimeline id="questionsTimeline" timecodes={timecodes} jumpToTime={(time) => utils.jumpToTime(iframe, time)}></QuestionsTimeline>) : null}
+      {videoData != null ? (<QuestionsTimeline id="questionsTimeline" videoData={videoData} jumpToTime={(time) => utils.jumpToTime(iframe, time)}></QuestionsTimeline>) : null}
       {displayAddQuestion()}
       {displayQuestionEditor()}
     </div>
@@ -39,18 +37,10 @@ export default function EditQuestions() {
     useEffect(() => {
       axiosClient.get(`videoDatas/byVideoId/${videoId}`)
         .then((response) => {
-          initData(response);
+          setvideoData(response.data)
         }).catch((error) => {
-
         })
     }, [])
-  }
-
-  function initData(response) {
-    console.log(response.data)
-    var localtimecodes = utils.makeTimecodesList(response.data.data)
-    setTimecodes(localtimecodes)
-    setvideoData(response.data)
   }
 
   function displayAddQuestion() {
@@ -70,39 +60,33 @@ export default function EditQuestions() {
   function saveQuestion(question) {
     if (question != null) {
 
-      if (videoData != null) {
-        var request = videoData
-      } else {
-        var request = {
-          "videoId": videoId,
-          "creator": creator,
-          "data": [],
-          "correctAnswerIndexes": []
-        }
+      var baseRequest = {
+        "videoId": videoId,
+        "creator": creator,
+        "data": [],
+        "correctAnswerIndexes": []
       }
 
-      var correctAnswers = [];
+      var request = videoData != null ? videoData : baseRequest;
 
+      var correctAnswers = [];
       for (let step = 0; step < question.answers.length; step++) {
         if (question.answers[step].correct) {
           correctAnswers.push(step)
         }
       }
-
       var reqQuestion = {
         "answers": question.answers.map((answer) => answer.text),
         "question": question.question,
         "timecode": question.timecode,
       }
-
       request.data.push(reqQuestion)
       request.correctAnswerIndexes.push(correctAnswers)
-
       axiosClient.post(`videoDatas`, request)
         .then((response) => {
           seteditedQuestion(null)
-          initData(response);
-            console.log(response)
+          setvideoData(response.data);
+          console.log(response)
         })
     } else {
       seteditedQuestion(null)
@@ -112,7 +96,6 @@ export default function EditQuestions() {
 
   function displayQuestionEditor() {
     if (editedQuestion == 'multipleChoice') {
-
       return (
         <QuestionEditor saveQuestion={saveQuestion} time={time.current}></QuestionEditor>
       )
@@ -120,9 +103,7 @@ export default function EditQuestions() {
   }
 
   function addQuestion() {
-
     seteditedQuestion(questionType);
-
   }
 
   function listenForTimeUpdate(localtimecodes, allVideoData) {

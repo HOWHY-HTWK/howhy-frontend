@@ -7,15 +7,14 @@ export function makeTimecodesList(questions) {
     return localtimecodes;
 }
 
-export function setQuestion(time, localtimecodes, allVideoData) {
-    for (let step = 0; step < localtimecodes.length; step++) {
-        if (Math.floor(time) == localtimecodes[step]) {
+export function findQuestionIndex(time, timecodes) {
+    for (let step = 0; step < timecodes.length; step++) {
+        if (Math.floor(time) == timecodes[step]) {
             //Die Frage mit dem entsprechenden Index wird angezeigt
-            var videoData = allVideoData.data[step]
-            videoData.index = step;
-            return videoData;
+            return step;
         }
     }
+    return null
 }
 
 export function playVideo(iframe) {

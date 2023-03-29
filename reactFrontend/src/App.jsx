@@ -6,27 +6,33 @@ import QuestionsTimeline from './components/QuestionsTimeline'
 import * as utils from './utils.js'
 
 function App() {
-  const [questionData, setQuestionData] = useState(null)
-  const [timecodes, setTimecodes] = useState([])
+  const [videoData, setVideoData] = useState(null)
+  const [currentQuestionData, setCurrentQuestionData] = useState(null)
   const iframe = useRef(null);
 
   const videoId = "v12663c723847flqwp36"
 
   fetchQuestionsData();
 
+  useEffect(() => {
+    if(videoData != null){
+      listenForTimeUpdate(videoData);
+    }
+  }, [videoData])
+  
   return (
     <div id="wrapper">
       <iframe ref={iframe} id="iframe" src="https://mediaserver.htwk-leipzig.de/permalink/v12663c723847flqwp36/iframe"></iframe>
-      {timecodes != null ? (<QuestionsTimeline id="questionsTimeline" timecodes={timecodes} jumpToTime={(time) => utils.jumpToTime(iframe, time)}></QuestionsTimeline>) : null}
+      {videoData != null ? (<QuestionsTimeline id="questionsTimeline" videoData={videoData} jumpToTime={(time) => utils.jumpToTime(iframe, time)}></QuestionsTimeline>) : null}
       {displayQuestion()}
     </div>
   )
 
   function displayQuestion() {
-    if (questionData != null) {
+    if (currentQuestionData != null) {
       utils.pauseVideo(iframe);
       return (
-        <QuestionBox questionData={questionData} setVideoData={setQuestionData} videoId={videoId}></QuestionBox>
+        <QuestionBox questionData={currentQuestionData} setVideoData={setCurrentQuestionData} videoId={videoId}></QuestionBox>
       )
     }
     else {
@@ -39,25 +45,27 @@ function fetchQuestionsData() {
   useEffect(() => {
     axiosClient.get(`videoDatas/byVideoId/${videoId}`)
       .then((response) => {
-        var localtimecodes = utils.makeTimecodesList(response.data.data);
-        listenForTimeUpdate(localtimecodes, response.data);
-        setTimecodes(localtimecodes);
+        setVideoData(response.data)
       })
   }, [])
 }
 
-function listenForTimeUpdate(localtimecodes, allVideoData) {
+function listenForTimeUpdate(videoData) {
+
+  let timecodes = utils.makeTimecodesList(videoData.data)
+
   window.addEventListener('message', function (event) {
-    // Check that the message comes from the player iframe.
-    // Handle event data.
+
     if ('time' in event.data) {
-      // console.log('New player time:', event.data.time);
-      var videoData = utils.setQuestion(event.data.time, localtimecodes, allVideoData);
-      setQuestionData(videoData);
+      var questionIndex = utils.findQuestionIndex(event.data.time, timecodes);
+      if(questionIndex != null){
+        let tempQuestionData = videoData.data[questionIndex]
+        tempQuestionData.index = questionIndex;
+        setCurrentQuestionData(tempQuestionData);
+      }
+
     } else if ('state' in event.data) {
-      // console.log('New player state:', event.data.state)
     } else if ('duration' in event.data) {
-      // console.log('New player duration:', event.data.duration)
     }
   }, false)
 }
