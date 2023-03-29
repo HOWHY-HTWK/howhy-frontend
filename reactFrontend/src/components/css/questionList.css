@@ -1,0 +1,34 @@
+.listElement{
+    background-color: lightblue;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.text{
+    width: 10rem;
+}
+
+.rightWrapper{
+    display: flex;
+    justify-content: right;
+    flex-grow: 2;
+    gap: 1rem
+}
+
+.questionButton{
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 1rem;
+}
+
+.edit{
+    background-color: lightgreen;
+
+}
+
+.deleteButton{
+    background-color: rgb(255, 84, 84);
+}

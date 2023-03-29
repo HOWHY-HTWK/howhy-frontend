@@ -6,12 +6,17 @@ import * as utils from '../utils'
 import { MdClose, MdAdd, MdCheck } from "react-icons/md"
 
 
-export default function QuestionEditor({ saveQuestion, time }) {
-  const basequestion = {
+export default function QuestionEditor({ saveQuestion, time, existingQuestion, correctAnswerIndexes }) {
+  const basequestion = existingQuestion == null ? {
     'question': '',
     'answers': [{ "id": 0, "text": '', "correct": false }],
     'correctAnswers': [''],
     'timecode': time
+  } : {
+    'question': existingQuestion.question,
+    'answers': existingQuestion.answers.map((answer, index) => ({'id': index, "text":answer, "correct": correctAnswerIndexes.includes(index) }) ),
+    'correctAnswers': correctAnswerIndexes,
+    'timecode': existingQuestion.timecode
   }
 
   const localquestion = JSON.parse(localStorage.getItem('question'));

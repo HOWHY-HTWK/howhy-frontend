@@ -5,6 +5,7 @@ import QuestionsTimeline from '../components/QuestionsTimeline'
 import axiosClient from '../../axios-client.jsx'
 import * as utils from '../utils.js'
 import './editQuestions.css'
+import QuestionList from '../components/QuestionList'
 
 export default function EditQuestions() {
   const queryParameters = new URLSearchParams(window.location.search)
@@ -27,11 +28,20 @@ export default function EditQuestions() {
   return (
     <div id="wrapper">
       <iframe ref={iframe} id="iframe" src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe/`} allowFullScreen={false} ></iframe>
-      {videoData != null ? (<QuestionsTimeline id="questionsTimeline" videoData={videoData} jumpToTime={(time) => utils.jumpToTime(iframe, time)}></QuestionsTimeline>) : null}
+      {/* {videoData != null ? (<QuestionsTimeline id="questionsTimeline" videoData={videoData} jumpToTime={(time) => utils.jumpToTime(iframe, time)}></QuestionsTimeline>) : null} */}
       {displayAddQuestion()}
       {displayQuestionEditor()}
+      {(editedQuestion == null) && (videoData != null) ? <QuestionList videoData={videoData} editQuestion={seteditedQuestion} deleteQuestion={deleteQuestion}></QuestionList> : null}
     </div>
   )
+
+  function deleteQuestion(question){
+    let index = videoData.data.findIndex(element => element.question == question.question);
+    let newVideoData = videoData;
+    newVideoData.data.splice(index, 1);
+    newVideoData.correctAnswerIndexes.splice(index, 1);
+    postNewVideoData(newVideoData);
+  }
 
   function fetchQuestionsData() {
     useEffect(() => {
@@ -82,22 +92,34 @@ export default function EditQuestions() {
       }
       request.data.push(reqQuestion)
       request.correctAnswerIndexes.push(correctAnswers)
-      axiosClient.post(`videoDatas`, request)
-        .then((response) => {
-          seteditedQuestion(null)
-          setvideoData(response.data);
-          console.log(response)
-        })
+      postNewVideoData(request)
+
     } else {
       seteditedQuestion(null)
     }
   }
 
+  function postNewVideoData(newVideoData){
+    axiosClient.post(`videoDatas`, newVideoData)
+    .then((newVideoData) => {
+      seteditedQuestion(null)
+      setvideoData(newVideoData.data);
+    })
+  }
+
 
   function displayQuestionEditor() {
-    if (editedQuestion == 'multipleChoice') {
+    if (editedQuestion == null) {
+      return null
+    } else if (editedQuestion == 'multipleChoice') {
       return (
-        <QuestionEditor saveQuestion={saveQuestion} time={time.current}></QuestionEditor>
+        <QuestionEditor saveQuestion={saveQuestion} time={time.current} existingQuestion={null} correctAnswerIndexes={null}></QuestionEditor>
+      )
+    } else if (typeof editedQuestion == 'object') {
+      let index = videoData.data.findIndex(element => element.question == editedQuestion.question);
+      let indexes = videoData.correctAnswerIndexes[index];
+      return (
+        <QuestionEditor saveQuestion={saveQuestion} time={time.current} existingQuestion={editedQuestion} correctAnswerIndexes={indexes}></QuestionEditor>
       )
     }
   }
