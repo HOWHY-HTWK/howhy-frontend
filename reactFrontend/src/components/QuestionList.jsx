@@ -1,16 +1,14 @@
 import React from 'react'
 import './css/questionList.css'
 
-
 export default function QuestionList({ videoData, editQuestion, deleteQuestion }) {
     const questions = videoData.data.map(question => getListElement(question));
 
     return (
-        <div>
+        <>
             <p>Existierende Fragen:</p>
             <div>{questions}</div>
-        </div>
-
+        </>
     )
 
     function getListElement(question) {

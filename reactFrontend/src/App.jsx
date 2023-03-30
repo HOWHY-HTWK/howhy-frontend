@@ -6,11 +6,12 @@ import QuestionsTimeline from './components/QuestionsTimeline'
 import * as utils from './utils.js'
 
 function App() {
+  const queryParameters = new URLSearchParams(window.location.search)
+  const videoId = queryParameters.get("id")
+
   const [videoData, setVideoData] = useState(null)
   const [currentQuestionData, setCurrentQuestionData] = useState(null)
   const iframe = useRef(null);
-
-  const videoId = "v12663c723847flqwp36"
 
   fetchQuestionsData();
 
