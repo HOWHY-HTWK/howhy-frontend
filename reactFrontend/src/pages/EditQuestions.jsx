@@ -27,6 +27,7 @@ export default function EditQuestions() {
 
   return (
     <div id="wrapper">
+      <div>{videoId}</div>
       <iframe ref={iframe} id="iframe" src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe/`} allowFullScreen={false} ></iframe>
       {/* {videoData != null ? (<QuestionsTimeline id="questionsTimeline" videoData={videoData} jumpToTime={(time) => utils.jumpToTime(iframe, time)}></QuestionsTimeline>) : null} */}
       {displayAddQuestion()}
@@ -35,8 +36,8 @@ export default function EditQuestions() {
     </div>
   )
 
-  function deleteQuestion(question){
-    let index = videoData.data.findIndex(element => element.question == question.question);
+  function deleteQuestion(question) {
+    let index = videoData.data.findIndex(element => element.id == question.id);
     let newVideoData = videoData;
     newVideoData.data.splice(index, 1);
     newVideoData.correctAnswerIndexes.splice(index, 1);
@@ -67,7 +68,26 @@ export default function EditQuestions() {
     }
   }
 
-  function saveQuestion(question) {
+  function saveEditedQuestion(question) {
+
+    var reqQuestion = {
+      "answers": question.answers.map((answer) => answer.text),
+      "question": question.question,
+      "timecode": question.timecode,
+      "id": question.id
+    }
+
+    var request = videoData;
+    //TODO change do id
+    let index = videoData.data.findIndex(element => (element.id == question.id));
+
+    request.data[index] = reqQuestion;
+
+    postNewVideoData(request)
+
+  }
+
+  function saveNewQuestion(question) {
     if (question != null) {
 
       var baseRequest = {
@@ -89,7 +109,9 @@ export default function EditQuestions() {
         "answers": question.answers.map((answer) => answer.text),
         "question": question.question,
         "timecode": question.timecode,
+        "id": getNewQuestionId()
       }
+
       request.data.push(reqQuestion)
       request.correctAnswerIndexes.push(correctAnswers)
       postNewVideoData(request)
@@ -99,27 +121,35 @@ export default function EditQuestions() {
     }
   }
 
-  function postNewVideoData(newVideoData){
-    axiosClient.post(`videoDatas`, newVideoData)
-    .then((newVideoData) => {
-      seteditedQuestion(null)
-      setvideoData(newVideoData.data);
-    })
+  function getNewQuestionId() {
+    if (videoData != null) {
+      let lastQuestion = videoData.data.at(-1)
+      return (lastQuestion) != null ? lastQuestion.id + 1 :0
+    } else {
+      return 0
+    }
   }
 
+  function postNewVideoData(newVideoData) {
+    axiosClient.post(`videoDatas`, newVideoData)
+      .then((newVideoData) => {
+        seteditedQuestion(null)
+        setvideoData(newVideoData.data);
+      })
+  }
 
   function displayQuestionEditor() {
     if (editedQuestion == null) {
       return null
     } else if (editedQuestion == 'multipleChoice') {
       return (
-        <QuestionEditor saveQuestion={saveQuestion} time={time.current} existingQuestion={null} correctAnswerIndexes={null}></QuestionEditor>
+        <QuestionEditor saveNewQuestion={saveNewQuestion} saveEditedQuestion={saveEditedQuestion} time={time.current} existingQuestion={null} correctAnswerIndexes={null}></QuestionEditor>
       )
     } else if (typeof editedQuestion == 'object') {
       let index = videoData.data.findIndex(element => element.question == editedQuestion.question);
       let indexes = videoData.correctAnswerIndexes[index];
       return (
-        <QuestionEditor saveQuestion={saveQuestion} time={time.current} existingQuestion={editedQuestion} correctAnswerIndexes={indexes}></QuestionEditor>
+        <QuestionEditor saveNewQuestion={saveNewQuestion} saveEditedQuestion={saveEditedQuestion} time={time.current} existingQuestion={editedQuestion} correctAnswerIndexes={indexes}></QuestionEditor>
       )
     }
   }

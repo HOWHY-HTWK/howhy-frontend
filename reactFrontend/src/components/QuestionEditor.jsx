@@ -6,7 +6,7 @@ import * as utils from '../utils'
 import { MdClose, MdAdd, MdCheck } from "react-icons/md"
 
 
-export default function QuestionEditor({ saveQuestion, time, existingQuestion, correctAnswerIndexes }) {
+export default function QuestionEditor({ saveNewQuestion, saveEditedQuestion,  time, existingQuestion, correctAnswerIndexes }) {
   const basequestion = existingQuestion == null ? {
     'question': '',
     'answers': [{ "id": 0, "text": '', "correct": false }],
@@ -16,14 +16,14 @@ export default function QuestionEditor({ saveQuestion, time, existingQuestion, c
     'question': existingQuestion.question,
     'answers': existingQuestion.answers.map((answer, index) => ({'id': index, "text":answer, "correct": correctAnswerIndexes.includes(index) }) ),
     'correctAnswers': correctAnswerIndexes,
-    'timecode': existingQuestion.timecode
+    'timecode': existingQuestion.timecode,
+    'id': existingQuestion.id
   }
 
   const localquestion = JSON.parse(localStorage.getItem('question'));
   const [question, setQuestion] = useState(localquestion == null ? basequestion : localquestion);
 
   useEffect(() => {
-    // console.log(question)
     localStorage.setItem('question', JSON.stringify(question));
   }, [question]);
 
@@ -76,14 +76,17 @@ export default function QuestionEditor({ saveQuestion, time, existingQuestion, c
   }
 
   function saveQuestionAndReset() {
-    var tempquestion = question;
     localStorage.setItem('question', null);
-    saveQuestion(tempquestion);
+    if(existingQuestion == null){
+      saveNewQuestion(question);
+    } else {
+      saveEditedQuestion(question)
+    }
   }
 
   function cancelAndReset() {
     localStorage.setItem('question', null);
-    saveQuestion(null);
+    saveNewQuestion(null);
   }
 
   function getNewId() {
