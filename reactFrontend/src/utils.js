@@ -31,3 +31,10 @@ export function pauseVideo(iframe) {
 export function jumpToTime(iframe, time) {
     iframe.current.contentWindow.postMessage({ 'seek': time }, '*');
   }
+
+  export function getTimeInReadable(time){
+    let minutes = Math.floor(time/60)
+    let seconds = time%60
+    let hours = Math.floor(time/3600)
+    return (hours != 0 ? hours+"h ": "")+ minutes +"m "+ seconds+"s"
+  }

@@ -50,7 +50,7 @@ export default function EditQuestions() {
   }
 
   function displayAddQuestion() {
-    if (editedQuestion != 'multipleChoice') {
+    if (editedQuestion == null) {
       return (
         <>
           <select className="selector" value={questionType} onChange={e => setquestionType(e.target.value)}  >
