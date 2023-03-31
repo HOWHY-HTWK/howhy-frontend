@@ -8,24 +8,35 @@ import {
 } from "react-router-dom";
 import AddQuestions from './pages/AddQuestions'
 import EditQuestions from './pages/EditQuestions';
+import { Sanctum } from 'react-sanctum';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <App />,
   },
   {
     path: "/addquestions",
-    element: <AddQuestions/>,
+    element: <AddQuestions />,
   },
   {
-    path:"/edit/*",
-    element:<EditQuestions/>
+    path: "/edit/*",
+    element: <EditQuestions />
   }
 ]);
 
+const sanctumConfig = {
+  apiUrl: "localhost:8000",
+  csrfCookieRoute: "sanctum/csrf-cookie",
+  signInRoute: "login",
+  signOutRoute: "logout",
+  userObjectRoute: "user",
+};
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Sanctum config={sanctumConfig}>
+      <RouterProvider router={router} />
+    </Sanctum>
   </React.StrictMode>,
 )
