@@ -9,19 +9,32 @@ import {
 import AddQuestions from './pages/AddQuestions'
 import EditQuestions from './pages/EditQuestions';
 import { Sanctum } from 'react-sanctum';
+import LoggedIn from './components/LoggedIn';
+import LogIn from './components/LogIn';
 
 const router = createBrowserRouter([
+  {
+    path: "/editor",
+    element: <LoggedIn />,
+    children: [
+      {
+        path: "/editor/*",
+        element: <AddQuestions />
+
+      },
+      {
+        path: "/editor/edit/*",
+        element: <EditQuestions />
+      }
+    ]
+  },
   {
     path: "/",
     element: <App />,
   },
   {
-    path: "/addquestions",
-    element: <AddQuestions />,
-  },
-  {
-    path: "/edit/*",
-    element: <EditQuestions />
+    path: "/login/",
+    element: <LogIn></LogIn>
   }
 ]);
 
@@ -35,8 +48,8 @@ const sanctumConfig = {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Sanctum config={sanctumConfig}>
+    {/* <Sanctum config={sanctumConfig}> */}
       <RouterProvider router={router} />
-    </Sanctum>
+    {/* </Sanctum> */}
   </React.StrictMode>,
 )
