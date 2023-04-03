@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios';
 import axiosClient from '../../axios-client.jsx'
 import { useStateContext } from '../contexts/ContextProvider.jsx';
+import './css/login.css'
 
 export default function LogIn(signIn) {
 
@@ -26,11 +27,11 @@ export default function LogIn(signIn) {
   }
 
   return (
-    <div>
+    <div id="formwrapper">
       Log In
-      <form onSubmit={handleLogin}>
-        <input></input>
-        <input></input>
+      <form className="vertical" onSubmit={handleLogin}>
+        <label>E-Mail<input name="email"/></label>
+        <label>Passwort<input name="password"/></label>
         <button type="submit">LogIn</button>
       </form>
     </div>

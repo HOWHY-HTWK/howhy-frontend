@@ -5,8 +5,4 @@ const axiosClient = axios.create({
     withCredentials: true,
 })
 
-// axiosClient.interceptors.request.use( (config: )=> {
-
-// })
-
 export default axiosClient;

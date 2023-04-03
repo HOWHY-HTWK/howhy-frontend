@@ -1,0 +1,11 @@
+.background {
+    background-color: rgba(39, 75, 177, .8);
+    height: 2rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
