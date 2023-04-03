@@ -11,6 +11,7 @@ import EditQuestions from './pages/EditQuestions';
 import { Sanctum } from 'react-sanctum';
 import LoggedIn from './components/LoggedIn';
 import LogIn from './components/LogIn';
+import { ContextProvider } from './contexts/ContextProvider';
 
 const router = createBrowserRouter([
   {
@@ -18,9 +19,8 @@ const router = createBrowserRouter([
     element: <LoggedIn />,
     children: [
       {
-        path: "/editor/*",
+        path: "/editor/add",
         element: <AddQuestions />
-
       },
       {
         path: "/editor/edit/*",
@@ -38,18 +38,10 @@ const router = createBrowserRouter([
   }
 ]);
 
-const sanctumConfig = {
-  apiUrl: "localhost:8000",
-  csrfCookieRoute: "sanctum/csrf-cookie",
-  signInRoute: "login",
-  signOutRoute: "logout",
-  userObjectRoute: "user",
-};
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {/* <Sanctum config={sanctumConfig}> */}
+    <ContextProvider>
       <RouterProvider router={router} />
-    {/* </Sanctum> */}
+    </ContextProvider>
   </React.StrictMode>,
 )

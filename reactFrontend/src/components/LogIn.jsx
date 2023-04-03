@@ -1,8 +1,11 @@
 import React from 'react'
 import axios from 'axios';
 import axiosClient from '../../axios-client.jsx'
+import { useStateContext } from '../contexts/ContextProvider.jsx';
 
 export default function LogIn(signIn) {
+
+  const { user, authenticated, setStatus } = useStateContext()
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -10,9 +13,6 @@ export default function LogIn(signIn) {
     const password = "password";
     const remember = true;
 
-    // signIn(email, password, remember)
-    // .then(() => window.alert("Signed in!"))
-    // .catch(() => window.alert("Incorrect email or password"))
     axiosClient.get('/sanctum/csrf-cookie')
       .then(response => {
         axiosClient.post('/login', {
@@ -20,9 +20,10 @@ export default function LogIn(signIn) {
           password: password
         }).then(response => {
           console.log(response)
+          setStatus(true)
         });
-  })
-}
+      })
+  }
 
   return (
     <div>

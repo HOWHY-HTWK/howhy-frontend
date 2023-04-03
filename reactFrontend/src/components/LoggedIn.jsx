@@ -1,20 +1,19 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 import { useSanctum } from 'react-sanctum'
 import LogIn from './LogIn'
+import { useStateContext } from '../contexts/ContextProvider'
 
 export default function LoggedIn() {
+    const {user, authenticated, setStatus} = useStateContext()
 
-    // if (authenticated === true) {
+    if(authenticated){
         return (
             <div>
-                LoggedIn
                 <Outlet />
             </div>
         )
-    // } else {
-    //     return (
-    //         <LogIn signIn={signIn}></LogIn>
-    //     )
-    // }
+    } else{
+        return <LogIn></LogIn>
+    }
 }
