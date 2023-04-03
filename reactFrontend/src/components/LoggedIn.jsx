@@ -1,6 +1,5 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-import { useSanctum } from 'react-sanctum'
 import LogIn from './LogIn'
 import { useStateContext } from '../contexts/ContextProvider'
 import Header from './Header'

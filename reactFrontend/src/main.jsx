@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import AddQuestions from './pages/AddQuestions'
 import EditQuestions from './pages/EditQuestions';
-import { Sanctum } from 'react-sanctum';
 import LoggedIn from './components/LoggedIn';
 import LogIn from './components/LogIn';
 import { ContextProvider } from './contexts/ContextProvider';
