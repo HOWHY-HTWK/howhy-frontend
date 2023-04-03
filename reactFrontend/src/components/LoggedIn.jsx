@@ -5,7 +5,7 @@ import { useStateContext } from '../contexts/ContextProvider'
 import Header from './Header'
 
 export default function LoggedIn() {
-    const {user, authenticated, setStatus} = useStateContext()
+    const {user, authenticated, setLoggedIn: setStatus} = useStateContext()
 
     if(authenticated){
         return (

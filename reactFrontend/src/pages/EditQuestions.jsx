@@ -108,7 +108,7 @@ export default function EditQuestions() {
   }
 
   function postNewVideoData(newVideoData) {
-    axiosClient.post(`videoDatas`, newVideoData)
+    axiosClient.post(`/api/videoDatas`, newVideoData)
       .then((newVideoData) => {
         setvideoData(newVideoData.data);
       })

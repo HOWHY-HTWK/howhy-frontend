@@ -44,7 +44,7 @@ function WatchVideo() {
 
 function fetchQuestionsData() {
   useEffect(() => {
-    axiosClient.get(`videoDatas/byVideoId/${videoId}`)
+    axiosClient.get(`api/videoDatas/byVideoId/${videoId}`)
       .then((response) => {
         setVideoData(response.data)
       })

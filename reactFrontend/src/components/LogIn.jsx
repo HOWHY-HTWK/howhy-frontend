@@ -6,7 +6,7 @@ import './css/login.css'
 
 export default function LogIn(signIn) {
 
-  const { user, authenticated, setStatus } = useStateContext()
+  const { user, authenticated, setLoggedIn: setStatus } = useStateContext()
 
   const handleLogin = (e) => {
     e.preventDefault();

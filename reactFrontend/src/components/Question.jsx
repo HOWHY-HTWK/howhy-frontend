@@ -31,7 +31,7 @@ export default function QuestionBox({ questionData, setVideoData, videoId }) {
         "questionIndex": questionData.index,
         "answers": answer
       }
-      axiosClient.post(`videoDatas/checkAnswers/${videoId}`, request)
+      axiosClient.post(`api/videoDatas/checkAnswers/${videoId}`, request)
         .then((response) => {
           setAnswerCorrect(response.data.success)
           setTimeout(function () {

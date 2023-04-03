@@ -4,7 +4,7 @@ const StateContext = createContext({
     user: null,
     authenticated: false,
     setUser: () => {},
-    setStatus: () => {}
+    setLoggedIn: () => {}
 })
 
 export const ContextProvider = ({children}) => {
@@ -17,7 +17,7 @@ export const ContextProvider = ({children}) => {
             localStorage.setItem('ACCESS_TOKEN', authenticated);
 
         } else {
-            localStorage.removeItem('ACCES_TOKEN')
+            localStorage.removeItem('ACCESS_TOKEN')
         }
     }
 
@@ -26,7 +26,7 @@ export const ContextProvider = ({children}) => {
             user,
             authenticated: authenticated,
             setUser, 
-            setStatus: setAuthenticated
+            setLoggedIn: setAuthenticated
         }}>
             {children}
         </StateContext.Provider>
