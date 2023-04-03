@@ -1,9 +1,16 @@
 #formwrapper{
-    /* display: flex;
-    flex-direction: column;    */
+    display: flex;
+    flex-direction: column;
+    width: 15rem;
+    margin: 5rem auto;
+    background-color: aliceblue;
+    padding: 1rem;
+    border-radius: 1rem;
 }
 
 .vertical{
     display: flex;
+    gap: 1rem;
     flex-direction: column;
+    align-items: center;
 }

@@ -1,19 +1,23 @@
-import React from 'react'
+import React, { createRef } from 'react'
 import axios from 'axios';
 import axiosClient from '../../axios-client.jsx'
 import { useStateContext } from '../contexts/ContextProvider.jsx';
 import './css/login.css'
 
 export default function LogIn(signIn) {
+  const emailRef = createRef()
+  const passwordRef = createRef()
 
   const { user, authenticated, setLoggedIn: setStatus } = useStateContext()
 
-  const handleLogin = (e) => {
+  function handleLogin(e) {
     e.preventDefault();
-    const email = "alex@alex.com";
-    const password = "password";
-    const remember = true;
+    const formData = new FormData(e.target)
 
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+    const remember = formData.remember;
+    
     axiosClient.get('/sanctum/csrf-cookie')
       .then(response => {
         axiosClient.post('/login', {
@@ -28,11 +32,12 @@ export default function LogIn(signIn) {
 
   return (
     <div id="formwrapper">
-      Log In
-      <form className="vertical" onSubmit={handleLogin}>
-        <label>E-Mail<input name="email"/></label>
-        <label>Passwort<input name="password"/></label>
-        <button type="submit">LogIn</button>
+      <form method="post" className="vertical" onSubmit={handleLogin}>
+        <span>Log In</span>
+        <label><input ref={emailRef} type="email" name="email" placeholder='E-mail' /></label>
+        <label><input ref={passwordRef} type="password" name="password" placeholder='Passwort' /></label>
+        <label>Eingeloggt Bleiben<input type='checkbox' name='remember'></input></label>
+        <button className="button" type="submit">LogIn</button>
       </form>
     </div>
   )
