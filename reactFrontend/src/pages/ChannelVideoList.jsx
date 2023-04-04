@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import './css/videoList.css'
 import { Link } from 'react-router-dom';
 
-export default function VideoList() {
+export default function ChannelVideoList() {
     const [videoList, setvideoList] = useState(null);
 
     const videos = videoList ? videoList.map(video => getListElement(video)) : null;

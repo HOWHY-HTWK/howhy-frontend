@@ -7,12 +7,12 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import AddQuestions from './pages/AddQuestions'
+import AddVideo from './components/AddVideo'
 import EditQuestions from './pages/EditQuestions';
 import LoggedIn from './components/LoggedIn';
 import LogIn from './components/LogIn';
 import { ContextProvider } from './contexts/ContextProvider';
-import VideoList from './pages/VideoList';
+import VideoList from './pages/ChannelVideoList';
 import Dashboard from './pages/Dashboard';
 import EditorDash from './pages/EditorDash';
 import WatchVideo from './pages/WatchVideo';
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/editor/add",
-        element: <AddQuestions />
+        element: <AddVideo />
       },      
       {
         path: "/editor/edit/*",

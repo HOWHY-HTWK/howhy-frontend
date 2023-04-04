@@ -72,3 +72,15 @@ h1 {
   border-radius: 1rem;
   padding: 0 0.4rem;
 }
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.FlexRow {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
