@@ -41,7 +41,7 @@ export default function EditQuestions() {
 
   function fetchQuestionsData() {
     useEffect(() => {
-      axiosClient.get(`videoDatas/byVideoId/${videoId}`)
+      axiosClient.get(`api/videoDatas/byVideoId/${videoId}`)
         .then((response) => {
           setvideoData(response.data)
         }).catch((error) => {
@@ -108,7 +108,7 @@ export default function EditQuestions() {
   }
 
   function postNewVideoData(newVideoData) {
-    axiosClient.post(`videoDatas`, newVideoData)
+    axiosClient.post(`/api/videoDatas`, newVideoData)
       .then((newVideoData) => {
         setvideoData(newVideoData.data);
       })

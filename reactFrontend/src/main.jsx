@@ -8,24 +8,35 @@ import {
 } from "react-router-dom";
 import AddQuestions from './pages/AddQuestions'
 import EditQuestions from './pages/EditQuestions';
+import LoggedIn from './components/LoggedIn';
+import LogIn from './components/LogIn';
+import { ContextProvider } from './contexts/ContextProvider';
 
 const router = createBrowserRouter([
   {
+    path: "/editor",
+    element: <LoggedIn />,
+    children: [
+      {
+        path: "/editor/add",
+        element: <AddQuestions />
+      },
+      {
+        path: "/editor/edit/*",
+        element: <EditQuestions />
+      }
+    ]
+  },
+  {
     path: "/",
-    element: <App/>,
-  },
-  {
-    path: "/addquestions",
-    element: <AddQuestions/>,
-  },
-  {
-    path:"/edit/*",
-    element:<EditQuestions/>
+    element: <App />,
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ContextProvider>
+      <RouterProvider router={router} />
+    </ContextProvider>
   </React.StrictMode>,
 )
