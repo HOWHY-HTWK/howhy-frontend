@@ -14,6 +14,8 @@ import LogIn from './components/LogIn';
 import { ContextProvider } from './contexts/ContextProvider';
 import VideoList from './pages/VideoList';
 import Dashboard from './pages/Dashboard';
+import EditorDash from './pages/EditorDash';
+import WatchVideo from './pages/WatchVideo';
 
 const router = createBrowserRouter([
   {
@@ -26,7 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/editor/list",
-        element:<VideoList/>
+        element:<EditorDash/>
       },
       {
         path: "/editor/add",
@@ -49,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "/list",
         element: <Dashboard/>
+      },
+      {
+        path: "/watch",
+        element: <WatchVideo/>
       }
 
     ]

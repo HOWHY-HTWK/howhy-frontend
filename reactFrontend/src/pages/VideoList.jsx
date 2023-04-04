@@ -25,7 +25,7 @@ export default function VideoList() {
                 <div className='vlTitle'>{video.title}</div>
                 <img className='vlThumb' src={video.thumb}></img>
                 <Link className='button vlEdit' to={`/editor/edit/?id=${video.oid}`}>Bearbeiten</Link>
-                <Link className='button vlWatch' target="_blank" to={`/?id=${video.oid}`}>Ansehen</Link>
+                <Link className='button vlWatch' target="_blank" to={`/watch?id=${video.oid}`}>Ansehen</Link>
             </div>
         )
     }

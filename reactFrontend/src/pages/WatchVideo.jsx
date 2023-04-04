@@ -8,7 +8,7 @@ import * as utils from '../utils.js'
 function WatchVideo() {
   const queryParameters = new URLSearchParams(window.location.search)
   const videoId = queryParameters.get("id")
-
+  
   const [videoData, setVideoData] = useState(null)
   const [currentQuestionData, setCurrentQuestionData] = useState(null)
   const iframe = useRef(null);
