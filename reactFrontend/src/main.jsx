@@ -4,6 +4,7 @@ import App from './App'
 import './index.css'
 import {
   createBrowserRouter,
+  Navigate,
   RouterProvider,
 } from "react-router-dom";
 import AddQuestions from './pages/AddQuestions'
@@ -11,6 +12,8 @@ import EditQuestions from './pages/EditQuestions';
 import LoggedIn from './components/LoggedIn';
 import LogIn from './components/LogIn';
 import { ContextProvider } from './contexts/ContextProvider';
+import VideoList from './pages/VideoList';
+import Dashboard from './pages/Dashboard';
 
 const router = createBrowserRouter([
   {
@@ -18,9 +21,17 @@ const router = createBrowserRouter([
     element: <LoggedIn />,
     children: [
       {
+        index: true,
+        element: <Navigate to="/editor/list"/>,
+      },
+      {
+        path: "/editor/list",
+        element:<VideoList/>
+      },
+      {
         path: "/editor/add",
         element: <AddQuestions />
-      },
+      },      
       {
         path: "/editor/edit/*",
         element: <EditQuestions />
@@ -30,6 +41,17 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    children: [
+      {
+        index: true,
+        element: <Navigate to="/list"/>
+      },
+      {
+        path: "/list",
+        element: <Dashboard/>
+      }
+
+    ]
   }
 ]);
 
