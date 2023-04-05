@@ -3,15 +3,15 @@ import './css/questions.css'
 import './css/questionEditor.css'
 import { MdClose, MdAdd } from "react-icons/md"
 
-export default function QuestionEditor({ saveNewQuestion, saveEditedQuestion, time, existingQuestion, correctAnswerIndexes }) {
+export default function QuestionEditor({ saveNewQuestion, saveEditedQuestion, time, existingQuestion }) {
   const basequestion = existingQuestion == null ? {
+    'type': 'multiplechoice',
     'question': '',
-    'answers': [{ "id": 0, "text": '', "correct": false }],
-    'correctAnswerIndexes': [''],
+    'answers': [{ "id": 0, "text": '',}],
+    'correctAnswers': [{'id': 0, 'correct':false}],
     'timecode': time
   } : {
-    ...existingQuestion,
-    'answers': existingQuestion.answers.map((answer, index) => ({ 'id': index, "text": answer, "correct": correctAnswerIndexes.includes(index) })),
+     ...existingQuestion
   }
 
   const localquestion = JSON.parse(localStorage.getItem('question'));
@@ -46,17 +46,18 @@ export default function QuestionEditor({ saveNewQuestion, saveEditedQuestion, ti
               <MdClose></MdClose>
             </div>
             : null}
-          {answer.correct ?
+          {question.correctAnswers.find(e => e.id == answer.id).correct ?
             <div className='circle answerCorrect correct' onClick={() => toggleCorrect(answer.id)}>richtig</div>
             : <div className='circle answerCorrect' onClick={() => toggleCorrect(answer.id)}>falsch</div>}
+
           <input className="input questionElements change" placeholder="Antwort hier eingeben" value={answer.text} onInput={e => handleAnswerChange(answer.id, e.target.value)}></input>
         </div>
       ));
   }
 
   function toggleCorrect(id) {
-    const newAnswer = question.answers.map(answer => answer.id == id ? { ...answer, correct: !answer.correct } : answer);
-    setQuestion({ ...question, answers: newAnswer });
+    const newCorrectAnswers = question.correctAnswers.map(e => e.id == id? {...e, correct: !e.correct }: e)
+    setQuestion({ ...question, correctAnswers: newCorrectAnswers });
   }
 
   function getNewId() {
@@ -64,7 +65,8 @@ export default function QuestionEditor({ saveNewQuestion, saveEditedQuestion, ti
   }
 
   function addAnswer() {
-    setQuestion({ ...question, answers: [...question.answers, { id: getNewId(), text: "", correct: false }] });
+    let id = getNewId()
+    setQuestion({ ...question, answers: [...question.answers, { id: id, text: ""}], correctAnswers: [...question.correctAnswers, { id: id, correct: false }] });
   }
 
   function deleteAnswer(id) {

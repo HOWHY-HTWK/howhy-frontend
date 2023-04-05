@@ -67,39 +67,26 @@ export default function EditQuestions() {
 
   function saveEditedQuestion(question) {
     var newVideoData = videoData;
-    let newQuestion = {
-      ...question,
-      "answers": question.answers.map((answer) => answer.text),
-    }
-    let correctAnswers = question.answers
-      .map((answer, index) => answer.correct ? index : null)
-      .filter(element => element != null);
     let questionIndex = videoData.data.findIndex(element => (element.id == question.id));
-    newVideoData.data[questionIndex] = newQuestion;
-    newVideoData.correctAnswerIndexes[questionIndex] = correctAnswers
+    newVideoData.data[questionIndex] = question;
     postNewVideoData(newVideoData)
     seteditedQuestion(null)
   }
 
   function saveNewQuestion(question) {
+    
     if (question != null) {
+      let newQuestion = {
+        ...question,
+        "id": getNewQuestionId()
+      }
       let baseVideoData = {
         "videoId": videoId,
         "creator": creator,
         "data": [],
-        "correctAnswerIndexes": []
-      }
-      let newQuestion = {
-        ...question,
-        "answers": question.answers.map((answer) => answer.text),
-        "id": getNewQuestionId()
       }
       let newVideoData = videoData != null ? videoData : baseVideoData;
       newVideoData.data.push(newQuestion)
-      let correctAnswers = question.answers
-        .map((answer, index) => answer.correct ? index : null)
-        .filter(element => element != null);
-      newVideoData.correctAnswerIndexes.push(correctAnswers)
       postNewVideoData(newVideoData)
     }
     seteditedQuestion(null)
@@ -124,11 +111,11 @@ export default function EditQuestions() {
     if (editedQuestion == null) {
       return null
     } else if (editedQuestion == 'multipleChoice') {
-      return <QuestionEditor saveNewQuestion={saveNewQuestion} saveEditedQuestion={saveEditedQuestion} time={time.current} existingQuestion={null} correctAnswerIndexes={null}></QuestionEditor>
+      return <QuestionEditor saveNewQuestion={saveNewQuestion} saveEditedQuestion={saveEditedQuestion} time={time.current} existingQuestion={null}></QuestionEditor>
     } else if (typeof editedQuestion == 'object') {
       let index = videoData.data.findIndex(element => element.id == editedQuestion.id);
       let indexes = videoData.correctAnswerIndexes[index];
-      return <QuestionEditor saveNewQuestion={saveNewQuestion} saveEditedQuestion={saveEditedQuestion} time={time.current} existingQuestion={editedQuestion} correctAnswerIndexes={indexes}></QuestionEditor>
+      return <QuestionEditor saveNewQuestion={saveNewQuestion} saveEditedQuestion={saveEditedQuestion} time={time.current} existingQuestion={editedQuestion} ></QuestionEditor>
     }
   }
 

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import axiosClient from '../../axios-client'
 import './css/watchVideo.css'
-import QuestionBox from '../components/Question'
+import Question from '../components/Question'
 import QuestionsTimeline from '../components/QuestionsTimeline'
 import * as utils from '../utils.js'
 import Score from '../components/Score'
@@ -36,7 +36,7 @@ function WatchVideo() {
     if (currentQuestionData != null) {
       utils.pauseVideo(iframe);
       return (
-        <QuestionBox questionData={currentQuestionData} setVideoData={setCurrentQuestionData} videoId={videoId} correctAnswer={answeredCorrectly}></QuestionBox>
+        <Question questionData={currentQuestionData} setQuestionData={setCurrentQuestionData} videoId={videoId} answeredCorrectly={answeredCorrectly}></Question>
       )
     }
     else {
