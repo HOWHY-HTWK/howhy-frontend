@@ -3,6 +3,7 @@ import './css/header.css'
 import { useStateContext } from '../contexts/ContextProvider'
 import {ReactComponent as Logo} from '../assets/howhy.svg'
 import axiosClient from '../../axios-client.jsx'
+import { Link } from 'react-router-dom'
 
 
 export default function Header() {
@@ -10,7 +11,7 @@ export default function Header() {
 
   return (
     <div className="background">
-        <Logo id="logo"></Logo>
+        <Link to={'/editor'}><Logo id="logo" ></Logo></Link>
         <button className='button' onClick={logout}>Log Out</button>
     </div>
   )

@@ -5,7 +5,6 @@ import axiosClient from '../../axios-client';
 
 export default function AllStoredVideosList() {
   const [videoList, setvideoList] = useState([]);
-  console.log(videoList)
 
   const videos = videoList ? videoList.map(video => getListElement(video)) : null;
   
@@ -42,7 +41,11 @@ export default function AllStoredVideosList() {
   async function makeVideoList(videoIds) {
     let videoDatas = []
     for(let videoId of videoIds){
+
       videoDatas.push(await getVideoDataFromMediaserver(videoId))
+      // let videoData = await getVideoDataFromMediaserver(videoId)
+    // setvideoList([...videoDatas], videoData)
+
     }
     setvideoList(videoDatas)
 

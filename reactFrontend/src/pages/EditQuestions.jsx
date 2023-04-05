@@ -4,6 +4,7 @@ import QuestionEditor from '../components/QuestionEditor'
 import axiosClient from '../../axios-client.jsx'
 import './editQuestions.css'
 import QuestionList from '../components/QuestionList'
+import { Navigate } from 'react-router-dom'
 
 export default function EditQuestions() {
   const queryParameters = new URLSearchParams(window.location.search)
@@ -112,6 +113,10 @@ export default function EditQuestions() {
     axiosClient.post(`/api/videoDatas`, newVideoData)
       .then((newVideoData) => {
         setvideoData(newVideoData.data);
+      }).catch(error => {
+        if(error.response.status){
+          <Navigate to={'/login'}></Navigate>
+        }
       })
   }
 
