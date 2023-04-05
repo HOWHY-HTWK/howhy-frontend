@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './css/questions.css'
 import axiosClient from '../../axios-client'
 
-export default function QuestionBox({ questionData, setVideoData, videoId }) {
+export default function QuestionBox({ questionData, setVideoData: setQuestionData, correctAnswer, videoId }) {
   var selected = Array.from({ length: questionData.answers.length }, () => false);
 
   const [selectedAnswers, setselectedAnswers] = useState(selected);
@@ -34,9 +34,10 @@ export default function QuestionBox({ questionData, setVideoData, videoId }) {
       axiosClient.post(`api/videoDatas/checkAnswers/${videoId}`, request)
         .then((response) => {
           setAnswerCorrect(response.data.success)
+          response.data.success ? correctAnswer(): null;
           setTimeout(function () {
             setAnswerCorrect(null)
-            setVideoData(null)
+            setQuestionData(null)
           }, 2000);
 
         })

@@ -4,11 +4,13 @@ import './css/watchVideo.css'
 import QuestionBox from '../components/Question'
 import QuestionsTimeline from '../components/QuestionsTimeline'
 import * as utils from '../utils.js'
+import Score from '../components/Score'
 
 function WatchVideo() {
   const queryParameters = new URLSearchParams(window.location.search)
   const videoId = queryParameters.get("id")
   
+  const [score, setscore] = useState(0)
   const [videoData, setVideoData] = useState(null)
   const [currentQuestionData, setCurrentQuestionData] = useState(null)
   const iframe = useRef(null);
@@ -23,6 +25,7 @@ function WatchVideo() {
   
   return (
     <div id="wrapper">
+      <Score newscore={score}></Score>
       <iframe ref={iframe} id="iframe" src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe`}></iframe>
       {videoData != null ? (<QuestionsTimeline id="questionsTimeline" videoData={videoData} jumpToTime={(time) => utils.jumpToTime(iframe, time)}></QuestionsTimeline>) : null}
       {displayQuestion()}
@@ -33,13 +36,17 @@ function WatchVideo() {
     if (currentQuestionData != null) {
       utils.pauseVideo(iframe);
       return (
-        <QuestionBox questionData={currentQuestionData} setVideoData={setCurrentQuestionData} videoId={videoId}></QuestionBox>
+        <QuestionBox questionData={currentQuestionData} setVideoData={setCurrentQuestionData} videoId={videoId} correctAnswer={answeredCorrectly}></QuestionBox>
       )
     }
     else {
       utils.playVideo(iframe);
       return null;
     }
+}
+
+function answeredCorrectly(){
+  setscore(score+100)
 }
 
 function fetchQuestionsData() {
@@ -52,11 +59,8 @@ function fetchQuestionsData() {
 }
 
 function listenForTimeUpdate(videoData) {
-
   let timecodes = utils.makeTimecodesList(videoData.data)
-
   window.addEventListener('message', function (event) {
-
     if ('time' in event.data) {
       var questionIndex = utils.findQuestionIndex(event.data.time, timecodes);
       if(questionIndex != null){
@@ -64,13 +68,11 @@ function listenForTimeUpdate(videoData) {
         tempQuestionData.index = questionIndex;
         setCurrentQuestionData(tempQuestionData);
       }
-
     } else if ('state' in event.data) {
     } else if ('duration' in event.data) {
     }
   }, false)
 }
-
 }
 
 export default WatchVideo

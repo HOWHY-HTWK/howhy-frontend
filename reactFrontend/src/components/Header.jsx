@@ -5,7 +5,6 @@ import {ReactComponent as Logo} from '../assets/howhy.svg'
 import axiosClient from '../../axios-client.jsx'
 import { Link } from 'react-router-dom'
 
-
 export default function Header() {
     const {user, authenticated, setLoggedIn} = useStateContext()
 
