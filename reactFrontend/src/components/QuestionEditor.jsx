@@ -70,7 +70,7 @@ export default function QuestionEditor({ saveNewQuestion, saveEditedQuestion, ti
   }
 
   function deleteAnswer(id) {
-    setQuestion({ ...question, answers: question.answers.filter(a => a.id !== id) });
+    setQuestion({ ...question, answers: question.answers.filter(a => a.id !== id), correctAnswers: question.correctAnswers.filter(a => a.id !== id) });
   }
 
   function handleAnswerChange(id, input) {
