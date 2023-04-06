@@ -26,7 +26,6 @@ export default function Question({ questionData, setQuestionData, answeredCorrec
         "questionId": questionData.id,
         "answers": answers
       }
-      debugger
       axiosClient.post(`api/videoDatas/checkAnswers/${videoId}`, request)
         .then((response) => {
           setAnswerCorrect(response.data.success)
