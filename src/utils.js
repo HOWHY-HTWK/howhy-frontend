@@ -33,8 +33,15 @@ export function jumpToTime(iframe, time) {
   }
 
   export function getTimeInReadable(time){
-    let minutes = Math.floor(time/60)
-    let seconds = time%60
-    let hours = Math.floor(time/3600)
+    let hours = Math.floor(time / 3600);
+    let minutes = Math.floor((time % 3600) / 60);
+    let seconds = Math.floor(time % 60);
     return (hours != 0 ? hours+"h ": "")+ minutes +"m "+ seconds+"s"
+  }
+
+  export function getHoursMinutesSeconds(time){
+    let hours = Math.floor(time / 3600);
+    let minutes = Math.floor((time % 3600) / 60);
+    let seconds = Math.floor(time % 60);
+    return {hours: hours, minutes: minutes, seconds: seconds};
   }

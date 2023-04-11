@@ -1,7 +1,10 @@
 #question {
     background-color: transparent;
     overflow: visible;
-    padding: 1rem;
+    /* padding: 1rem; */
+    /* display: flex; */
+    /* flex-flow: column nowrap; */
+    /* align-items: center; */
 }
 
 .questionElements {

@@ -19,6 +19,7 @@ export default function EditQuestions() {
   const creator = "alex";
   const iframe = useRef(null)
   const time = useRef(null)
+  const duration = useRef(null)
 
   fetchQuestionsData()
   refreshCurrentTime()
@@ -37,7 +38,6 @@ export default function EditQuestions() {
     let index = videoData.data.findIndex(element => element.id == question.id);
     let newVideoData = videoData;
     newVideoData.data.splice(index, 1);
-    newVideoData.correctAnswerIndexes.splice(index, 1);
     postNewVideoData(newVideoData);
   }
 
@@ -74,7 +74,6 @@ export default function EditQuestions() {
   }
 
   function saveNewQuestion(question) {
-    
     if (question != null) {
       let newQuestion = {
         ...question,
@@ -111,9 +110,9 @@ export default function EditQuestions() {
     if (editedQuestion == null) {
       return null
     } else if (editedQuestion == 'multipleChoice') {
-      return <QuestionEditor saveNewQuestion={saveNewQuestion} saveEditedQuestion={saveEditedQuestion} time={time.current} existingQuestion={null}></QuestionEditor>
+      return <QuestionEditor saveNewQuestion={saveNewQuestion} saveEditedQuestion={saveEditedQuestion} duration={duration.current} time={time.current} existingQuestion={null}></QuestionEditor>
     } else if (typeof editedQuestion == 'object') {
-      return <QuestionEditor saveNewQuestion={saveNewQuestion} saveEditedQuestion={saveEditedQuestion} time={time.current} existingQuestion={editedQuestion} ></QuestionEditor>
+      return <QuestionEditor saveNewQuestion={saveNewQuestion} saveEditedQuestion={saveEditedQuestion} duration={duration.current} time={time.current} existingQuestion={editedQuestion} ></QuestionEditor>
     }
   }
 
@@ -122,6 +121,9 @@ export default function EditQuestions() {
       if ('time' in event.data) {
         time.current = event.data.time
       } 
+      if('duration' in event.data){
+        duration.current = event.data.duration
+      }
     }, false)
   }
 }

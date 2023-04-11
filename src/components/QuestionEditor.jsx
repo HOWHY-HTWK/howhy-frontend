@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import './css/questions.css'
 import './css/questionEditor.css'
 import { MdClose, MdAdd } from "react-icons/md"
+import TimeCodePicker from './TimeCodePicker'
 
-export default function QuestionEditor({ saveNewQuestion, saveEditedQuestion, time, existingQuestion }) {
+export default function QuestionEditor({ saveNewQuestion, saveEditedQuestion, duration, time, existingQuestion }) {
   const basequestion = existingQuestion == null ? {
     'type': 'multiplechoice',
     'question': '',
@@ -23,6 +24,7 @@ export default function QuestionEditor({ saveNewQuestion, saveEditedQuestion, ti
 
   return (
     <div id="question">
+      <TimeCodePicker duration={duration} time={question.timecode} setTimeCode={setNewTimecode}></TimeCodePicker>
       <div className="questionElements questionText">
         <input className="input questionElements questionInput" placeholder="Frage hier eingeben" value={question.question} onInput={e => setQuestion({ ...question, question: e.target.value })}></input>
       </div>
@@ -36,6 +38,10 @@ export default function QuestionEditor({ saveNewQuestion, saveEditedQuestion, ti
       </div>
     </div>
   )
+
+  function setNewTimecode(timecode){
+    setQuestion({...question, timecode: timecode})
+  }
 
   function getAnswers() {
     return (
