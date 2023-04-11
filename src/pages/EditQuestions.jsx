@@ -113,8 +113,6 @@ export default function EditQuestions() {
     } else if (editedQuestion == 'multipleChoice') {
       return <QuestionEditor saveNewQuestion={saveNewQuestion} saveEditedQuestion={saveEditedQuestion} time={time.current} existingQuestion={null}></QuestionEditor>
     } else if (typeof editedQuestion == 'object') {
-      let index = videoData.data.findIndex(element => element.id == editedQuestion.id);
-      let indexes = videoData.correctAnswerIndexes[index];
       return <QuestionEditor saveNewQuestion={saveNewQuestion} saveEditedQuestion={saveEditedQuestion} time={time.current} existingQuestion={editedQuestion} ></QuestionEditor>
     }
   }
