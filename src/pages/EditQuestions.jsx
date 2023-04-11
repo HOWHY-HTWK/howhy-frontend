@@ -101,7 +101,7 @@ export default function EditQuestions() {
         setvideoData(newVideoData.data);
       }).catch(error => {
         if(error.response.status){
-          <Navigate to={'/login'}></Navigate>
+          // <Navigate to={'/login'}></Navigate>
         }
       })
   }
