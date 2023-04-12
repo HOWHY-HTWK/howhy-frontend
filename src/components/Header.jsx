@@ -11,6 +11,7 @@ export default function Header() {
   return (
     <div className="background">
         <Link to={'/editor'}><Logo id="logo" ></Logo></Link>
+        <div>{user.name}</div>
         <button className='button' onClick={logout}>Log Out</button>
     </div>
   )

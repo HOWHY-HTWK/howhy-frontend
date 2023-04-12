@@ -3,7 +3,7 @@
     height: 2rem;
     position: absolute;
     bottom: 0px;
-    background-color: lightblue;
+    background-color: lightgray;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
