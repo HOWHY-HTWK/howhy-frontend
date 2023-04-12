@@ -1,0 +1,11 @@
+.bar{
+    width: 100vw;
+    height: 2rem;
+    position: absolute;
+    bottom: 0px;
+    background-color: lightblue;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}

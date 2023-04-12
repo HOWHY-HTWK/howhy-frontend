@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import AddVideo from './components/AddVideo'
 import EditQuestions from './pages/EditQuestions';
-import LoggedIn from './components/LoggedIn';
+import LoggedIn from './pages/LoggedIn';
 import LogIn from './components/LogIn';
 import { ContextProvider } from './contexts/ContextProvider';
 import VideoList from './pages/ChannelVideoList';

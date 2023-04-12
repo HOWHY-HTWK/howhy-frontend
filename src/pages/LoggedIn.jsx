@@ -1,9 +1,11 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-import LogIn from './LogIn'
+import LogIn from '../components/LogIn'
 import { useStateContext } from '../contexts/ContextProvider'
-import Header from './Header'
+import Header from '../components/Header'
 import axiosClient from '../../axios-client'
+import Footer from '../components/Footer'
+import styles from './css/LoggedIn.module.css'
 
 export default function LoggedIn() {
     const { user, authenticated, setLoggedIn: setStatus } = useStateContext()
@@ -13,7 +15,8 @@ export default function LoggedIn() {
             return response
         },
         function (error) {
-            if (error.response.status == 401 || 419) {
+            if (parseInt(error.response.status) === 401) {
+                debugger
                 setStatus(false)
             }
         }
@@ -26,10 +29,11 @@ export default function LoggedIn() {
 
     if (authenticated) {
         return (
-            <>
+            <div className={styles.wrap}>
                 <Header></Header>
                 <Outlet />
-            </>
+                <Footer></Footer>
+            </div>
         )
     } else {
         return <LogIn></LogIn>
