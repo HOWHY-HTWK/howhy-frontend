@@ -34,7 +34,7 @@ export default function SignUp({toggleSignUp}) {
                 toggleSignUp
               }).catch((error) => {
                 // debugger
-                console.log(error.response)
+                alert(error.response.data.message)
               });
           })
       }

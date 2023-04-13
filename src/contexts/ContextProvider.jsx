@@ -1,31 +1,36 @@
-import {createContext, useContext, useState} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const StateContext = createContext({
     user: null,
     authenticated: false,
-    setUser: () => {},
-    setLoggedIn: () => {}
+    setUser: () => { },
+    setAuthenticated: () => { }
 })
 
-export const ContextProvider = ({children}) => {
-    const [user, setUser ] = useState({});
-    const [authenticated, _setAuthenticated] = useState(localStorage.getItem('ACCESS_TOKEN'));
+export const ContextProvider = ({ children }) => {
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('USER')));
+    const [authenticated, setAuthenticated] = useState(localStorage.getItem('ACCESS_TOKEN'));
 
-    const setAuthenticated = (authenticated) => {
-        _setAuthenticated(authenticated)
-        if (authenticated){
+    useEffect(() => {
+        localStorage.setItem('USER', JSON.stringify(user))
+    }, [user])
+
+    useEffect(() => {
+        if (authenticated) {
             localStorage.setItem('ACCESS_TOKEN', authenticated);
         } else {
             localStorage.removeItem('ACCESS_TOKEN')
+            localStorage.removeItem('USER')
+            setUser(null)
         }
-    }
+    }, [authenticated])
 
-    return(
+    return (
         <StateContext.Provider value={{
             user,
             authenticated: authenticated,
-            setUser, 
-            setLoggedIn: setAuthenticated
+            setUser,
+            setAuthenticated
         }}>
             {children}
         </StateContext.Provider>

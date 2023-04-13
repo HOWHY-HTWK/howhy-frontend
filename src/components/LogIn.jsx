@@ -5,7 +5,7 @@ import './css/login.css'
 import SignUp from './SignUp.jsx';
 
 export default function LogIn() {
-  const { user, authenticated, setLoggedIn: setStatus } = useStateContext()
+  const { user, authenticated, setUser, setAuthenticated: setLoggedIn } = useStateContext()
 
   const emailRef = createRef()
   const passwordRef = createRef()
@@ -24,7 +24,8 @@ export default function LogIn() {
           password: password
         }).then(response => {
           console.log(response)
-          setStatus(true)
+          setLoggedIn(true)
+          setUser(response.data)
         }).catch((error) => {
           alert(error.response.data.message)
         });

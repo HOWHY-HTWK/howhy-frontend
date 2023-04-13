@@ -8,10 +8,10 @@ import Footer from '../components/Footer'
 import styles from './css/LoggedIn.module.css'
 
 export default function LoggedIn() {
-    const { user, authenticated, setLoggedIn: setStatus } = useStateContext()
+    const { user, authenticated, setUser, setAuthenticated: setStatus } = useStateContext()
 
     axiosClient.interceptors.response.use(
-        res =>  {
+        res => {
             return res;
         },
         err => {
@@ -23,13 +23,16 @@ export default function LoggedIn() {
     )
 
     useEffect(() => {
-        axiosClient.get('api/check').then(response => {
-            console.log(response)
-        }).catch(error => {
-        })
+        axiosClient.get('/sanctum/csrf-cookie')
+            .then(response => {
+                axiosClient.get('api/check').then(response => {
+                    console.log(response)
+                }).catch(error => {
+                })
+            })
     }, [])
 
-    if (authenticated) {
+    if (user) {
         return (
             <div className={styles.wrap}>
                 <Header></Header>
