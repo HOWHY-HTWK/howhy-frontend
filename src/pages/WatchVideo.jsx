@@ -13,6 +13,7 @@ function WatchVideo() {
   const [score, setscore] = useState(0)
   const [videoData, setVideoData] = useState(null)
   const [currentQuestionData, setCurrentQuestionData] = useState(null)
+  const [duration, setDuration] = useState(null)
   const iframe = useRef(null);
 
   fetchQuestionsData();
@@ -27,7 +28,7 @@ function WatchVideo() {
     <div id="wrapper">
       <Score newscore={score}></Score>
       <iframe ref={iframe} id="iframe" src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe`}></iframe>
-      {videoData != null ? (<QuestionsTimeline id="questionsTimeline" videoData={videoData} jumpToTime={(time) => utils.jumpToTime(iframe, time)}></QuestionsTimeline>) : null}
+      {videoData && duration != null ? (<QuestionsTimeline id="questionsTimeline" videoData={videoData} duration={duration} jumpToTime={(time) => utils.jumpToTime(iframe, time)}></QuestionsTimeline>) : null}
       {displayQuestion()}
     </div>
   )
@@ -70,6 +71,9 @@ function listenForTimeUpdate(videoData) {
       }
     } else if ('state' in event.data) {
     } else if ('duration' in event.data) {
+      if(!duration){
+        setDuration(event.data.duration)
+      }
     }
   }, false)
 }

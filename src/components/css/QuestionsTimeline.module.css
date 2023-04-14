@@ -1,0 +1,47 @@
+.timelineWwrapper {
+    width: 88%;
+    gap: 0.5rem;
+    position: relative;
+    height: 2rem;
+}
+
+.questionDot {
+    width: 2rem;
+    height: 2rem;
+    text-align: center;
+    color: white;
+    background-color: rgb(162, 161, 161);
+    border-radius: 1rem;
+    vertical-align: middle;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    overflow: visible;
+    position: absolute;
+    /* left: 20.384398279374239847%; */
+    transform: translate(-1rem);
+}
+
+.stripe{
+    position: absolute;
+    top: calc(50% - 0.1rem);
+    width: 100%;
+    height: 0.2rem;
+    background-color: rgba(39, 75, 177, .8);
+}
+
+.timecode{
+    background-color: gray;
+    color: white;
+    padding: 0 0.5rem;
+    border-radius: 0.3rem;
+    position: absolute;
+    transform: translate(0 , 2rem);
+    visibility: hidden;
+    z-index: 1;
+}
+
+.questionDot:hover .timecode{
+    visibility: visible;
+}
