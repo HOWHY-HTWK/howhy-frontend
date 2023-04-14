@@ -3,7 +3,7 @@
 }
 
 .videoListWrapper{
-    width: 30rem;
+    /* width: 30rem; */
 }
 
 .videoInList{
@@ -22,9 +22,10 @@
 }
 
 .vlThumb{
-    height: 7rem;
+    /* height: 7rem; */
     border-radius: 8px;
     grid-area: thumb;
+    max-width: 45vw;
     /* justify-self: stretch; */
 }
 

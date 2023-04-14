@@ -1,7 +1,6 @@
 .scoreWrap {
-    /* height: 3rem; */
     width: fit-content;
-    margin: 1rem;
+    margin: 1rem 2rem;
     border: 1px solid black;
     border-radius: 1rem;
     position: relative;

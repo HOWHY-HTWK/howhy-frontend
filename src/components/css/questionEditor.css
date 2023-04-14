@@ -1,4 +1,5 @@
 .input {
+    font-family: inherit;
     width: 100%;
     outline: none;
     background-color: transparent;
@@ -9,6 +10,13 @@
     z-index: 0;
     grid-column: 1;
     grid-row: 1;
+    width: 100%;
+    min-height: 100%;
+}
+
+.stretch{
+    align-items: strech;
+    
 }
 
 .questionInput {
@@ -20,7 +28,6 @@
 }
 
 .circle{
-    
     margin-left: -1rem;
     border-radius: 1rem;
     display: flex;
@@ -39,7 +46,7 @@
     height: 1rem;
     border-radius: 1rem;
     background-color: red;
-    top: -1rem;
+    top: -0.6rem;
 }
 
 .answerCorrect{

@@ -7,7 +7,7 @@ export default function Question({ questionData, setQuestionData, answeredCorrec
 
   const [selectedAnswers, setselectedAnswers] = useState(selected);
   const [answerCorrect, setAnswerCorrect] = useState(null);
-  const answers = questionData.answers.map((answer, index) => <div key={answer.id} className={`questionElements answer ${selectedAnswers[index] ? "whiteborder" : ""}`} onClick={() => selectAnswer(index)}>{answer.text}</div>);
+  const answers = questionData.answers.map((answer, index) => <div key={answer.id} className={`questionElement answer ${selectedAnswers[index] ? "whiteborder" : ""}`} onClick={() => selectAnswer(index)}>{answer.text}</div>);
 
   function selectAnswer(index) {
     var arr = selectedAnswers.slice(0);
@@ -16,7 +16,7 @@ export default function Question({ questionData, setQuestionData, answeredCorrec
   }
 
   function calcAnswerIndexes() {
-    let answers = questionData.answers.map((answer, index) => ({id: answer.id, correct: selectedAnswers[index]}))
+    let answers = questionData.answers.map((answer, index) => ({ id: answer.id, correct: selectedAnswers[index] }))
     processAnswer(answers);
   }
 
@@ -29,7 +29,7 @@ export default function Question({ questionData, setQuestionData, answeredCorrec
       axiosClient.post(`api/videoDatas/checkAnswers/${videoId}`, request)
         .then((response) => {
           setAnswerCorrect(response.data.success)
-          response.data.success ? answeredCorrectly(): null;
+          response.data.success ? answeredCorrectly() : null;
           setTimeout(function () {
             setAnswerCorrect(null)
             setQuestionData(null)
@@ -40,30 +40,20 @@ export default function Question({ questionData, setQuestionData, answeredCorrec
     }
   }
 
-  function answerFeedback() {
-    if (answerCorrect != null) {
-      return (
-        <div className="questionElements">{answerCorrect ? "Richtig!" : "Leider Falsch"}</div>
-      )
-    } else {
-      return (
-        <div id="question">
-          <div className="questionElements questionText"> {questionData.question}</div>
-          <div id="answersWrapper">
-            {answers}
-          </div>
-          <div id="answerbuttonWrapper">
-            <div className="questionElements" id="answerbutton" onClick={calcAnswerIndexes}>Antwort abschicken</div>
-          </div>
-        </div>
-      )
-    }
-  }
-
   return (
-    <>
-      {answerFeedback()}
-    </>
-
+    answerCorrect != null ?
+      <div className='question center'>
+        <div className="feedback">{answerCorrect ? "Richtig!" : "Leider Falsch"}</div>
+      </div>
+      :
+      <div className='question'>
+        <div className="questionElement questionText"> {questionData.question}</div>
+        <div id="answersWrapper">
+          {answers}
+        </div>
+        <div id="answerbuttonWrapper center">
+          <div className="questionElement button" id="answerbutton" onClick={calcAnswerIndexes}>Antwort abschicken</div>
+        </div>
+      </div>
   )
 }

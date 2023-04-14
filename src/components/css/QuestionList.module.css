@@ -1,0 +1,42 @@
+.text {
+    box-shadow: 0px 0px 5px black;
+    margin-bottom: 0;
+    z-index: 0;
+}
+
+.timecode {
+    border-radius: 0.5rem;
+    padding: 0 0.5rem;
+    border: 1px solid black;
+}
+
+.bottomWrapper {
+    /* padding: 1rem 0.5rem; */
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rightWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 1rem;
+}
+
+.edit {
+    background-color: lightgreen;
+
+}
+
+.deleteButton {
+    background-color: rgb(248, 142, 142);
+}
+
+@media (prefers-color-scheme: dark) {
+    .timecode{
+        border: 1px solid white;
+    }
+  }

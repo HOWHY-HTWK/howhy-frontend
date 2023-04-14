@@ -8,7 +8,7 @@ import Footer from '../components/Footer'
 import styles from './css/LoggedIn.module.css'
 
 export default function LoggedIn() {
-    const { user, authenticated, setUser, setAuthenticated: setStatus } = useStateContext()
+    const { user, authenticated, setUser, setAuthenticated } = useStateContext()
 
     axiosClient.interceptors.response.use(
         res => {
@@ -16,7 +16,7 @@ export default function LoggedIn() {
         },
         err => {
             if (err.response.status === 401) {
-                setStatus(false)
+                setAuthenticated(false)
             }
             throw err;
         }

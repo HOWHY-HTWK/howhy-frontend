@@ -55,25 +55,12 @@ h1 {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  .button {
-    background-color: #f9f9f9;
-  }
-}
-
 .listElement {
   margin-bottom: 20px;
   border-radius: 1rem;
   padding: 0 0.4rem;
   padding: 1rem;
-  background-color: rgba(227, 238, 252, 0.612);
+  background-color: #323232;
   border-radius: 1rem;
 }
 
@@ -85,6 +72,29 @@ h1 {
 
 .FlexRow {
   display: flex;
-  flex-direction: row;
+  flex-flow: row nowrap;
   gap: 1rem;
+}
+
+.selector{
+  margin: 1rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  .button {
+    background-color: #f9f9f9;
+  }
+  .listElement{
+    background-color: rgba(227, 238, 252, 0.612);
+  }
 }

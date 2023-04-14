@@ -5,8 +5,11 @@ import axiosClient from '../../axios-client.jsx'
 import './editQuestions.css'
 import QuestionList from '../components/QuestionList'
 import { Navigate } from 'react-router-dom'
+import { useStateContext } from '../contexts/ContextProvider'
 
 export default function EditQuestions() {
+  const { user, authenticated, setUser, setAuthenticated } = useStateContext()
+
   const queryParameters = new URLSearchParams(window.location.search)
 
   const [editedQuestion, seteditedQuestion] = useState(JSON.parse(localStorage.getItem('question')) != null ? 'multipleChoice' : null)
@@ -16,7 +19,7 @@ export default function EditQuestions() {
 
   const videoId = queryParameters.get("id")
   //TODO change when login is done
-  const creator = "alex";
+  const creator = user.id;
   const iframe = useRef(null)
   const time = useRef(null)
   const duration = useRef(null)
@@ -35,10 +38,12 @@ export default function EditQuestions() {
   )
 
   function deleteQuestion(question) {
-    let index = videoData.data.findIndex(element => element.id == question.id);
-    let newVideoData = videoData;
-    newVideoData.data.splice(index, 1);
-    postNewVideoData(newVideoData);
+    if(confirm('wirklich löschen?') ){
+      let index = videoData.data.findIndex(element => element.id == question.id);
+      let newVideoData = videoData;
+      newVideoData.data.splice(index, 1);
+      postNewVideoData(newVideoData);
+    }
   }
 
   function fetchQuestionsData() {
@@ -54,13 +59,13 @@ export default function EditQuestions() {
   function displayAddQuestion() {
     if (editedQuestion == null) {
       return (
-        <>
+        <div className='add_wrapper'>
           <select className="selector" value={questionType} onChange={e => setquestionType(e.target.value)}  >
             <option value="multipleChoice">Multiple Choice</option>
             <option value="singleChoice">Single Choice</option>
           </select>
-          <button className="addBtn" onClick={() => seteditedQuestion(questionType)}>{questionType}-Frage zum aktuellen Zeitpunk hinzufügen</button>
-        </>
+          <button className="button" onClick={() => seteditedQuestion(questionType)}>{questionType}-Frage zum aktuellen Zeitpunk hinzufügen</button>
+        </div>
       )
     }
   }

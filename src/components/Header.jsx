@@ -7,6 +7,8 @@ import logoBig from '../assets/logo_big.png'
 import axiosClient from '../../axios-client.jsx'
 import { Link } from 'react-router-dom'
 import DropDown from './DropDown'
+import { MdArrowDropDown } from "react-icons/md";
+
 
 export default function Header() {
   const { user, authenticated, setAuthenticated } = useStateContext()
@@ -33,7 +35,7 @@ export default function Header() {
         <Link to={'/editor'} className='home'><img className='imgLogo' src={logoBig}></img></Link>
         {/* <Link to={'/editor'} className='home'><Logo id="logo" ></Logo></Link> */}
         <div className='user' ref={dropdownRef} onClick={handleUserClick}>
-          <div className='name'>Hallo {user.name} ▼</div>
+          <div className='name'>Hallo {user.name} <MdArrowDropDown></MdArrowDropDown></div>
         </div>
         {isOpen ? <div className='dropDownWrapper'  ><DropDown></DropDown></div> : null}
       </div>

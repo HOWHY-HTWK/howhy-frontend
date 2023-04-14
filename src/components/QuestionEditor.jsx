@@ -3,6 +3,8 @@ import './css/questions.css'
 import './css/questionEditor.css'
 import { MdClose, MdAdd } from "react-icons/md"
 import TimeCodePicker from './TimeCodePicker'
+import TextareaAutosize from 'react-textarea-autosize';
+
 
 export default function QuestionEditor({ saveNewQuestion, saveEditedQuestion, duration, time, existingQuestion }) {
   const basequestion = existingQuestion == null ? {
@@ -23,10 +25,10 @@ export default function QuestionEditor({ saveNewQuestion, saveEditedQuestion, du
   }, [question]);
 
   return (
-    <div id="question">
+    <div className='question strech'>
       <TimeCodePicker duration={duration} time={question.timecode} setTimeCode={setNewTimecode}></TimeCodePicker>
-      <div className="questionElements questionText">
-        <input className="input questionElements questionInput" placeholder="Frage hier eingeben" value={question.question} onInput={e => setQuestion({ ...question, question: e.target.value })}></input>
+      <div className="questionElement questionText">
+        <TextareaAutosize className="input" placeholder="Frage hier eingeben" value={question.question} onInput={e => setQuestion({ ...question, question: e.target.value })}></TextareaAutosize>
       </div>
       <div id="answersWrapper">
         {getAnswers()}
@@ -46,7 +48,7 @@ export default function QuestionEditor({ saveNewQuestion, saveEditedQuestion, du
   function getAnswers() {
     return (
       question.answers.map((answer) =>
-        <div className="questionElements" key={answer.id}>
+        <div className="questionElement answer" key={answer.id}>
           {question.answers.length > 1 ?
             <div className="circle delete" onClick={() => deleteAnswer(answer.id)}>
               <MdClose></MdClose>
@@ -56,7 +58,7 @@ export default function QuestionEditor({ saveNewQuestion, saveEditedQuestion, du
             <div className='circle answerCorrect correct' onClick={() => toggleCorrect(answer.id)}>richtig</div>
             : <div className='circle answerCorrect' onClick={() => toggleCorrect(answer.id)}>falsch</div>}
 
-          <input className="input questionElements change" placeholder="Antwort hier eingeben" value={answer.text} onInput={e => handleAnswerChange(answer.id, e.target.value)}></input>
+          <TextareaAutosize className="input questionElement change answer" placeholder="Antwort hier eingeben" value={answer.text} onInput={e => handleAnswerChange(answer.id, e.target.value)}></TextareaAutosize>
         </div>
       ));
   }
