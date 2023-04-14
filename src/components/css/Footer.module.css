@@ -2,7 +2,7 @@
     width: 100vw;
     height: 2rem;
     position: absolute;
-    bottom: 0px;
+    bottom: -1rem;
     background-color: lightgray;
     display: flex;
     flex-flow: row nowrap;

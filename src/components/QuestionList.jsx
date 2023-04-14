@@ -4,7 +4,9 @@ import * as utils from '../utils.js'
 
 
 export default function QuestionList({ videoData, editQuestion, deleteQuestion }) {
-    const questions = videoData.data.map(question => getListElement(question));
+
+    const orderedQuestions = videoData.data.sort((first, last) => first.timecode - last.timecode)
+    const questions = orderedQuestions.map(question => getListElement(question));
 
     return (
         <>
