@@ -72,6 +72,9 @@ h1 {
   margin-bottom: 20px;
   border-radius: 1rem;
   padding: 0 0.4rem;
+  padding: 1rem;
+  background-color: rgba(227, 238, 252, 0.612);
+  border-radius: 1rem;
 }
 
 .center {

@@ -10,8 +10,8 @@ export default function EditorDash() {
 }, [])
   return (
     <div className='EDWrap'>
-        <ChannelVideoList/>
         <AllStoredVideosList />
+        <ChannelVideoList/>
       <div className='addVideo'><AddVideo/></div>
 
     </div >
