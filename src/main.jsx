@@ -16,6 +16,7 @@ import VideoList from './pages/ChannelVideoList';
 import Dashboard from './pages/Dashboard';
 import EditorDash from './pages/EditorDash';
 import WatchVideo from './pages/WatchVideo';
+import Settings from './pages/Settings';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/editor/edit/*",
         element: <EditQuestions />
+      },
+      {
+        path: "/editor/settings",
+        element: <Settings />
       }
     ]
   },

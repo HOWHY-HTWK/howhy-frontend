@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './css/header.css'
 import { useStateContext } from '../contexts/ContextProvider'
 import { ReactComponent as Logo } from '../assets/howhy.svg'
@@ -9,10 +9,21 @@ import DropDown from './DropDown'
 export default function Header() {
   const { user, authenticated, setAuthenticated } = useStateContext()
   const [isOpen, setIsOpen] = useState(false);
-
   const dropdownRef = useRef(null);
 
-  document.addEventListener('click', handleOutsideClick);
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
 
   return (
     <div>
@@ -23,8 +34,6 @@ export default function Header() {
         </div>
         {isOpen ? <div className='dropDownWrapper'  ><DropDown></DropDown></div> : null}
       </div>
-
-
     </div>
   )
 
