@@ -23,7 +23,7 @@ export default function SignUp({toggleSignUp}) {
         axiosClient.get('/sanctum/csrf-cookie')
           .then(response => {
             let requestObject = {
-              name: 'test',
+              name: signUpData.email.split('@')[0],
               email: signUpData.email,
               password: signUpData.password,
               password_confirmation: signUpData.repeatPassword,
@@ -31,7 +31,7 @@ export default function SignUp({toggleSignUp}) {
             axiosClient.post('/register', requestObject)
               .then(response => {
                 alert('Registrierung erfolgreich!')
-                toggleSignUp
+                toggleSignUp()
               }).catch((error) => {
                 // debugger
                 alert(error.response.data.message)

@@ -17,9 +17,20 @@
 }
 
 .home{
+    position: relative;
+    padding: 0.5rem 0;
+    padding-top: 1.7rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    /* background-color: red; */
+    width: 10rem;
+
+}
+
+.imgLogo{
+    width: 90%;
+    
 }
 
 .user {
