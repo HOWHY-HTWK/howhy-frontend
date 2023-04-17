@@ -8,8 +8,8 @@ export default function DropDown() {
   const { user, authenticated, setAuthenticated: setLoggedIn } = useStateContext()
 
   return (
-    <div className={styles.wrap}>
-      <Link to={'/editor/settings'} className={styles.menuListItem}>Einstellungen</Link>
+    <div className={[styles.wrap, "itemBackground"].join(' ')} >
+      <Link to={'/editor/settings'} className={`${styles.menuListItem}`}>Einstellungen</Link>
       <div className={styles.menuListItem} onClick={logout}>Log Out</div>
     </div>
   )

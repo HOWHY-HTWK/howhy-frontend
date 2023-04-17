@@ -41,19 +41,22 @@ export default function Question({ questionData, setQuestionData, answeredCorrec
   }
 
   return (
-    answerCorrect != null ?
-      <div className='question center'>
-        <div className="feedback">{answerCorrect ? "Richtig!" : "Leider Falsch"}</div>
-      </div>
-      :
-      <div className='question'>
-        <div className="questionElement questionText"> {questionData.question}</div>
-        <div id="answersWrapper">
-          {answers}
+
+    <div className={['wrap'].join()} >
+      {answerCorrect != null ?
+        <div className='question center'>
+          <div className="feedback">{answerCorrect ? "Richtig!" : "Leider Falsch"}</div>
         </div>
-        <div id="answerbuttonWrapper center">
-          <div className="questionElement button" id="answerbutton" onClick={calcAnswerIndexes}>Antwort abschicken</div>
-        </div>
-      </div>
+        :
+        <div className='question'>
+          <div className="questionElement questionText"> {questionData.question}</div>
+          <div id="answersWrapper">
+            {answers}
+          </div>
+          <div id="answerbuttonWrapper center">
+            <div className="questionElement button" id="answerbutton" onClick={calcAnswerIndexes}>Antwort abschicken</div>
+          </div>
+        </div>}
+    </div>
   )
 }

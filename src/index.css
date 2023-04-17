@@ -64,6 +64,10 @@ h1 {
   border-radius: 1rem;
 }
 
+.itemBackground{
+  background-color: #323232;
+}
+
 .center {
   display: flex;
   justify-content: center;
@@ -96,5 +100,9 @@ h1 {
   }
   .listElement{
     background-color: rgba(227, 238, 252, 0.612);
+  }
+
+  .itemBackground{
+    background-color: white;
   }
 }

@@ -33,11 +33,11 @@ export default function Header() {
     <div>
       <div className="background" >
         <Link to={'/editor'} className='home'><img className='imgLogo' src={logoBig}></img></Link>
-        {/* <Link to={'/editor'} className='home'><Logo id="logo" ></Logo></Link> */}
         <div className='user' ref={dropdownRef} onClick={handleUserClick}>
           <div className='name'>Hallo {user.name} <MdArrowDropDown></MdArrowDropDown></div>
+          {isOpen ? <div className='dropDownWrapper visible'  ><DropDown></DropDown></div> :
+            <div className='dropDownWrapper'  ><DropDown></DropDown></div>}
         </div>
-        {isOpen ? <div className='dropDownWrapper'  ><DropDown></DropDown></div> : null}
       </div>
     </div>
   )

@@ -24,8 +24,10 @@ export default function AllStoredVideosList() {
       <div className="listElement videoInList" key={video.oid}>
         <div className='vlTitle'>{video.title}</div>
         <img className='vlThumb' src={video.thumb}></img>
-        <Link className='button vlEdit' to={`/editor/edit/?id=${video.oid}`}>Bearbeiten</Link>
-        <Link className='button vlWatch' target="_blank" to={`/watch?id=${video.oid}`}>Ansehen</Link>
+        <div className='buttonWrap'>
+          <Link className='button vlEdit' to={`/editor/edit/?id=${video.oid}`}>Bearbeiten</Link>
+          <Link className='button vlWatch' target="_blank" to={`/watch?id=${video.oid}`}>Ansehen</Link>
+        </div>
       </div>
     )
   }

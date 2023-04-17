@@ -1,39 +1,38 @@
-.videoListBody{
+.videoListBody {
     padding: 1rem;
 }
 
-.videoListWrapper{
+.videoListWrapper {
     /* width: 30rem; */
 }
 
-.videoInList{
+.videoInList {
     display: grid;
     grid-template-rows: auto auto;
     grid-template-columns: auto auto auto;
-    grid-template-areas: 
-    "title title title"
-    "thumb thumb buttons1"
-    "thumb thumb buttons2";
+    grid-template-areas:
+        "title title title"
+        "thumb thumb buttons"
+        "thumb thumb buttons";
     gap: 1rem;
 }
 
-.vlTitle{
+.vlTitle {
     grid-area: title;
+    font-weight: 500;
 }
 
-.vlThumb{
-    /* height: 7rem; */
+.vlThumb {
     border-radius: 8px;
     grid-area: thumb;
     max-width: 45vw;
-    /* justify-self: stretch; */
 }
 
-.vlEdit{
-    grid-area: buttons1;
+.buttonWrap {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    grid-area: buttons;
+    height: 100%;
 }
-
-.vlWatch{
-    grid-area: buttons2;
-}
-

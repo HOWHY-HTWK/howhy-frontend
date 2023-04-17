@@ -34,12 +34,13 @@
 .timecode{
     background-color: gray;
     color: white;
-    padding: 0 0.5rem;
+    padding: 0 0.4rem;
     border-radius: 0.3rem;
     position: absolute;
     transform: translate(0 , 2rem);
     visibility: hidden;
-    z-index: 1;
+    z-index: 100;
+    white-space: nowrap;
 }
 
 .questionDot:hover .timecode{

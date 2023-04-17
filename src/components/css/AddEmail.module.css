@@ -6,8 +6,8 @@
     flex-flow: column nowrap;
     gap: 0.5rem;
     /* align-items: center; */
-    align-content: stretch;
-    justify-content: stretch;
+    align-content: left;
+    justify-content: left;
 }
 
 .title{
@@ -17,6 +17,11 @@
 
 .email{
     position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
 }
 
 .delete{
@@ -24,6 +29,6 @@
     border-radius: 0.5rem;
     border: none;
     background-color: rgba(255, 0, 0, 0.757);
-    position: absolute;
+    /* position: absolute; */
     right: 0;
 }

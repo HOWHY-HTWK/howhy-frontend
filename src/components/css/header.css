@@ -16,7 +16,7 @@
     height: 2.5rem;
 }
 
-.home{
+.home {
     position: relative;
     padding: 0.5rem 0;
     padding-top: 1.5rem;
@@ -28,13 +28,12 @@
 
 }
 
-.imgLogo{
+.imgLogo {
     width: 90%;
-    
+
 }
 
 .user {
-    color: white;
     cursor: pointer;
     padding: 0 0.5rem;
     text-align: center;
@@ -42,13 +41,27 @@
     justify-content: center;
     align-items: center;
 }
-
-.user:hover, .home:hover {
+.name{
+    color: white;
+}
+.user:hover,
+.home:hover {
     background-color: rgba(0, 0, 0, 0.619);
 }
 
+
 .dropDownWrapper {
     position: absolute;
-    margin-top: 3.5rem;
+    padding-top: 3.5rem;
     right: 1rem;
+    visibility: hidden;
+    transform: translate(0rem, 3rem);
+}
+
+.user:hover .dropDownWrapper {
+    visibility: visible;
+}
+
+.visible {
+    visibility: visible;
 }
