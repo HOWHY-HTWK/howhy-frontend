@@ -72,27 +72,15 @@
 
 }
 
-.btn {
-    cursor: pointer;
-    text-align: center;
-    border-radius: 0.8rem;
-    border: 1px solid black;
-}
-
 .buttonWrapper{
     margin-top: 2rem;
     display: flex;
     justify-content: center;
     gap: 1rem;
-    /* justify-content: space-around; */
 }
 
 .saveQuestion {
     background-color: lightgreen;
-    padding: 0.5rem;
-    width: -moz-fit-content;
-    width: fit-content;
-
 }
 
 .cancel{

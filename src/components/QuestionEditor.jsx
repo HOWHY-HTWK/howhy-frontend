@@ -35,8 +35,8 @@ export default function QuestionEditor({ saveNewQuestion, saveEditedQuestion, du
       </div>
       <MdAdd className={[styles.addAnswer].join(' ')}  onClick={addAnswer}></MdAdd>
       <div className={[styles.buttonWrapper].join(' ')} >
-        <div className={[styles.btn, styles.saveQuestion, styles.cancel].join(' ')}  onClick={cancelAndReset}>Abbrechen</div>
-        <div className={[styles.btn, styles.saveQuestion].join(' ')}  onClick={saveQuestionAndReset}>Frage speichern</div>
+        <div className={['button', styles.saveQuestion, styles.cancel].join(' ')}  onClick={cancelAndReset}>Abbrechen</div>
+        <div className={['button', styles.saveQuestion].join(' ')}  onClick={saveQuestionAndReset}>Frage speichern</div>
       </div>
     </div>
   )

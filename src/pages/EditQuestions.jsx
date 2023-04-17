@@ -70,6 +70,16 @@ export default function EditQuestions() {
     }
   }
 
+  function displayQuestionEditor() {
+    if (editedQuestion == null) {
+      return null
+    } else if (editedQuestion == 'multipleChoice') {
+      return <QuestionEditor saveNewQuestion={saveNewQuestion} saveEditedQuestion={saveEditedQuestion} duration={duration.current} time={time.current} existingQuestion={null}></QuestionEditor>
+    } else if (typeof editedQuestion == 'object') {
+      return <QuestionEditor saveNewQuestion={saveNewQuestion} saveEditedQuestion={saveEditedQuestion} duration={duration.current} time={time.current} existingQuestion={editedQuestion} ></QuestionEditor>
+    }
+  }
+
   function saveEditedQuestion(question) {
     var newVideoData = videoData;
     let questionIndex = videoData.data.findIndex(element => (element.id == question.id));
@@ -109,16 +119,6 @@ export default function EditQuestions() {
           // <Navigate to={'/login'}></Navigate>
         }
       })
-  }
-
-  function displayQuestionEditor() {
-    if (editedQuestion == null) {
-      return null
-    } else if (editedQuestion == 'multipleChoice') {
-      return <QuestionEditor saveNewQuestion={saveNewQuestion} saveEditedQuestion={saveEditedQuestion} duration={duration.current} time={time.current} existingQuestion={null}></QuestionEditor>
-    } else if (typeof editedQuestion == 'object') {
-      return <QuestionEditor saveNewQuestion={saveNewQuestion} saveEditedQuestion={saveEditedQuestion} duration={duration.current} time={time.current} existingQuestion={editedQuestion} ></QuestionEditor>
-    }
   }
 
   function refreshCurrentTime() {
