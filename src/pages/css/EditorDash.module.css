@@ -1,4 +1,4 @@
-.EDWrap {
+.wrap {
     display: flex;
     /* height: 100vh; */
     width: 100vw;
@@ -7,11 +7,6 @@
     align-content: center;
     justify-content: center;
     gap: 1rem;
-}
-
-.listWrap{
-    display: flex;
-    flex-direction: column;
 }
 
 .addVideo{

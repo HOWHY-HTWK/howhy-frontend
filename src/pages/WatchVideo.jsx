@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import axiosClient from '../../axios-client'
-import './css/watchVideo.css'
+import styles from './css/WatchVideo.module.css'
 import Question from '../components/Question'
 import QuestionsTimeline from '../components/QuestionsTimeline'
 import * as utils from '../utils.js'
@@ -25,9 +25,9 @@ function WatchVideo() {
   }, [videoData])
   
   return (
-    <div id="wrapper">
+    <div className={[styles.wrapper].join(' ')} >
       <Score newscore={score}></Score>
-      <iframe ref={iframe} id="iframe" src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe`}></iframe>
+      <iframe ref={iframe} className={[styles.iframe].join(' ')}  src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe`}></iframe>
       {videoData && duration != null ? (<QuestionsTimeline id="questionsTimeline" videoData={videoData} duration={duration} jumpToTime={(time) => utils.jumpToTime(iframe, time)}></QuestionsTimeline>) : null}
       {displayQuestion()}
     </div>

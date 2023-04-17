@@ -12,7 +12,6 @@ import EditQuestions from './pages/EditQuestions';
 import LoggedIn from './pages/LoggedIn';
 import LogIn from './components/LogIn';
 import { ContextProvider } from './contexts/ContextProvider';
-import VideoList from './pages/ChannelVideoList';
 import Dashboard from './pages/Dashboard';
 import EditorDash from './pages/EditorDash';
 import WatchVideo from './pages/WatchVideo';

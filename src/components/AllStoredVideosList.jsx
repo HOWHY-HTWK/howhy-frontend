@@ -2,35 +2,19 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import axiosClient from '../../axios-client';
+import styles from './css/VideoList.module.css'
+import EditorVideoList from './EditorVideoList.jsx';
 
 export default function AllStoredVideosList() {
-  const [videoList, setvideoList] = useState([]);
+  const [videoList, setvideoList] = useState(null);
 
-  const videos = videoList ? videoList.map(video => getListElement(video)) : null;
-  
   useEffect(() => {
     getVideos()
   }, [])
 
   return (
-    <div className='videoListBody'>
-      <h2>Alle Videos für die Daten gespeichert sind: </h2>
-      {videoList ? <div className='videoListWrapper'>{videos}</div> : null}
-    </div>
+    videoList ? <EditorVideoList videoList={videoList}></EditorVideoList>: null
   )
-
-  function getListElement(video) {
-    return (
-      <div className="listElement videoInList" key={video.oid}>
-        <div className='vlTitle'>{video.title}</div>
-        <img className='vlThumb' src={video.thumb}></img>
-        <div className='buttonWrap'>
-          <Link className='button vlEdit' to={`/editor/edit/?id=${video.oid}`}>Bearbeiten</Link>
-          <Link className='button vlWatch' target="_blank" to={`/watch?id=${video.oid}`}>Ansehen</Link>
-        </div>
-      </div>
-    )
-  }
 
   function getVideos() {
     axiosClient.get('/api/videoDatas/list/')
@@ -42,21 +26,19 @@ export default function AllStoredVideosList() {
 
   async function makeVideoList(videoIds) {
     let videoDatas = []
-    for(let videoId of videoIds){
-
+    for (let videoId of videoIds) {
       videoDatas.push(await getVideoDataFromMediaserver(videoId))
       // let videoData = await getVideoDataFromMediaserver(videoId)
-    // setvideoList([...videoDatas], videoData)
+      // setvideoList([...videoDatas], videoData)
 
     }
     setvideoList(videoDatas)
-
   }
 
   async function getVideoDataFromMediaserver(videoId) {
     return axios.get('https://mediaserver.htwk-leipzig.de/api/v2/medias/get/', { params: { oid: videoId } })
       .then(function (response) {
-           return response.data.info
+        return response.data.info
       })
   }
 }

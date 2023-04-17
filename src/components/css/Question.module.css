@@ -25,7 +25,7 @@
     cursor: default;
 }
 
-#answersWrapper {
+.answersWrapper {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
@@ -35,11 +35,11 @@
     color: white;
 }
 
-#answerbuttonWrapper {
+.answerButtonWrapper {
     width: 100%;
 }
 
-#answerbutton {
+.answerButton {
     margin-top: 20px;
     float: right;
     cursor: pointer;

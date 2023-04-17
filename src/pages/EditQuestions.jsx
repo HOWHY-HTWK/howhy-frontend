@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect, useRef } from 'react'
 import QuestionEditor from '../components/QuestionEditor'
 import axiosClient from '../../axios-client.jsx'
-import './editQuestions.css'
+import styles from './css/EditQuestions.module.css'
 import QuestionList from '../components/QuestionList'
 import { Navigate } from 'react-router-dom'
 import { useStateContext } from '../contexts/ContextProvider'
@@ -28,9 +28,9 @@ export default function EditQuestions() {
   refreshCurrentTime()
 
   return (
-    <div id="wrapper">
+    <div className={[styles.wrapper].join(' ')} >
       <div>{videoId}</div>
-      <iframe ref={iframe} id="iframe" src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe/player/`} allowFullScreen={false} ></iframe>
+      <iframe ref={iframe} className={[styles.iframe].join(' ')}  src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe/player/`} allowFullScreen={false} ></iframe>
       {displayAddQuestion()}
       {displayQuestionEditor()}
       {(editedQuestion == null) && (videoData != null) ? <QuestionList videoData={videoData} editQuestion={seteditedQuestion} deleteQuestion={deleteQuestion}></QuestionList> : null}
@@ -59,7 +59,7 @@ export default function EditQuestions() {
   function displayAddQuestion() {
     if (editedQuestion == null) {
       return (
-        <div className='add_wrapper'>
+        <div className={[styles.addWrapper].join(' ')} >
           <select className="selector" value={questionType} onChange={e => setquestionType(e.target.value)}  >
             <option value="multipleChoice">Multiple Choice</option>
             <option value="singleChoice">Single Choice</option>

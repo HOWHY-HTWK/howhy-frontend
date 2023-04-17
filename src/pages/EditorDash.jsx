@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react'
-import ChannelVideoList from './ChannelVideoList'
+import ChannelVideoList from '../components/ChannelVideoList'
 import AllStoredVideosList from '../components/AllStoredVideosList'
 import AddVideo from '../components/AddVideo'
-import './css/editorDash.css'
+import styles from './css/EditorDash.module.css'
 
 export default function EditorDash() {
   useEffect(() => {
     document.title = "Dashboard";
 }, [])
   return (
-    <div className='EDWrap'>
+    <div className={[styles.wrap].join(' ')} >
         <AllStoredVideosList />
         <ChannelVideoList/>
-      <div className='addVideo'><AddVideo/></div>
+      <div className={[styles.addVideo].join(' ')} ><AddVideo/></div>
 
     </div >
   )

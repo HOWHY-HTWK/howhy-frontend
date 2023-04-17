@@ -1,7 +1,7 @@
 import React, { createRef, useEffect, useState } from 'react'
 import axiosClient from '../../axios-client.jsx'
 import { useStateContext } from '../contexts/ContextProvider.jsx';
-import './css/login.css'
+import styles from './css/Login.module.css'
 import SignUp from './SignUp.jsx';
 
 export default function LogIn() {
@@ -44,20 +44,17 @@ export default function LogIn() {
 
   function getLogin() {
     return (
-      <div id="formwrapper">
-        <form method="post" className="vertical" onSubmit={handleLogin}>
+      <div className={[styles.formwrapper].join(' ')} >
+        <form method="post" className={[styles.vertical].join(' ')}  onSubmit={handleLogin}>
           <span>Log In</span>
           <label><input ref={emailRef} type="email" name="email" placeholder='E-mail' autoComplete='username' /></label>
           <label><input ref={passwordRef} type="password" name="password" placeholder='Passwort' autoComplete='current-password' /></label>
           {/* <label>Eingeloggt Bleiben<input type='checkbox' name='remember'></input></label> */}
-          <button className="button" type="submit">LogIn</button>
+          <button className={['button'].join(' ')}  type="submit">LogIn</button>
         </form>
-        <div className='register' onClick={toggleSignUp}> Registrieren</div>
+        <div className={[styles.register].join(' ')}  onClick={toggleSignUp}> Registrieren</div>
       </div>
     )
   }
 
-  function getRegister() {
-
-  }
 }

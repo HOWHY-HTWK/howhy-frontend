@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import './css/score.css'
+import styles from './css/Score.module.css'
 import { ReactComponent as Logo } from '../assets/howhy_solid.svg'
 
 
@@ -12,9 +12,9 @@ export default function Score({newscore}) {
     }, [newscore])
     
     return (
-        <div className='scoreWrap'>
-            <Logo className='scoreLogo'></Logo>
-            <div className='scoreCounter'>{score}</div>
+        <div className={[styles.scoreWrap].join(' ')} >
+            <Logo className={[styles.scoreLogo].join(' ')} ></Logo>
+            <div className={[styles.scoreCounter].join(' ')} >{score}</div>
         </div>
     )
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import './css/questions.css'
+import styles from './css/Question.module.css'
 import axiosClient from '../../axios-client'
 
 export default function Question({ questionData, setQuestionData, answeredCorrectly, videoId }) {
@@ -7,7 +7,7 @@ export default function Question({ questionData, setQuestionData, answeredCorrec
 
   const [selectedAnswers, setselectedAnswers] = useState(selected);
   const [answerCorrect, setAnswerCorrect] = useState(null);
-  const answers = questionData.answers.map((answer, index) => <div key={answer.id} className={`questionElement answer ${selectedAnswers[index] ? "whiteborder" : ""}`} onClick={() => selectAnswer(index)}>{answer.text}</div>);
+  const answers = questionData.answers.map((answer, index) => <div key={answer.id} className={[styles.questionElement, styles.answer, (selectedAnswers[index] ? styles.whiteborder : null)].join(' ')} onClick={() => selectAnswer(index)}>{answer.text}</div>);
 
   function selectAnswer(index) {
     var arr = selectedAnswers.slice(0);
@@ -44,17 +44,17 @@ export default function Question({ questionData, setQuestionData, answeredCorrec
 
     <div className={['wrap'].join()} >
       {answerCorrect != null ?
-        <div className='question center'>
-          <div className="feedback">{answerCorrect ? "Richtig!" : "Leider Falsch"}</div>
+        <div className={[styles.question, 'center'].join(' ')} >
+          <div className={[styles.feedback].join(' ')} >{answerCorrect ? "Richtig!" : "Leider Falsch"}</div>
         </div>
         :
-        <div className='question'>
-          <div className="questionElement questionText"> {questionData.question}</div>
-          <div id="answersWrapper">
+        <div className={[styles.question].join(' ')} >
+          <div className={[styles.questionElement, styles.questionText].join(' ')} > {questionData.question}</div>
+          <div className={[styles.answersWrapper].join(' ')} >
             {answers}
           </div>
-          <div id="answerbuttonWrapper center">
-            <div className="questionElement button" id="answerbutton" onClick={calcAnswerIndexes}>Antwort abschicken</div>
+          <div className={[styles.answerButtonWrapper, 'center'].join(' ')}>
+            <div className={[styles.questionElement, styles.answerButton, 'button'].join(' ')}  onClick={calcAnswerIndexes}>Antwort abschicken</div>
           </div>
         </div>}
     </div>

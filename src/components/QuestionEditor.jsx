@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import './css/questions.css'
-import './css/questionEditor.css'
+import questionStyles from './css/Question.module.css'
+import styles from './css/QuestionEditor.module.css'
 import { MdClose, MdAdd } from "react-icons/md"
 import TimeCodePicker from './TimeCodePicker'
 import TextareaAutosize from 'react-textarea-autosize';
@@ -25,18 +25,18 @@ export default function QuestionEditor({ saveNewQuestion, saveEditedQuestion, du
   }, [question]);
 
   return (
-    <div className='question strech'>
+    <div className={[questionStyles.question, styles.stretch].join(' ')} >
       <TimeCodePicker duration={duration} time={question.timecode} setTimeCode={setNewTimecode}></TimeCodePicker>
-      <div className="questionElement questionText">
-        <TextareaAutosize className="input" placeholder="Frage hier eingeben" value={question.question} onInput={e => setQuestion({ ...question, question: e.target.value })}></TextareaAutosize>
+      <div className={[questionStyles.questionElement, questionStyles.questionText].join(' ')} >
+        <TextareaAutosize className={[styles.input].join(' ')}  placeholder="Frage hier eingeben" value={question.question} onInput={e => setQuestion({ ...question, question: e.target.value })}></TextareaAutosize>
       </div>
-      <div id="answersWrapper">
+      <div className={[questionStyles.answersWrapper].join(' ')} >
         {getAnswers()}
       </div>
-      <MdAdd className='addAnswer' onClick={addAnswer}></MdAdd>
-      <div className='buttonWrapper'>
-        <div className="btn saveQuestion cancel" onClick={cancelAndReset}>Abbrechen</div>
-        <div className="btn saveQuestion " onClick={saveQuestionAndReset}>Frage speichern</div>
+      <MdAdd className={[styles.addAnswer].join(' ')}  onClick={addAnswer}></MdAdd>
+      <div className={[styles.buttonWrapper].join(' ')} >
+        <div className={[styles.btn, styles.saveQuestion, styles.cancel].join(' ')}  onClick={cancelAndReset}>Abbrechen</div>
+        <div className={[styles.btn, styles.saveQuestion].join(' ')}  onClick={saveQuestionAndReset}>Frage speichern</div>
       </div>
     </div>
   )
@@ -48,17 +48,17 @@ export default function QuestionEditor({ saveNewQuestion, saveEditedQuestion, du
   function getAnswers() {
     return (
       question.answers.map((answer) =>
-        <div className="questionElement answer" key={answer.id}>
+        <div className={[questionStyles.questionElement, questionStyles.answer].join(' ')}  key={answer.id}>
           {question.answers.length > 1 ?
-            <div className="circle delete" onClick={() => deleteAnswer(answer.id)}>
+            <div className={[styles.circle, styles.delete].join(' ')}  onClick={() => deleteAnswer(answer.id)}>
               <MdClose></MdClose>
             </div>
             : null}
           {question.correctAnswers.find(e => e.id == answer.id).correct ?
-            <div className='circle answerCorrect correct' onClick={() => toggleCorrect(answer.id)}>richtig</div>
-            : <div className='circle answerCorrect' onClick={() => toggleCorrect(answer.id)}>falsch</div>}
+            <div className={[styles.circle, styles.answerCorrect, styles.correct].join(' ')}  onClick={() => toggleCorrect(answer.id)}>richtig</div>
+            : <div className={[styles.circle, styles.answerCorrect].join(' ')}  onClick={() => toggleCorrect(answer.id)}>falsch</div>}
 
-          <TextareaAutosize className="input questionElement change answer" placeholder="Antwort hier eingeben" value={answer.text} onInput={e => handleAnswerChange(answer.id, e.target.value)}></TextareaAutosize>
+          <TextareaAutosize className={[styles.input, questionStyles.questionElement, styles.change, questionStyles.answer].join(' ')}  placeholder="Antwort hier eingeben" value={answer.text} onInput={e => handleAnswerChange(answer.id, e.target.value)}></TextareaAutosize>
         </div>
       ));
   }
