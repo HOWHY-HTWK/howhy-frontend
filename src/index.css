@@ -11,6 +11,10 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   min-height: 100vh;
+
+  --background-color:#242424;
+  --item-color: #3f3f3f;
+  --color: white;
 }
 
 a {
@@ -62,12 +66,8 @@ h1 {
   border-radius: 1rem;
   padding: 0 0.4rem;
   padding: 1rem;
-  background-color: #323232;
+  background-color: var(--item-color);
   border-radius: 1rem;
-}
-
-.itemBackground{
-  background-color: #323232;
 }
 
 .center {
@@ -93,6 +93,10 @@ h1 {
   :root {
     color: #213547;
     background-color: #ffffff;
+
+    --background-color:white;
+    --item-color: rgb(239, 239, 239);
+    --color: #213547; 
   }
   a:hover {
     color: #747bff;
@@ -103,11 +107,6 @@ h1 {
   .listElement{
     /* background-color: rgba(227, 238, 252, 0.612); */
     background-color: rgb(239, 239, 239);
-
-  }
-
-  .itemBackground{
-    background-color: white;
   }
 }
 

@@ -8,9 +8,8 @@
 .listItem {
     margin: 0;
     font-size: 0.9rem;
-    /* border-bottom: 1px solid #e1dfdf;
-    border-top: 1px solid #e1dfdf; */
-    background-color: rgb(244, 243, 243);
+    color: var(--color);
+    background-color: var(--item-color);
     border-radius: 0.5rem;
     overflow: hidden;
     padding: 0.0rem 0.0rem;
