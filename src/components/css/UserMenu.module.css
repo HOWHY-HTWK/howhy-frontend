@@ -1,0 +1,24 @@
+.wrap {
+    /* width: 100%;
+    height: 100%; */
+    height: 100%;
+    width: 2rem;
+}
+
+.icon {
+    color: white;
+    height: 100%;
+    width: 100%;
+}
+
+.logIn {
+    height: 1rem;
+}
+
+.menu {
+    background-color: white;
+    position: absolute;
+    top: 4rem;
+    right: 1rem;
+    padding: 1rem;
+}

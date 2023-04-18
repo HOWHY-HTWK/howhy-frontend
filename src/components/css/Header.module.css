@@ -1,15 +1,16 @@
 .background {
-    background-color: rgb(184, 56, 126);
-    height: 3rem;
-    /* margin-bottom: 1rem; */
+    box-sizing: border-box;
     position: fixed;
     top: 0;
+    height: 3rem;
     width: 100%;
     padding: 0 1rem;
+    background-color: rgb(184, 56, 126);
+    /* margin: 0 auto; */
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    align-items: stretch;
+    align-items: center;
     gap: 1rem;
     overflow: visible;
     z-index: 100;

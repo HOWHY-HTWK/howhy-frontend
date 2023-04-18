@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 export default function DashList() {
   return (
 
-    <div className={[styles.wrap].join(' ')} >
+    <div className={[styles.wrap, 'center'].join(' ')} >
       <AllStoredVideosList title={<div></div>} getListItem={getListItem}></AllStoredVideosList>
     </div>
   )

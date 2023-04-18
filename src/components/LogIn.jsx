@@ -3,9 +3,12 @@ import axiosClient from '../../axios-client.jsx'
 import { useStateContext } from '../contexts/ContextProvider.jsx';
 import styles from './css/Login.module.css'
 import SignUp from './SignUp.jsx';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function LogIn() {
-  const { user, authenticated, setUser, setAuthenticated: setLoggedIn } = useStateContext()
+  const location = useLocation();
+  const { user, authenticated, setUser, setAuthenticated } = useStateContext()
+  const navigate = useNavigate()
 
   const emailRef = createRef()
   const passwordRef = createRef()
@@ -24,7 +27,8 @@ export default function LogIn() {
           password: password
         }).then(response => {
           console.log(response)
-          setLoggedIn(true)
+          setAuthenticated(true)
+          navigate(location.state.back)
           setUser(response.data)
         }).catch((error) => {
           alert(error.response.data.message)

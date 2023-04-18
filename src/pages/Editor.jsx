@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Navigate, Outlet } from 'react-router-dom'
+import { Navigate, Outlet, useNavigate } from 'react-router-dom'
 import LogIn from '../components/LogIn'
 import { useStateContext } from '../contexts/ContextProvider'
 import Header from '../components/Header'
@@ -10,6 +10,7 @@ import DropDown from '../components/DropDown'
 
 export default function Editor() {
     const { user, authenticated, setUser, setAuthenticated } = useStateContext()
+    const navigate = useNavigate()
 
     axiosClient.interceptors.response.use(
         res => {
@@ -34,16 +35,25 @@ export default function Editor() {
     }, [])
 
     if (user) {
-        return (
-            <div className={styles.wrap}>
-                <Header editorMode={true}>
-                    <DropDown></DropDown>
-                </Header>
-                <Outlet />
-                <Footer></Footer>
-            </div>
+        if (user.role == 'editor' || user.role == 'admin') {
+            return (
+                <div className={styles.wrap}>
+                    <Header editorMode={true}>
+                        <DropDown></DropDown>
+                    </Header>
+                    <Outlet />
+                    <Footer></Footer>
+                </div>
+            )
+        } else {
+            return (
+                <Navigate to='/login' state={{back: '/editor'}}></Navigate>
+            )
+        }
+    }
+    else {
+        return(
+            <Navigate to='/login' state={{back: '/editor'}}></Navigate>
         )
-    } else {
-        return <LogIn></LogIn>
     }
 }
