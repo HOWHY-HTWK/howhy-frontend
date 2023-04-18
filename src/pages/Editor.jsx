@@ -6,6 +6,7 @@ import Header from '../components/Header'
 import axiosClient from '../../axios-client'
 import Footer from '../components/Footer'
 import styles from './css/Editor.module.css'
+import DropDown from '../components/DropDown'
 
 export default function Editor() {
     const { user, authenticated, setUser, setAuthenticated } = useStateContext()
@@ -35,7 +36,9 @@ export default function Editor() {
     if (user) {
         return (
             <div className={styles.wrap}>
-                <Header editorMode={true}></Header>
+                <Header editorMode={true}>
+                    <DropDown></DropDown>
+                </Header>
                 <Outlet />
                 <Footer></Footer>
             </div>

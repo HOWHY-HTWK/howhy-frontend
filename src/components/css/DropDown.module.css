@@ -15,3 +15,39 @@
 .menuListItem:hover {
     background-color: rgba(128, 128, 128, 0.541);
 }
+
+.user {
+    cursor: pointer;
+    padding: 0 1rem;
+    padding-right: 2rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.name{
+    color: white;
+}
+.user:hover,
+.home:hover {
+    background-color: rgba(0, 0, 0, 0.619);
+}
+
+
+.dropDownWrapper {
+    position: absolute;
+    padding-top: 3.5rem;
+    right: 2rem;
+    visibility: hidden;
+    transform: translate(0rem, 3rem);
+}
+
+.user:hover .dropDownWrapper {
+    visibility: visible;
+}
+
+.visible {
+    visibility: visible;
+}
