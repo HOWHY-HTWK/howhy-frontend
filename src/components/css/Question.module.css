@@ -43,6 +43,7 @@
     margin-top: 20px;
     float: right;
     cursor: pointer;
+    user-select: none;
 }
 
 .whiteborder {
