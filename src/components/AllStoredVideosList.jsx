@@ -28,11 +28,10 @@ export default function AllStoredVideosList({title, getListItem }) {
     let videoDatas = []
     for (let videoId of videoIds) {
       videoDatas.push(await getVideoDataFromMediaserver(videoId))
-      // let videoData = await getVideoDataFromMediaserver(videoId)
-      // setvideoList([...videoDatas], videoData)
+      let videoData = await getVideoDataFromMediaserver(videoId)
+      setvideoList([...videoDatas], videoData)
 
     }
-    setvideoList(videoDatas)
   }
 
   async function getVideoDataFromMediaserver(videoId) {
