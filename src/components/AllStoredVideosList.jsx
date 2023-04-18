@@ -17,7 +17,7 @@ export default function AllStoredVideosList({title, getListItem }) {
   )
 
   function getVideos() {
-    axiosClient.get('/api/videoDatas/all/')
+    axiosClient.get('/api/videoDatas/list/')
       .then(function (response) {
         // handle success
         makeVideoList(response.data)
