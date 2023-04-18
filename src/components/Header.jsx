@@ -10,7 +10,7 @@ import { MdArrowDropDown } from "react-icons/md";
 import styles from './css/Header.module.css'
 
 
-export default function Header() {
+export default function Header({editorMode}) {
   const { user, authenticated, setAuthenticated } = useStateContext()
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -31,12 +31,11 @@ export default function Header() {
 
   return (
     <div>
-      <div className={[styles.background].join(' ')}  >
-        <Link to={'/editor'} className={[styles.home].join(' ')} ><img className={[styles.imgLogo].join(' ')}  src={logoBig}></img></Link>
+      <div className={[styles.background, editorMode ? styles.editorBackground : ''].join(' ')}  >
+        <Link to={editorMode ? '/editor' : '/'} className={[styles.home].join(' ')} ><img className={[styles.imgLogo].join(' ')}  src={logoBig}></img></Link>
         <div className={[styles.user].join(' ')}  ref={dropdownRef} onClick={handleUserClick}>
           <div className={[styles.name].join(' ')} >Hallo {user.name} <MdArrowDropDown></MdArrowDropDown></div>
-          {isOpen ? <div className={[styles.dropDownWrapper, styles.visible].join(' ')}   ><DropDown></DropDown></div> :
-            <div className={[styles.dropDownWrapper].join(' ')}   ><DropDown></DropDown></div>}
+          <div className={[styles.dropDownWrapper,(isOpen ? styles.visible : null)].join(' ')}><DropDown></DropDown></div>
         </div>
       </div>
     </div>

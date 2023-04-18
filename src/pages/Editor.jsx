@@ -5,9 +5,9 @@ import { useStateContext } from '../contexts/ContextProvider'
 import Header from '../components/Header'
 import axiosClient from '../../axios-client'
 import Footer from '../components/Footer'
-import styles from './css/LoggedIn.module.css'
+import styles from './css/Editor.module.css'
 
-export default function LoggedIn() {
+export default function Editor() {
     const { user, authenticated, setUser, setAuthenticated } = useStateContext()
 
     axiosClient.interceptors.response.use(
@@ -35,7 +35,7 @@ export default function LoggedIn() {
     if (user) {
         return (
             <div className={styles.wrap}>
-                <Header></Header>
+                <Header editorMode={true}></Header>
                 <Outlet />
                 <Footer></Footer>
             </div>

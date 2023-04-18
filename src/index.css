@@ -99,10 +99,19 @@ h1 {
     background-color: #f9f9f9;
   }
   .listElement{
-    background-color: rgba(227, 238, 252, 0.612);
+    /* background-color: rgba(227, 238, 252, 0.612); */
+    background-color: rgb(239, 239, 239);
+
   }
 
   .itemBackground{
     background-color: white;
   }
+}
+
+.pageWrap{
+  min-height: calc(100vh - 2rem);
+  position: relative;
+  padding-bottom: 1rem;
+  padding-top: 3rem;
 }

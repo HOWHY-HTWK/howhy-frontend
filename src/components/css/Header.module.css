@@ -1,7 +1,10 @@
 .background {
-    background-color: rgba(39, 75, 177, .8);
+    background-color: rgb(184, 56, 126);
     height: 3rem;
     /* margin-bottom: 1rem; */
+    position: fixed;
+    top: 0;
+    width: 100%;
     padding: 0 1rem;
     display: flex;
     flex-flow: row nowrap;
@@ -9,6 +12,11 @@
     align-items: stretch;
     gap: 1rem;
     overflow: visible;
+    z-index: 100;
+}
+
+.editorBackground{
+    background-color: rgba(88,116,194,255);
 }
 
 #logo {
@@ -23,9 +31,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: red; */
     width: 8rem;
-
 }
 
 .imgLogo {
@@ -34,12 +40,15 @@
 
 .user {
     cursor: pointer;
-    padding: 0 0.5rem;
+    padding: 0 1rem;
+    padding-right: 2rem;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
+
 .name{
     color: white;
 }
@@ -52,7 +61,7 @@
 .dropDownWrapper {
     position: absolute;
     padding-top: 3.5rem;
-    right: 1rem;
+    right: 2rem;
     visibility: hidden;
     transform: translate(0rem, 3rem);
 }

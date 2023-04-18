@@ -1,0 +1,38 @@
+.wrap {
+    padding: 0.2rem 0rem;
+    padding-right: 0.1rem;
+    cursor: pointer;
+}
+
+.listItem {
+    margin: 0;
+    font-size: 0.9rem;
+    /* border-bottom: 1px solid #e1dfdf;
+    border-top: 1px solid #e1dfdf; */
+    background-color: rgb(244, 243, 243);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    padding: 0.0rem 0.0rem;
+    margin: 0.2rem;
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: 40vw 1fr 1fr;
+    grid-template-areas:
+        "thumb title title"
+        "thumb stats stats";
+}
+
+.img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* border-radius: 0.5rem; */
+    grid-area: thumb;
+}
+
+.title {
+    padding: 0.2rem 0.5rem;
+    font-weight: 500;
+    grid-area: title;   
+}
+

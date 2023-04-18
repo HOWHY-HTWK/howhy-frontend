@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import AddVideo from './components/AddVideo'
 import EditQuestions from './pages/EditQuestions';
-import LoggedIn from './pages/LoggedIn';
+import Editor from './pages/Editor';
 import LogIn from './components/LogIn';
 import { ContextProvider } from './contexts/ContextProvider';
 import Dashboard from './pages/Dashboard';
@@ -20,20 +20,12 @@ import Settings from './pages/Settings';
 const router = createBrowserRouter([
   {
     path: "/editor",
-    element: <LoggedIn />,
+    element: <Editor />,
     children: [
       {
         index: true,
-        element: <Navigate to="/editor/list"/>,
-      },
-      {
-        path: "/editor/list",
         element:<EditorDash/>
-      },
-      {
-        path: "/editor/add",
-        element: <AddVideo />
-      },      
+      },  
       {
         path: "/editor/edit/*",
         element: <EditQuestions />
@@ -50,10 +42,6 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to="/list"/>
-      },
-      {
-        path: "/list",
         element: <Dashboard/>
       },
       {

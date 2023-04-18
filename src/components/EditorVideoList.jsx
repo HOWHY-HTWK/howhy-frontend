@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import styles from './css/VideoList.module.css'
 
-export default function EditorVideoList({videoList}) {
-    const videos = videoList ? videoList.map(video => getListElement(video)) : null
+export default function EditorVideoList({ title, videoList, getListItem }) {
+    const videos = videoList ? videoList.map(video => getListItem(video)) : null
 
     return (
         <div className={[styles.videoListWrapper].join(' ')} >
-            <h2>Alle Videos für die Daten gespeichert sind: </h2>
+            {title}
             {videos ? <div className={[styles.videoListBody].join(' ')} >{videos}</div> : null}
         </div>
     )

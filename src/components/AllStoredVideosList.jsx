@@ -5,7 +5,7 @@ import axiosClient from '../../axios-client';
 import styles from './css/VideoList.module.css'
 import EditorVideoList from './EditorVideoList.jsx';
 
-export default function AllStoredVideosList() {
+export default function AllStoredVideosList({title, getListItem }) {
   const [videoList, setvideoList] = useState(null);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ export default function AllStoredVideosList() {
   }, [])
 
   return (
-    videoList ? <EditorVideoList videoList={videoList}></EditorVideoList>: null
+    videoList ? <EditorVideoList title={title} videoList={videoList} getListItem={getListItem}></EditorVideoList>: null
   )
 
   function getVideos() {

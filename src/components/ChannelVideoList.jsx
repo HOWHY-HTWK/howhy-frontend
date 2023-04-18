@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import EditorVideoList from './EditorVideoList';
 
-export default function ChannelVideoList() {
+export default function ChannelVideoList({title, getListItem}) {
     const [videoList, setvideoList] = useState(null);
 
     useEffect(() => {
@@ -10,7 +10,7 @@ export default function ChannelVideoList() {
     }, [])
 
     return (
-        <EditorVideoList videoList={videoList}></EditorVideoList>
+        <EditorVideoList title={title} videoList={videoList} getListItem={getListItem}></EditorVideoList>
     )
 
     function getHowhyChannelVideos() {
