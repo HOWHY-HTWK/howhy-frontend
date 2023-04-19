@@ -3,54 +3,95 @@
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
-  position: relative;
+  padding-bottom: 1rem;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto auto auto;
+  grid-template-areas:
+    "score"
+    "video"
+    "timeline"
+    "question";
 }
 
-.fullScreenWrapper{
-  box-sizing: border-box;
-  position: relative;
-  width: 100%;
-  /* height: 15rem; */
-  aspect-ratio: 16/9;
-  /* background-color: rgba(15, 0, 128, 0.206); */
-  z-index: 100;
-}
-
-.questionWrapper{
-  position: absolute;
+.wrapperFS{
+  position: fixed;
+  max-width: none;
+  width: 100vw;
+  height: 100vh;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.535);
+  background-color: red;
+  z-index: 100;
+}
+
+.score {
+  grid-area: score;
+}
+
+.scoreFS{
+  grid-area: score;
+}
+
+.videoWrapper {
+  box-sizing: border-box;
+  position: relative;
+  box-sizing: border-box;
+  aspect-ratio: 16/9;
+  margin: 0;
+  width: 100%;
+  grid-area: video;
+}
+
+.videoWrapperFS{
+  aspect-ratio: auto;
+  /* grid-area: score / video / timeline / question; */
+  grid-row-start: score;
+  grid-row-end: question;
+
 }
 
 .iframe {
-  box-sizing: border-box;
-  margin: 0;
-  z-index: 0;
-  width: 100%;
-  /* height: 15rem; */
-  aspect-ratio: 16/9;
-}
-
-.fullWidthAndHeight{
+  position: relative;
   width: 100%;
   height: 100%;
-  aspect-ratio: none;
+  margin-bottom: -10px;
 }
 
-.fsButton{
+.iframeFS {
+  height: 100%;
+}
+
+.fsButton {
+  z-index: 99;
   position: absolute;
   background-color: rgba(255, 0, 0, 0.608);
-  width: 13%;
-  height: 12%;
+  height: 36px;
+  width: 16%;
   bottom: 0;
   right: 0;
 }
 
-.space{
-  height: 0.5rem;
+.timeline {
+  margin-top: 1rem;
+  grid-area: timeline;
 }
 
+.timelineFS{
+  display: none;
+}
+
+.questionWrapper {
+  padding: 0 1rem;
+  grid-area: question;
+}
+
+.questionWrapperFS{
+  background-color: rgba(0, 0, 0, 0.535);
+  grid-row-start: video;
+  grid-row-end: question;
+  overflow: scroll;
+
+}

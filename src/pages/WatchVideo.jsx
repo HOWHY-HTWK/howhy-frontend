@@ -15,41 +15,26 @@ function WatchVideo() {
   const [currentQuestionData, setCurrentQuestionData] = useState(null)
   const [duration, setDuration] = useState(null)
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [height, setHeight] = useState(0)
 
   const iframe = useRef(null);
   const fullScreenWrapper = useRef(null);
-
-  const [height, setHeight] = useState(0)
-
-  useEffect(() => {
-    if (!iframe.current) return;
-    const resizeObserver = new ResizeObserver(() => {
-      setHeight(iframe.current.clientHeight)
-    });
-    resizeObserver.observe(iframe.current);
-    return () => resizeObserver.disconnect(); // clean up 
-  }, []);
-
-  // Watch for fullscreenchange
-  useEffect(() => {
-    function onFullscreenChange() {
-      setIsFullscreen(Boolean(document.fullscreenElement));
-    }
-    document.addEventListener('fullscreenchange', onFullscreenChange);
-    return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
-  }, []);
-
 
   fetchQuestionsData();
 
   function fullscreen() {
     if (!isFullscreen) {
-      fullScreenWrapper.current.requestFullscreen();
-      screen.orientation.lock("landscape")
+      // fullScreenWrapper.current.requestFullscreen();
+      // screen.orientation.lock("landscape")
+      document.body.style.height = "100vh";
+      document.body.style.overflow = "clip";
       setHeight(iframe.current.clientHeight)
     } else {
-      document.exitFullscreen();
+      // document.exitFullscreen();
+      document.body.style.height = "unset";
+      document.body.style.overflow = "unset";
     }
+    setIsFullscreen(!isFullscreen);
   }
 
   useEffect(() => {
@@ -58,23 +43,19 @@ function WatchVideo() {
     }
   }, [videoData])
 
-
-
   return (
-    <div className={[styles.wrapper].join(' ')} >
-      <Score newscore={score}></Score>
-      <div ref={fullScreenWrapper} className={[styles.fullScreenWrapper, isFullscreen ? styles.fullWidthAndHeight : ''].join(' ')} style={{ height: height }}>
-        <iframe ref={iframe} className={[styles.iframe, isFullscreen ? styles.fullWidthAndHeight : ''].join(' ')} src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe`}></iframe>
-        {isFullscreen && (currentQuestionData != null) ? <div className={[styles.questionWrapper].join(' ')} > {displayQuestion()} </div> : null}
+    <div className={[styles.wrapper, isFullscreen ? styles.wrapperFS : ''].join(' ')} >
+      <div ref={fullScreenWrapper} className={[styles.videoWrapper, isFullscreen ? styles.videoWrapperFS : ''].join(' ')}>
+        <iframe ref={iframe} className={[styles.iframe, isFullscreen ? styles.iframeFS : ''].join(' ')} src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe`}></iframe>
         <div className={[styles.fsButton].join(' ')} onClick={fullscreen}></div>
       </div>
-      <div className={[styles.space].join(' ')} ></div>
-      {videoData && duration != null ? (<QuestionsTimeline id="questionsTimeline" videoData={videoData} duration={duration} jumpToTime={(time) => utils.jumpToTime(iframe, time)}></QuestionsTimeline>) : null}
-      {displayQuestion()}
+      <div className={[styles.score, isFullscreen ? styles.scoreFS : ''].join(' ')}>
+        <Score newscore={score}></Score>
+      </div>
+      {currentQuestionData != null ? <div className={[styles.questionWrapper, isFullscreen ? styles.questionWrapperFS : ''].join(' ')} > {displayQuestion()} </div> : null}
+      {videoData && duration != null ? (<div className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}  ><QuestionsTimeline className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')} videoData={videoData} duration={duration} jumpToTime={(time) => utils.jumpToTime(iframe, time)}></QuestionsTimeline></div>) : null}
     </div>
   )
-
-
 
   function displayQuestion() {
     if (currentQuestionData != null) {
