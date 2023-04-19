@@ -111,8 +111,10 @@ h1 {
 }
 
 .pageWrap{
-  min-height: calc(100vh - 2rem);
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100vh;
   position: relative;
-  padding-bottom: 1rem;
   padding-top: 3rem;
+  padding-bottom: 2rem;
 }

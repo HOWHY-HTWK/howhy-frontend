@@ -19,8 +19,8 @@
 
 .questionText {
     border: 3px solid rgba(216, 110, 169);
-    background-color: white;
-    color: black;
+    background-color: var(--background-color);
+    color: var(--color);
     margin-bottom: 1.5rem;
     cursor: default;
 }

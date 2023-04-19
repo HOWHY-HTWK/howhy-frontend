@@ -10,7 +10,6 @@ import DropDown from '../components/DropDown'
 
 export default function Editor() {
     const { user, authenticated, setUser, setAuthenticated } = useStateContext()
-    const navigate = useNavigate()
 
     axiosClient.interceptors.response.use(
         res => {
@@ -37,7 +36,7 @@ export default function Editor() {
     if (user) {
         if (user.role == 'editor' || user.role == 'admin') {
             return (
-                <div className={styles.wrap}>
+                <div className={['pageWrap'].join(' ')} >
                     <Header editorMode={true}>
                         <DropDown></DropDown>
                     </Header>

@@ -1,9 +1,8 @@
 .wrap{
+    box-sizing: border-box;
     width: 100%;
     min-height: calc(100vh - 2rem);
     position: relative;
     padding-top: 3rem;
-    padding-bottom: 1rem;
+    padding-bottom: 2rem;
 }
-
-
