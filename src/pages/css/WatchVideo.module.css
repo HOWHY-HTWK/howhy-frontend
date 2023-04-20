@@ -74,6 +74,7 @@
 .timeline {
   margin-top: 1rem;
   grid-area: timeline;
+  overflow: clip;
 }
 
 .timelineFS{
@@ -83,6 +84,7 @@
 .questionWrapper {
   padding: 0 1rem;
   grid-area: question;
+  overflow: hidden;
 }
 
 .questionWrapperFS{
