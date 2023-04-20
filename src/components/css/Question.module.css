@@ -3,6 +3,7 @@
     margin: 1rem;
     display: flex;
     flex-flow: column nowrap;
+    align-items: center;
     position: relative;
 }
 
@@ -29,6 +30,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
+    place-items: center;
 }
 
 .answer {

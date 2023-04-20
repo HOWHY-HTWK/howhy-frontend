@@ -52,16 +52,18 @@ function WatchVideo() {
       <div className={[styles.score, isFullscreen ? styles.scoreFS : ''].join(' ')}>
         <Score newscore={score}></Score>
       </div>
-      {currentQuestionData != null ? <div className={[styles.questionWrapper, isFullscreen ? styles.questionWrapperFS : ''].join(' ')} > {displayQuestion()} </div> : null}
+      {displayQuestion()}
       {videoData && duration != null ? (<div className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}  ><QuestionsTimeline className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')} videoData={videoData} duration={duration} jumpToTime={(time) => utils.jumpToTime(iframe, time)}></QuestionsTimeline></div>) : null}
-    </div>
+    </div >
   )
 
   function displayQuestion() {
-    if (currentQuestionData != null) {
+    if (currentQuestionData) {
       utils.pauseVideo(iframe);
       return (
-        <Question questionData={currentQuestionData} setQuestionData={setCurrentQuestionData} videoId={videoId} answeredCorrectly={answeredCorrectly}></Question>
+        <div className={[styles.questionWrapper, isFullscreen ? styles.questionWrapperFS : ''].join(' ')} >
+          <Question questionData={currentQuestionData} setQuestionData={setCurrentQuestionData} videoId={videoId} answeredCorrectly={answeredCorrectly}></Question>
+        </div>
       )
     }
     else {
