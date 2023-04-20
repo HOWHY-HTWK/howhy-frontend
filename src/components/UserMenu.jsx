@@ -5,7 +5,7 @@ import { useStateContext } from '../contexts/ContextProvider'
 import { useNavigate } from 'react-router-dom'
 
 export default function UserMenu() {
-  const { user, authenticated, setAuthenticated } = useStateContext()
+  const { user, authenticated, setUser, setAuthenticated } = useStateContext()
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
 
@@ -24,7 +24,7 @@ export default function UserMenu() {
   function getMenu() {
     return (
       <div className={[styles.menu].join(' ')} >
-        <div className={['button'].join(' ')} onClick={() => setAuthenticated(false)}>Log Out</div>
+        <div className={['button'].join(' ')} onClick={() => setUser(null)}>Log Out</div>
       </div>
     )
   }

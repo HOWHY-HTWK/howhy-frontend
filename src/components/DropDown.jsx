@@ -7,7 +7,7 @@ import { MdArrowDropDown } from "react-icons/md";
 
 
 export default function DropDown() {
-  const { user, authenticated, setAuthenticated } = useStateContext()
+  const { user, authenticated, setUser } = useStateContext()
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -49,7 +49,7 @@ export default function DropDown() {
     axiosClient.post('/logout').then(response => {
       if (response.status === 204) {
         console.log(response)
-        setAuthenticated(false);
+        setUser(false);
       }
     })
   }

@@ -17,24 +17,26 @@ export default function Editor() {
         },
         err => {
             if (err.response.status === 401) {
-                setAuthenticated(false)
+                console.log(err.response)
+                setUser(false)
             }
             throw err;
         }
     )
 
-    useEffect(() => {
-        axiosClient.get('/sanctum/csrf-cookie')
-            .then(response => {
-                axiosClient.get('api/check').then(response => {
-                    console.log(response)
-                }).catch(error => {
-                })
-            })
-    }, [])
+    // useEffect(() => {
+    //     axiosClient.get('/sanctum/csrf-cookie')
+    //         .then(response => {
+    //             axiosClient.get('api/check').then(response => {
+    //                 console.log(response)
+    //             }).catch(error => {
+    //                 console.log(error.response)
+    //             })
+    //         })
+    // }, [])
 
     if (user) {
-        if (user.role == 'editor' || user.role == 'admin') {
+        if (user && user.role == 'creator' || user.role == 'admin') {
             return (
                 <div className={['pageWrap'].join(' ')} >
                     <Header editorMode={true}>
@@ -45,14 +47,15 @@ export default function Editor() {
                 </div>
             )
         } else {
+            alert('Sie dürfen leider nicht auf diese seite zugreifen')
             return (
-                <Navigate to='/login' state={{back: '/editor'}}></Navigate>
+                <Navigate to='/' ></Navigate >
             )
         }
     }
     else {
-        return(
-            <Navigate to='/login' state={{back: '/editor'}}></Navigate>
+        return (
+            <LogIn></LogIn>
         )
     }
 }

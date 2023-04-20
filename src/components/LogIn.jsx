@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function LogIn() {
   const location = useLocation();
-  const { user, authenticated, setUser, setAuthenticated } = useStateContext()
+  const { user, authenticated, setUser } = useStateContext()
   const navigate = useNavigate()
 
   const emailRef = createRef()
@@ -27,8 +27,6 @@ export default function LogIn() {
           password: password
         }).then(response => {
           console.log(response)
-          setAuthenticated(true)
-          navigate(location.state.back)
           setUser(response.data)
         }).catch((error) => {
           alert(error.response.data.message)
