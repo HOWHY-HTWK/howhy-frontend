@@ -4,7 +4,7 @@ import styles from './css/UserMenu.module.css'
 import { useStateContext } from '../contexts/ContextProvider'
 import { useNavigate } from 'react-router-dom'
 
-export default function UserMenu() {
+export default function UserMenu({setLoginActive}) {
   const { user, authenticated, setUser, setAuthenticated } = useStateContext()
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
@@ -16,7 +16,7 @@ export default function UserMenu() {
           <MdMenu onClick={() => setOpen(!open)} className={[styles.icon].join(' ')} ></MdMenu>
           {open ? getMenu() : null}
         </div>
-        : <div className={['button', 'center', styles.logIn].join(' ')} onClick={() => navigate('/login', {state:{back:'/'}})} >Log In</div>
+        : <div className={['button', 'center', styles.logIn].join(' ')} onClick={() => setLoginActive(true)} >Log In</div>
         }
     </>
   )

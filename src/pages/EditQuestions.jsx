@@ -115,9 +115,6 @@ export default function EditQuestions() {
       .then((newVideoData) => {
         setvideoData(newVideoData.data);
       }).catch(error => {
-        if(error.response.status){
-          // <Navigate to={'/login'}></Navigate>
-        }
       })
   }
 

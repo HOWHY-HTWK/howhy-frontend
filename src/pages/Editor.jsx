@@ -9,31 +9,32 @@ import styles from './css/Editor.module.css'
 import DropDown from '../components/DropDown'
 
 export default function Editor() {
-    const { user, authenticated, setUser, setAuthenticated } = useStateContext()
+    const { user, setUser } = useStateContext()
 
     axiosClient.interceptors.response.use(
         res => {
             return res;
         },
         err => {
-            if (err.response.status === 401) {
-                console.log(err.response)
-                setUser(false)
-            }
+            alert(err.response.data.message)
+            // if (err.response.status === 401) {
+            //     console.log(err.response)
+            //     setUser(false)
+            // }
             throw err;
         }
     )
 
-    // useEffect(() => {
-    //     axiosClient.get('/sanctum/csrf-cookie')
-    //         .then(response => {
-    //             axiosClient.get('api/check').then(response => {
-    //                 console.log(response)
-    //             }).catch(error => {
-    //                 console.log(error.response)
-    //             })
-    //         })
-    // }, [])
+    useEffect(() => {
+        axiosClient.get('/sanctum/csrf-cookie')
+            .then(response => {
+                axiosClient.get('api/check').then(response => {
+                    console.log(response)
+                }).catch(error => {
+                    console.log(error.response)
+                })
+            })
+    }, [])
 
     if (user) {
         if (user && user.role == 'creator' || user.role == 'admin') {

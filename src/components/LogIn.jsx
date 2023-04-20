@@ -5,7 +5,7 @@ import styles from './css/Login.module.css'
 import SignUp from './SignUp.jsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export default function LogIn() {
+export default function LogIn({returnSuccess}) {
   const location = useLocation();
   const { user, authenticated, setUser } = useStateContext()
   const navigate = useNavigate()
@@ -28,6 +28,7 @@ export default function LogIn() {
         }).then(response => {
           console.log(response)
           setUser(response.data)
+          returnSuccess(true)
         }).catch((error) => {
           alert(error.response.data.message)
         });
