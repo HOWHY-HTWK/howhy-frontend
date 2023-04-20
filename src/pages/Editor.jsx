@@ -53,13 +53,13 @@ export default function Editor() {
         } else {
             alert('Sie dürfen leider nicht auf diese seite zugreifen')
             return (
-                <LogIn></LogIn>
+                <LogIn showEditorOption={true}></LogIn>
             )
         }
     }
     else {
         return (
-            <LogIn></LogIn>
+            <LogIn showEditorOption={true}></LogIn>
         )
     }
 }

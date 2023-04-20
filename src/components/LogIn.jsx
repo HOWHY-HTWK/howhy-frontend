@@ -5,7 +5,7 @@ import styles from './css/Login.module.css'
 import SignUp from './SignUp.jsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export default function LogIn({returnSuccess}) {
+export default function LogIn({returnSuccess, showEditorOption = false}) {
   const location = useLocation();
   const { user, authenticated, setUser } = useStateContext()
   const navigate = useNavigate()
@@ -41,7 +41,7 @@ export default function LogIn({returnSuccess}) {
 
   return (
     <>
-      {!signUp ? getLogin() : <SignUp toggleSignUp={toggleSignUp}></SignUp>}
+      {!signUp ? getLogin() : <SignUp showEditorOption={showEditorOption} toggleSignUp={toggleSignUp}></SignUp>}
     </>
   )
 
