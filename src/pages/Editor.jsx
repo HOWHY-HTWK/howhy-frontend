@@ -49,7 +49,7 @@ export default function Editor() {
         } else {
             alert('Sie dürfen leider nicht auf diese seite zugreifen')
             return (
-                <Navigate to='/' ></Navigate >
+                <LogIn></LogIn>
             )
         }
     }
