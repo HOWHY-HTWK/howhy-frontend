@@ -26,7 +26,9 @@ function WatchVideo() {
     })
   }, [])
 
-  questionTimecodes ? listenForTimeUpdate(questionTimecodes) : null
+  if(questionTimecodes.length > 0) {
+    listenForTimeUpdate()
+  } 
 
   function fullscreen() {
     if (!isFullscreen) {
@@ -87,7 +89,7 @@ function WatchVideo() {
   function listenForTimeUpdate(questionTimecodes) {
     window.addEventListener('message', function (event) {
       if ('time' in event.data) {
-        let questionId = findQuestionId(event.data.time, questionTimecodes);
+        let questionId = findQuestionId(event.data.time);
         if (questionId) {
           setCurrentQuestionId(questionId);
         }
@@ -100,8 +102,9 @@ function WatchVideo() {
     }, false)
   }
 
-  function findQuestionId(time, timecodes) {
-    return timecodes.find(element => element.timecode == time).id
+  function findQuestionId(time) {
+    let question = questionTimecodes.find(element => element.timecode == time)
+    return question ? question.id : null
   }
   
 }
