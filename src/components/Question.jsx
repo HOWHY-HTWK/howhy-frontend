@@ -1,22 +1,43 @@
 import React, { useState, useEffect } from 'react'
 import styles from './css/Question.module.css'
 import axiosClient from '../../axios-client'
+import * as api from '../api'
 
-export default function Question({ questionData, setQuestionData, answeredCorrectly, videoId }) {
-  var selected = Array.from({ length: questionData.answers.length }, () => false);
+export default function Question({ questionId, setQuestionId, answeredCorrectly}) {
 
-  const [selectedAnswers, setselectedAnswers] = useState(selected);
+  const [questionData, setQuestionData] = useState({ data: null, selected: [] });
+  // const [selectedAnswers, setselectedAnswers] = useState(selected);
   const [answerCorrect, setAnswerCorrect] = useState(null);
-  const answers = questionData.answers.map((answer, index) => <div key={answer.id} className={[styles.questionElement, styles.answer, (selectedAnswers[index] ? styles.whiteborder : null)].join(' ')} onClick={() => selectAnswer(index)}>{answer.text}</div>);
 
-  function selectAnswer(index) {
-    var arr = selectedAnswers.slice(0);
-    arr[index] = arr[index] == false ? true : false;
-    setselectedAnswers(arr);
+  const answers = questionData.data ? getAnswers(questionData.data) : null;
+
+  useEffect(() => {
+    api.getQuestionData(questionId).then(response => {
+      let data = response.data
+      let selected = Array.from({ length: data.answers.length }, () => false);
+      setQuestionData({ data: data, selected: selected})
+    })
+  }, [questionId])
+
+  function getAnswers(data) {
+    return data.answers.map((answer, index) =>
+      <div
+        key={answer.id}
+        className={[styles.questionElement, styles.answer, (questionData.selected[index] ? styles.whiteborder : null)].join(' ')}
+        onClick={() => selectAnswer(index)}>
+        {answer.text}
+      </div>);
+  }
+
+  function selectAnswer(answerIndex) {
+    var arr = questionData.selected.map((element, index) => {
+      return answerIndex == index ? !element : element
+    })
+    setQuestionData({...questionData, selected: arr});
   }
 
   function calcAnswerIndexes() {
-    let answers = questionData.answers.map((answer, index) => ({ id: answer.id, correct: selectedAnswers[index] }))
+    let answers = questionData.data.answers.map((answer, index) => ({ id: answer.id, correct: questionData.selected[index] }))
     processAnswer(answers);
   }
 
@@ -26,13 +47,13 @@ export default function Question({ questionData, setQuestionData, answeredCorrec
         "questionId": questionData.id,
         "answers": answers
       }
-      axiosClient.post(`api/videoDatas/checkAnswers/${videoId}`, request)
+      api.checkAnswers(questionId, request)
         .then((response) => {
           setAnswerCorrect(response.data.success)
           response.data.success ? answeredCorrectly() : null;
           setTimeout(function () {
             setAnswerCorrect(null)
-            setQuestionData(null)
+            setQuestionId(null)
           }, 2000);
         }).catch((error) => {
           alert(JSON.stringify(error.response.data))
@@ -40,8 +61,7 @@ export default function Question({ questionData, setQuestionData, answeredCorrec
     }
   }
 
-  return (
-
+  return questionData.data ?
     <div className={['wrap'].join()} >
       {answerCorrect != null ?
         <div className={[styles.question, 'center'].join(' ')} >
@@ -49,14 +69,14 @@ export default function Question({ questionData, setQuestionData, answeredCorrec
         </div>
         :
         <div className={[styles.question].join(' ')} >
-          <div className={[styles.questionElement, styles.questionText].join(' ')} > {questionData.question}</div>
+          <div className={[styles.questionElement, styles.questionText].join(' ')} > {questionData.data.questionText}</div>
           <div className={[styles.answersWrapper].join(' ')} >
             {answers}
           </div>
           <div className={[styles.answerButtonWrapper, 'center'].join(' ')}>
-            <div className={[styles.questionElement, styles.answerButton, 'button'].join(' ')}  onClick={calcAnswerIndexes}>Antwort abschicken</div>
+            <div className={[styles.questionElement, styles.answerButton, 'button'].join(' ')} onClick={calcAnswerIndexes}>Antwort abschicken</div>
           </div>
         </div>}
     </div>
-  )
+    : <div>loading</div>
 }

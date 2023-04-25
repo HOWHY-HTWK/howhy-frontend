@@ -1,43 +1,34 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
-import axiosClient from '../../axios-client';
-import styles from './css/VideoList.module.css'
 import EditorVideoList from './EditorVideoList.jsx';
+import * as api from '../api.js'
+import * as mediaserverApi from '../mediaserverApi.js'
 
-export default function AllStoredVideosList({title, getListItem }) {
-  const [videoList, setvideoList] = useState(null);
+export default function AllStoredVideosList({ title, getListItem }) {
+  const [videoList, setvideoList] = useState([]);
 
   useEffect(() => {
     getVideos()
   }, [])
 
   return (
-    videoList ? <EditorVideoList title={title} videoList={videoList} getListItem={getListItem}></EditorVideoList>: null
+    videoList ? <EditorVideoList title={title} videoList={videoList} getListItem={getListItem}></EditorVideoList> : null
   )
 
   function getVideos() {
-    axiosClient.get('/api/videoDatas/list/')
-      .then(function (response) {
-        // handle success
-        makeVideoList(response.data)
+    api.getVideos()
+      .then(response => {
+        let videoIds = response.data.map(data => data.videoId)
+        makeVideoList(videoIds)
       })
   }
 
   async function makeVideoList(videoIds) {
-    let videoDatas = []
-    for (let videoId of videoIds) {
-      videoDatas.push(await getVideoDataFromMediaserver(videoId))
-      let videoData = await getVideoDataFromMediaserver(videoId)
-      setvideoList([...videoDatas], videoData)
-
-    }
-  }
-
-  async function getVideoDataFromMediaserver(videoId) {
-    return axios.get('https://mediaserver.htwk-leipzig.de/api/v2/medias/get/', { params: { oid: videoId } })
-      .then(function (response) {
-        return response.data.info
+    // let videoDatas = []
+    let responses = await Promise.all(
+      videoIds.map(async id => {
+        return await mediaserverApi.getVideoInfoFromMediaserver(id)
       })
+    ) 
+    setvideoList(responses)
   }
 }

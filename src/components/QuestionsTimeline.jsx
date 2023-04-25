@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import * as utils from '../utils.js'
 import styles from './css/QuestionsTimeline.module.css'
 
-export default function QuestionsTimeline({ videoData, jumpToTime, duration }) {
+export default function QuestionsTimeline({ questionTimecodes, jumpToTime, duration }) {
 
-    const questions = videoData.data.map(question => {
+    const questions = questionTimecodes.map(question => {
         let percent = question.timecode / duration * 100
         let distance = percent + '%'
         return (
@@ -18,8 +18,7 @@ export default function QuestionsTimeline({ videoData, jumpToTime, duration }) {
                 </div>
             </div>
         )
-    }
-    );
+    });
 
     return (
         <div className={`center`}>

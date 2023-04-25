@@ -1,7 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
-import axiosClient from '../axios-client'
+import { useState } from 'react'
 import './App.css'
-import WatchVideo from './pages/WatchVideo'
 import { Outlet } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
