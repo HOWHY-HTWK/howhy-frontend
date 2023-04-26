@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react'
-import axiosClient from '../../axios-client'
 import styles from './css/WatchVideo.module.css'
 import Question from '../components/Question'
 import QuestionsTimeline from '../components/QuestionsTimeline'
@@ -21,10 +20,19 @@ function WatchVideo() {
   const fullScreenWrapper = useRef(null);
 
   useEffect(() => {
+    getTimecodes()
+  }, [])
+
+  useEffect(() => {
+    getTimecodes()
+  }, [currentQuestionId])
+
+  
+  function getTimecodes(){
     api.getQuestionTimecodes(videoId).then(response => {
       setQuestionTimecodes(response.data)
     })
-  }, [])
+  }
 
   if(questionTimecodes.length > 0) {
     listenForTimeUpdate()
