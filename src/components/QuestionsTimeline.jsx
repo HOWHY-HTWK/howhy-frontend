@@ -4,7 +4,6 @@ import styles from './css/QuestionsTimeline.module.css'
 
 export default function QuestionsTimeline({ questionTimecodes, jumpToTime, duration }) {
 
-    console.log(questionTimecodes);
     const questions = questionTimecodes.map(question => {
         let percent = question.timecode / duration * 100
         let distance = percent + '%'
