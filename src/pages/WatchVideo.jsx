@@ -10,7 +10,7 @@ function WatchVideo() {
   const queryParameters = new URLSearchParams(window.location.search)
   const videoId = queryParameters.get("id")
 
-  const [score, setscore] = useState(0)
+  const [score, setScore] = useState(null)
   const [questionTimecodes, setQuestionTimecodes] = useState([])
   const [currentQuestionId, setCurrentQuestionId] = useState(null)
   const [duration, setDuration] = useState(null)
@@ -21,13 +21,21 @@ function WatchVideo() {
 
   useEffect(() => {
     getTimecodes()
+    getUserScore()
   }, [])
 
   useEffect(() => {
     getTimecodes()
+    getUserScore()
   }, [currentQuestionId])
 
-  
+  function getUserScore(){
+    api.score().then(response => {
+      console.log(response.data)
+      setScore(response.data.score);
+    })
+  }
+
   function getTimecodes(){
     api.getQuestionTimecodes(videoId).then(response => {
       setQuestionTimecodes(response.data)
@@ -61,7 +69,7 @@ function WatchVideo() {
         <div className={[styles.fsButton].join(' ')} onClick={fullscreen}></div>
       </div>
       <div className={[styles.score, isFullscreen ? styles.scoreFS : ''].join(' ')}>
-        <Score newscore={score}></Score>
+        {score ? <Score newscore={score}></Score> : null}
       </div>
       {displayQuestion()}
       {questionTimecodes && duration != null ? (
@@ -80,7 +88,7 @@ function WatchVideo() {
       utils.pauseVideo(iframe);
       return (
         <div className={[styles.questionWrapper, isFullscreen ? styles.questionWrapperFS : ''].join(' ')} >
-          <Question questionId={currentQuestionId} setQuestionId={setCurrentQuestionId} videoId={videoId} answeredCorrectly={answeredCorrectly}></Question>
+          <Question questionId={currentQuestionId} setQuestionId={setCurrentQuestionId} videoId={videoId}></Question>
         </div>
       )
     }
@@ -88,10 +96,6 @@ function WatchVideo() {
       utils.playVideo(iframe);
       return null;
     }
-  }
-
-  function answeredCorrectly() {
-    setscore(score + 100)
   }
 
   function listenForTimeUpdate(questionTimecodes) {

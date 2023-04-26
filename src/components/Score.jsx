@@ -5,10 +5,16 @@ import { ReactComponent as Logo } from '../assets/howhy_solid.svg'
 
 export default function Score({newscore}) {
     
-    const [score, setscore] = useState(0)  
+    const scoreRef = useRef(0)
+    const [score, setscore] = useState(0)
     
     useEffect(() => {
-        countup(score, newscore)
+        scoreRef.current = newscore
+        setscore(newscore)
+    }, [])
+    
+    useEffect(() => {
+        countup(scoreRef.current, newscore)
     }, [newscore])
     
     return (

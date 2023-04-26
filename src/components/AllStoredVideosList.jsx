@@ -23,7 +23,6 @@ export default function AllStoredVideosList({ title, getListItem }) {
   }
 
   async function makeVideoList(videoIds) {
-    // let videoDatas = []
     let responses = await Promise.all(
       videoIds.map(async id => {
         return await mediaserverApi.getVideoInfoFromMediaserver(id)

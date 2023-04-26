@@ -3,7 +3,7 @@ import styles from './css/Question.module.css'
 import axiosClient from '../../axios-client'
 import * as api from '../api'
 
-export default function Question({ questionId, setQuestionId, answeredCorrectly}) {
+export default function Question({ questionId, setQuestionId}) {
 
   const [questionData, setQuestionData] = useState({ data: null, selected: [] });
   // const [selectedAnswers, setselectedAnswers] = useState(selected);
@@ -50,11 +50,10 @@ export default function Question({ questionId, setQuestionId, answeredCorrectly}
       api.checkAnswers(questionId, request)
         .then((response) => {
           setAnswerCorrect(response.data.success)
-          response.data.success ? answeredCorrectly() : null;
           setTimeout(function () {
             setAnswerCorrect(null)
             setQuestionId(null)
-          }, 2000);
+          }, 1000);
         }).catch((error) => {
           alert(JSON.stringify(error.response.data))
         })

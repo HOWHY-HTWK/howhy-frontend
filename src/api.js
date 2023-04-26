@@ -29,3 +29,8 @@ export function storeQuestion(data){
 export function deleteQuestion(id){
     return apiClient.post(`/deleteQuestion/${id}`)
 }
+
+export function score(){
+    return apiClient.get(`/score/`)
+}
+
