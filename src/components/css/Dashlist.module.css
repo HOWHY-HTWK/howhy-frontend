@@ -1,5 +1,5 @@
 .wrap {
-    padding: 0.2rem 0.5rem;
+    padding: 0.5rem 0.5rem;
     /* padding-right: 0.1rem; */
     cursor: pointer;
     max-width: 30rem;
@@ -46,8 +46,16 @@
 }
 
 .stats{
-    background-color: rgb(206, 206, 206);
+    background-color: rgb(221, 221, 221);
     padding: 0 0.5rem;
     border-radius: 0.5rem;
+}
+
+.all{
+    background-color: rgb(123, 226, 100);
+}
+
+.partly{
+    background-color: rgb(245, 245, 0);
 }
 
