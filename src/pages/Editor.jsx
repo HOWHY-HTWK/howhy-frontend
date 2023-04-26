@@ -16,7 +16,7 @@ export default function Editor() {
             return res;
         },
         err => {
-            alert(err.response.data.message)
+            // alert(err.response.data.message)
             if (err.response.status === 401) {
                 console.log(err.response)
                 setUser(null)
