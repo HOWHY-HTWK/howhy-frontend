@@ -23,6 +23,14 @@
     transform: translate(-1rem);
 }
 
+.correct {
+    background-color: rgb(0, 171, 0);
+}
+
+.false{
+    background-color: red;
+}
+
 .stripe{
     position: absolute;
     top: calc(50% - 0.1rem);

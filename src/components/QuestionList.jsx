@@ -3,22 +3,22 @@ import styles from './css/QuestionList.module.css'
 import * as utils from '../utils.js'
 
 
-export default function QuestionList({ videoData, editQuestion, deleteQuestion }) {
+export default function QuestionList({questions , editQuestion, deleteQuestion }) {
 
-    const orderedQuestions = videoData.data.sort((first, last) => first.timecode - last.timecode)
-    const questions = orderedQuestions.map(question => getListElement(question));
+    const orderedQuestions = questions.sort((first, last) => first.timecode - last.timecode)
+    const listElements = orderedQuestions.map(question => getListElement(question));
 
     return (
         <>
             <h3>Existierende Fragen:</h3>
-            <div>{questions}</div>
+            <div>{listElements}</div>
         </>
     )
 
     function getListElement(question) {
         return (
             <div className={`listElement`} key={question.id} onClick={() => null}>
-                <div className={''}>{question.question}
+                <div className={''}>{question.questionText}
                     <div className={styles.bottomWrapper}>
                         <div className={styles.timecode}>{utils.getTimeInReadable(question.timecode)}</div>
                         <div className={styles.rightWrapper}>
