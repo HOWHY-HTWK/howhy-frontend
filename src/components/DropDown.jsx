@@ -4,6 +4,7 @@ import axiosClient from '../../axios-client'
 import { useStateContext } from '../contexts/ContextProvider'
 import { Link } from 'react-router-dom'
 import { MdArrowDropDown } from "react-icons/md";
+import * as utils from '../utils'
 
 
 export default function DropDown() {
@@ -29,7 +30,7 @@ export default function DropDown() {
       <div className={[styles.dropDownWrapper, (isOpen ? styles.visible : null)].join(' ')}>
         <div className={[styles.wrap, "itemBackground"].join(' ')} >
           <Link to={'/editor/settings'} className={`${styles.menuListItem}`}>Einstellungen</Link>
-          <div className={styles.menuListItem} onClick={logout}>Log Out</div>
+          <div className={styles.menuListItem} onClick={utils.logout(setUser)}>Log Out</div>
         </div>
       </div>
     </div>
@@ -45,12 +46,14 @@ export default function DropDown() {
     setIsOpen(!isOpen)
   }
 
-  function logout() {
-    axiosClient.post('/logout').then(response => {
-      if (response.status === 204) {
-        console.log(response)
-        setUser(false);
-      }
-    })
-  }
+  // function logout() {
+  //   axiosClient.post('/logout').then(response => {
+  //     if (response.status === 204) {
+  //       console.log(response)
+  //       setUser(null);
+  //     }
+  //   }).catch(error => {
+  //     console.log(error.response.data)
+  //   })
+  // }
 }

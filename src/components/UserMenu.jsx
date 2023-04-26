@@ -3,6 +3,7 @@ import { MdMenu } from 'react-icons/md'
 import styles from './css/UserMenu.module.css'
 import { useStateContext } from '../contexts/ContextProvider'
 import { useNavigate } from 'react-router-dom'
+import * as utils from '../utils'
 
 export default function UserMenu({setLoginActive}) {
   const { user, authenticated, setUser, setAuthenticated } = useStateContext()
@@ -24,7 +25,7 @@ export default function UserMenu({setLoginActive}) {
   function getMenu() {
     return (
       <div className={[styles.menu].join(' ')} >
-        <div className={['button'].join(' ')} onClick={() => setUser(null)}>Log Out</div>
+        <div className={['button'].join(' ')} onClick={() => utils.logout(setUser)}>Log Out</div>
       </div>
     )
   }

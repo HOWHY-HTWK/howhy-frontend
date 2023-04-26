@@ -4,9 +4,10 @@ import DashList from '../components/DashList';
 import Score from '../components/Score';
 import Header from '../components/Header';
 import * as api from '../api';
+import { useStateContext } from '../contexts/ContextProvider';
 
 export default function Dashboard() {
-
+    const { user, authenticated, setUser } = useStateContext()
     const [score, setscore] = useState(null)
 
     useEffect(() => {
@@ -17,7 +18,7 @@ export default function Dashboard() {
 
     return (
         <div>
-            {score ? <Score newscore={score}></Score> : null}
+            {score && user ? <Score newscore={score}></Score> : null}
             <DashList></DashList>
         </div>
     );

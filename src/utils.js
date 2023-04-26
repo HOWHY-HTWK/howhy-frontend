@@ -1,3 +1,5 @@
+import axiosClient from "../axios-client";
+
 export function makeTimecodesList(questions) {
     let localtimecodes = [];
     for (let step = 0; step < questions.length; step++) {
@@ -30,18 +32,32 @@ export function pauseVideo(iframe) {
 
 export function jumpToTime(iframe, time) {
     iframe.current.contentWindow.postMessage({ 'seek': time }, '*');
-  }
+}
 
-  export function getTimeInReadable(time){
+export function getTimeInReadable(time) {
     let hours = Math.floor(time / 3600);
     let minutes = Math.floor((time % 3600) / 60);
     let seconds = Math.floor(time % 60);
-    return (hours != 0 ? hours+"h ": "")+ minutes +"m "+ seconds+"s"
-  }
+    return (hours != 0 ? hours + "h " : "") + minutes + "m " + seconds + "s"
+}
 
-  export function getHoursMinutesSeconds(time){
+export function getHoursMinutesSeconds(time) {
     let hours = Math.floor(time / 3600);
     let minutes = Math.floor((time % 3600) / 60);
     let seconds = Math.floor(time % 60);
-    return {hours: hours, minutes: minutes, seconds: seconds};
+    return { hours: hours, minutes: minutes, seconds: seconds };
+}
+
+export function logout(setUser) {
+    axiosClient.get('/sanctum/csrf-cookie')
+        .then(response => {
+            axiosClient.post('/logout').then(response => {
+                if (response.status === 204) {
+                    console.log(response)
+                    setUser(null);
+                }
+            }).catch(error => {
+                console.log(error.response.data)
+            })
+        })
   }
