@@ -3,7 +3,6 @@ import * as utils from '../utils.js'
 import styles from './css/QuestionsTimeline.module.css'
 
 export default function QuestionsTimeline({ questionTimecodes, jumpToTime, duration }) {
-
     const questions = questionTimecodes.map(question => {
         let percent = question.timecode / duration * 100
         let distance = percent + '%'
@@ -27,6 +26,7 @@ export default function QuestionsTimeline({ questionTimecodes, jumpToTime, durat
                 {questions}</div>
         </div>
     )
+    
 function getBackground(correct){
     if(correct == null){
         return null;

@@ -34,3 +34,18 @@ export function score(){
     return apiClient.get(`/score/`)
 }
 
+//email allowlist
+export function getEmails(){
+    return apiClient.get('/allowed-email')
+}
+
+export function postEmail(request){
+    return apiClient.post('/allowed-email', request )
+}
+
+export function deleteEmail(id){
+    return apiClient.delete(`/allowed-email/${id}`)
+}
+
+
+

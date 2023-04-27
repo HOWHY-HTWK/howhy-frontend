@@ -31,7 +31,6 @@ function WatchVideo() {
 
   function getUserScore(){
     api.score().then(response => {
-      console.log(response.data)
       setScore(response.data.score);
     })
   }
