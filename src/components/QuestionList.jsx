@@ -11,7 +11,7 @@ export default function QuestionList({questions , editQuestion, deleteQuestion }
     return (
         <>
             <h3>Existierende Fragen:</h3>
-            <div>{listElements}</div>
+            {listElements.length > 0 ? <div>{listElements}</div> : 'Für dieses Video gibt es noch keine Fragen'}
         </>
     )
 

@@ -5,6 +5,7 @@ import QuestionsTimeline from '../components/QuestionsTimeline'
 import * as utils from '../utils.js'
 import Score from '../components/Score'
 import * as api from '../api'
+import { getVideoInfoFromMediaserver } from '../mediaserverApi'
 
 function WatchVideo() {
   const queryParameters = new URLSearchParams(window.location.search)
@@ -20,30 +21,29 @@ function WatchVideo() {
   const fullScreenWrapper = useRef(null);
 
   useEffect(() => {
-    getTimecodes()
-    getUserScore()
-  }, [])
+    window.removeEventListener('message', handlePlayerEvent, false)
+    window.addEventListener('message', handlePlayerEvent, false)
+    return () => {
+      window.removeEventListener('message', handlePlayerEvent, false)
+    };
+  }, [questionTimecodes]);
 
   useEffect(() => {
     getTimecodes()
     getUserScore()
   }, [currentQuestionId])
 
-  function getUserScore(){
+  function getUserScore() {
     api.score().then(response => {
       setScore(response.data.score);
     })
   }
 
-  function getTimecodes(){
+  function getTimecodes() {
     api.getQuestionTimecodes(videoId).then(response => {
       setQuestionTimecodes(response.data)
     })
   }
-
-  if(questionTimecodes.length > 0) {
-    listenForTimeUpdate()
-  } 
 
   function fullscreen() {
     if (!isFullscreen) {
@@ -71,7 +71,7 @@ function WatchVideo() {
         {score ? <Score newscore={score}></Score> : null}
       </div>
       {displayQuestion()}
-      {questionTimecodes && duration != null ? (
+      {questionTimecodes && duration ? (
         <div className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}  >
           <QuestionsTimeline
             className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}
@@ -97,27 +97,27 @@ function WatchVideo() {
     }
   }
 
-  function listenForTimeUpdate(questionTimecodes) {
-    window.addEventListener('message', function (event) {
-      if ('time' in event.data) {
-        let questionId = findQuestionId(event.data.time);
-        if (questionId) {
-          setCurrentQuestionId(questionId);
-        }
-      } else if ('state' in event.data) {
-      } else if ('duration' in event.data) {
-        if (!duration) {
-          setDuration(event.data.duration)
-        }
+  function handlePlayerEvent(event) {
+    if ('time' in event.data) {
+      let questionId = findQuestionId(event.data.time);
+      if (questionId) {
+        setCurrentQuestionId(questionId);
       }
-    }, false)
+    } else if ('state' in event.data) {
+    } else if ('duration' in event.data) {
+      if (!duration) {
+        setDuration(event.data.duration)
+      }
+    }
   }
 
   function findQuestionId(time) {
-    let question = questionTimecodes.find(element => element.timecode == time)
+    let question = questionTimecodes.find(element => {
+      return element.timecode == time
+    })
     return question ? question.id : null
   }
-  
+
 }
 
 export default WatchVideo
