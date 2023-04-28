@@ -17,12 +17,7 @@ export default function QuestionEditor({ existingQuestion, duration, time, video
     'answers': [{ "id": 0, "text": '', }],
   }
 
-  const localquestion = JSON.parse(localStorage.getItem('question'));
-  const [question, setQuestion] = useState(localquestion ? localquestion : basequestion);
-
-  useEffect(() => {
-    localStorage.setItem('question', JSON.stringify(question));
-  }, [question]);
+  const [question, setQuestion] = useState(basequestion);
 
   return (
     <div className={[questionStyles.question, styles.stretch].join(' ')} >
