@@ -12,9 +12,9 @@ function App() {
   const { user, setUser } = useStateContext()
   const [key , setKey] = useReducer(x => x + 1, 0);
 
-  useEffect(() => {
-    setKey()
-  }, [user])
+  // useEffect(() => {
+  //   setKey()
+  // }, [user])
 
   return !loginActive ?
     <div className={['pageWrap'].join(' ')} >
