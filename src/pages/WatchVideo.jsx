@@ -68,7 +68,7 @@ function WatchVideo() {
         <div className={[styles.fsButton].join(' ')} onClick={fullscreen}></div>
       </div>
       <div className={[styles.score, isFullscreen ? styles.scoreFS : ''].join(' ')}>
-        {score ? <Score newscore={score}></Score> : null}
+        {score != null ? <Score newscore={score}></Score> : null}
       </div>
       {displayQuestion()}
       {questionTimecodes && duration ? (

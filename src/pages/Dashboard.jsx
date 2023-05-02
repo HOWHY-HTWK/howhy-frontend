@@ -18,7 +18,7 @@ export default function Dashboard() {
 
     return (
         <div>
-            {score && user ? <Score newscore={score}></Score> : null}
+            {score != null && user ? <Score newscore={score}></Score> : null}
             <DashList></DashList>
         </div>
     );
