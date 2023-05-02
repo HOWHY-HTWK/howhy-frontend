@@ -55,6 +55,7 @@ export function logout(setUser) {
                 if (response.status === 204) {
                     console.log(response)
                     setUser(null);
+                    window.location.reload();
                 }
             }).catch(error => {
                 console.log(error.response.data)

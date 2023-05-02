@@ -21,7 +21,6 @@ export default function LogIn({returnSuccess = (success) => success, showEditorO
     e.preventDefault();    
     axiosClient.get('/sanctum/csrf-cookie')
       .then(response => {
-        debugger
         axiosClient.post('/login', {
           email: emailRef.current.value,
           password: passwordRef.current.value,

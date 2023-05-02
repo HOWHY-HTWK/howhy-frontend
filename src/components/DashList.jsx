@@ -9,13 +9,6 @@ import * as mediaserverApi from '../mediaserverApi.js'
 import { useStateContext } from '../contexts/ContextProvider'
 
 export default function DashList() {
-  const { user, authenticated, setUser } = useStateContext()
-  const [, forceUpdate] = useReducer(x => x + 1, 0);
-
-  useEffect(() => {
-    forceUpdate()
-  }, [user])
-
   const [videoList, setvideoList] = useState([]);
   const videos = videoList ? videoList.map(video => getListItem(video)) : null
 
