@@ -9,7 +9,6 @@ const StateContext = createContext({
 
 export const ContextProvider = ({ children }) => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('USER')));
-    // const [authenticated, setAuthenticated] = useState(localStorage.getItem('ACCESS_TOKEN'));
 
     useEffect(() => {
         if(user){
@@ -19,22 +18,10 @@ export const ContextProvider = ({ children }) => {
         }
     }, [user])
 
-    // useEffect(() => {
-    //     if (authenticated) {
-    //         localStorage.setItem('ACCESS_TOKEN', authenticated);
-    //     } else {
-    //         localStorage.removeItem('ACCESS_TOKEN')
-    //         localStorage.removeItem('USER')
-    //         setUser(null)
-    //     }
-    // }, [authenticated])
-
     return (
         <StateContext.Provider value={{
             user,
-            // authenticated: authenticated,
             setUser,
-            // setAuthenticated
         }}>
             {children}
         </StateContext.Provider>

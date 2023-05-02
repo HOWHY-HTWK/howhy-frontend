@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import axiosClient from '../../axios-client.jsx'
 import styles from './css/Login.module.css'
-export default function SignUp({ toggleSignUp, showEditorOption = false }) {
-  const [signUpData, setsignUpData] = useState({ email: '', password: '', repeatPassword: '', editorRights: true })
+import { useStateContext } from '../contexts/ContextProvider.jsx'
 
-  useEffect(() => {
-    showEditorOption ? null : setsignUpData({ ...signUpData, editorRights: false })
-  }, [])
+export default function SignUp({ toggleSignUp, showEditorOption = false }) {
+  const { user, setUser } = useStateContext()
+
+  const [signUpData, setsignUpData] = useState({ email: '', password: '', repeatPassword: '', editorRights: showEditorOption ? true : false })
   
   return (
     <div className={[styles.formwrapper].join(' ')} >
@@ -39,8 +39,9 @@ export default function SignUp({ toggleSignUp, showEditorOption = false }) {
         }
         axiosClient.post('/register', requestObject)
           .then(response => {
-            alert('Registrierung erfolgreich!')
-            toggleSignUp()
+            console.log(response)
+            // alert('Registrierung erfolgreich!')
+            logIn()
           }).catch((error) => {
             // debugger
             alert(error.response.data.message)
@@ -56,5 +57,22 @@ export default function SignUp({ toggleSignUp, showEditorOption = false }) {
 
     return formattedFirstName + (formattedLastName ? ' ' + formattedLastName : '')
 
+  }
+
+  function logIn(){
+    axiosClient.get('/sanctum/csrf-cookie')
+    .then(response => {
+      axiosClient.post('/login', {
+        email: signUpData.email,
+        password: signUpData.password,
+        remember: false
+      }).then(response => {
+        console.log(response)
+        setUser(response.data)
+      }).catch((error) => {
+        alert(error.response.data.message)
+        console.log(error.response)
+      });
+    })
   }
 }

@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function LogIn({returnSuccess = (success) => success, showEditorOption = false}) {
   const location = useLocation();
-  const { user, authenticated, setUser } = useStateContext()
+  const { user, setUser } = useStateContext()
   const navigate = useNavigate()
 
   const emailRef = createRef()
@@ -19,21 +19,25 @@ export default function LogIn({returnSuccess = (success) => success, showEditorO
 
   function handleLogin(e) {
     e.preventDefault();    
+    logIn()
+  }
+
+  function logIn(){
     axiosClient.get('/sanctum/csrf-cookie')
-      .then(response => {
-        axiosClient.post('/login', {
-          email: emailRef.current.value,
-          password: passwordRef.current.value,
-          remember: remember
-        }).then(response => {
-          console.log(response)
-          setUser(response.data)
-          returnSuccess(true)
-        }).catch((error) => {
-          alert(error.response.data.message)
-          console.log(error.response)
-        });
-      })
+    .then(response => {
+      axiosClient.post('/login', {
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+        remember: remember
+      }).then(response => {
+        console.log(response)
+        setUser(response.data)
+        returnSuccess(true)
+      }).catch((error) => {
+        alert(error.response.data.message)
+        console.log(error.response)
+      });
+    })
   }
 
   function toggleSignUp() {
