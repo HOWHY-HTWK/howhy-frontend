@@ -55,10 +55,10 @@ export default function Editor() {
                 content()
                 : verifiyEmail()
             :
-            () => {
+            (() => {
                 alert('Sie dürfen leider nicht auf diese seite zugreifen')
                 return <LogIn showEditorOption={true}></LogIn>
-            }
+            })()
         :
         <LogIn showEditorOption={true}></LogIn>
 
