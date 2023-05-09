@@ -6,13 +6,10 @@
 }
 
 .listItem {
-    margin-bottom: 0.5rem;
     font-size: 0.9rem;
     color: var(--color);
     background-color: var(--item-color);
-    border-radius: 0.5rem;
-    overflow: hidden;
-    padding: 0.0rem 0.0rem;
+    padding: 0;
     display: grid;
     grid-template-rows: auto auto;
     grid-template-columns: 1.2fr 1fr 1fr;
@@ -47,6 +44,7 @@
 
 .stats{
     background-color: rgb(221, 221, 221);
+    color: black;
     padding: 0 0.5rem;
     border-radius: 0.5rem;
 }

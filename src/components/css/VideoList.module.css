@@ -1,31 +1,43 @@
 
+.videoListWrapper{
+    width: 27rem;
+    max-width: 100%;
+}
+
 .videoListBody {
-    /* padding: 1rem; */
     display: flex;
     flex-flow: column nowrap;
-    /* gap: 1rem; */
 }
 
 .videoInList {
+    height: 7rem;
     display: grid;
     grid-template-rows: auto auto;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 40% auto;
     grid-template-areas:
-        "title title title"
-        "thumb thumb questions"
-        "thumb thumb buttons";
-    gap: 1rem;
+        "thumb title"
+        "thumb buttons";
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .3);
+    margin-bottom: 0.8rem;
+
 }
 
-.vlTitle {
+.Title {
+    padding-top: .5rem;
+    padding-left: 1rem;
     grid-area: title;
     font-weight: 500;
 }
 
-.vlThumb {
-    border-radius: 8px;
+.Thumb {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
     grid-area: thumb;
-    max-width: 45vw;
+    object-fit: cover;
 }
 
 .questions{
@@ -34,9 +46,10 @@
 
 .buttonWrap {
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
     justify-content: flex-end;
+    align-items: center;
     gap: 0.5rem;
     grid-area: buttons;
-    height: 100%;
+    padding-right: 1rem;
 }
