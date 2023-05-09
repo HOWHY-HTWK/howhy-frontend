@@ -1,7 +1,9 @@
 # HOWHY-Frontend
+
 React Frontend for the Howhy platform. React SPA mit vite.js entwickelt.
 
 ## How to run
+
 This App can be startet either locally when node is installed or with docker
 
 ### run locally
