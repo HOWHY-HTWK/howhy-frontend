@@ -1,10 +1,9 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react'
-import AllStoredVideosList from '../components/AllStoredVideosList';
 import DashList from '../components/DashList';
 import Score from '../components/Score';
-import Header from '../components/Header';
 import * as api from '../api';
 import { useStateContext } from '../contexts/ContextProvider';
+import styles from './css/Dashboard.module.css';
 
 export default function Dashboard() {
     const { user, authenticated, setUser } = useStateContext()
@@ -17,7 +16,7 @@ export default function Dashboard() {
     }, [])
 
     return (
-        <div>
+        <div className={[styles.wrap].join(' ')} >
             {score != null && user ? <Score newscore={score}></Score> : null}
             <DashList></DashList>
         </div>

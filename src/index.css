@@ -17,6 +17,10 @@
   --color: white;
 }
 
+#root {
+  width: 100%;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -31,7 +35,7 @@ body {
   display: flex;
   place-items: top;
   /* min-width: 320px; */
-  /* min-height: 100vh; */
+  min-height: 100vh;
   width: 100%;
 }
 
@@ -116,7 +120,7 @@ h1 {
 .pageWrap{
   box-sizing: border-box;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
   position: relative;
   padding-top: 3rem;
   padding-bottom: 2rem;

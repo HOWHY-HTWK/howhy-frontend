@@ -1,5 +1,5 @@
-import { useEffect, useReducer, useState } from 'react'
-import './App.css'
+import { useEffect, useReducer, useRef, useState } from 'react'
+import styles from './App.module.css'
 import { Outlet } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -8,23 +8,37 @@ import LogIn from './components/LogIn'
 import { useStateContext } from './contexts/ContextProvider'
 
 function App() {
+  const windowSize = useRef([window.innerWidth, window.innerHeight]);
+
   const [loginActive, setLoginActive] = useState(false)
-  const { user, setUser } = useStateContext()
-  const [key , setKey] = useReducer(x => x + 1, 0);
+  const [frame, setFrame] = useState(determinIfSmartphone(windowSize.current));
 
-  // useEffect(() => {
-  //   setKey()
-  // }, [user])
+  return (
+    <div className={[frame ? styles.phone : styles.phoneOff].join(' ')} >
+      {!loginActive ?
+      <div className={['pageWrap'].join(' ')} >
+        <Header><UserMenu setLoginActive={setLoginActive} /></Header>
+        <Outlet />
+        <Footer></Footer>
+      </div>
+      :
+      <LogIn returnSuccess={success => setLoginActive(!success)}></LogIn>}
+      <div className={[styles.toggle].join(' ')} onClick={toggleFrame}>Toggle Frame</div>
 
-  return !loginActive ?
-    <div className={['pageWrap'].join(' ')} >
-      <Header><UserMenu setLoginActive={setLoginActive} /></Header>
-      <Outlet key={key}/>
-      <Footer></Footer>
     </div>
-    :
-    <LogIn returnSuccess={success => setLoginActive(!success)}></LogIn>
+  )
+  
+  function toggleFrame() {
+    setFrame(prev => !prev)
+  }
 
+  function determinIfSmartphone(windowSize) {
+    if (windowSize[0] < 1000) {
+      return false
+    } else {
+      return true
+    }
+  }
 }
 
 export default App
