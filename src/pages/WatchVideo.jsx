@@ -5,7 +5,8 @@ import QuestionsTimeline from '../components/QuestionsTimeline'
 import * as utils from '../utils.js'
 import Score from '../components/Score'
 import * as api from '../api'
-import { getVideoInfoFromMediaserver } from '../mediaserverApi'
+import { getRecources, getVideoInfoFromMediaserver } from '../mediaserverApi'
+import Player from '../components/Player'
 
 function WatchVideo() {
   const queryParameters = new URLSearchParams(window.location.search)
@@ -19,6 +20,16 @@ function WatchVideo() {
 
   const iframe = useRef(null);
   const fullScreenWrapper = useRef(null);
+  const playerRef = useRef(null);
+
+
+  const videoJsOptions = {
+    autoplay: true,
+    controls: true,
+    responsive: true,
+    fluid: true,
+    sources: getSources(videoId)
+  };
 
   useEffect(() => {
     window.removeEventListener('message', handlePlayerEvent, false)
@@ -37,6 +48,10 @@ function WatchVideo() {
     api.score().then(response => {
       setScore(response.data.score);
     })
+  }
+
+  function getSources(videoId){
+    return getRecources(videoId)
   }
 
   function getTimecodes() {
@@ -59,12 +74,26 @@ function WatchVideo() {
     setIsFullscreen(!isFullscreen);
   }
 
+  const handlePlayerReady = (player) => {
+    playerRef.current = player;
+
+    // You can handle player events here, for example:
+    player.on('waiting', () => {
+      videojs.log('player is waiting');
+    });
+
+    player.on('dispose', () => {
+      videojs.log('player will dispose');
+    });
+  };
+
   return (
     <div className={[styles.wrapper, isFullscreen ? styles.wrapperFS : ''].join(' ')} >
       <div ref={fullScreenWrapper} className={[styles.videoWrapper, isFullscreen ? styles.videoWrapperFS : ''].join(' ')}>
-        <iframe ref={iframe}
+        {/* <iframe ref={iframe}
           className={[styles.iframe, isFullscreen ? styles.iframeFS : ''].join(' ')}
-          src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe`}></iframe>
+          src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe`}></iframe> */}
+        <Player options={videoJsOptions} onReady={handlePlayerReady} className={[styles.iframe, isFullscreen ? styles.iframeFS : ''].join(' ')}></Player>
         <div className={[styles.fsButton].join(' ')} onClick={fullscreen}></div>
       </div>
       <div className={[styles.score, isFullscreen ? styles.scoreFS : ''].join(' ')}>
