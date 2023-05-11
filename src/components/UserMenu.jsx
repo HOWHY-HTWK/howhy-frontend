@@ -14,8 +14,8 @@ export default function UserMenu({setLoginActive}) {
     <>
       {user ?
         <div className={[styles.wrap, 'center'].join(' ')} >
-          <MdMenu onClick={() => setOpen(!open)} className={[styles.icon].join(' ')} ></MdMenu>
-          {open ? getMenu() : null}
+          <MdMenu onClick={() => setOpen(prev => !prev)} className={[styles.icon].join(' ')} ></MdMenu>
+          {getMenu()}
         </div>
         : <div className={['button', 'center', styles.logIn].join(' ')} onClick={() => setLoginActive(true)} >Log In</div>
         }
@@ -24,8 +24,9 @@ export default function UserMenu({setLoginActive}) {
 
   function getMenu() {
     return (
-      <div className={[styles.menu].join(' ')} >
-        <div className={['button'].join(' ')} onClick={() => utils.logout(setUser)}>Log Out</div>
+      <div className={[styles.menu, open ? styles.menuOpen : '' ].join(' ')} >
+        <div className={[styles.menuListItem].join(' ')} onClick={() => {}}>Einstellungen</div>
+        <div className={[styles.menuListItem].join(' ')} onClick={() => utils.logout(setUser)}>Log Out</div>
       </div>
     )
   }

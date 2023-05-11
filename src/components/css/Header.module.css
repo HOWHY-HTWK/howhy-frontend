@@ -6,7 +6,7 @@
     height: 3rem;
     width: 100%;
     padding: 0 1rem;
-    background-color: rgb(184, 56, 126);
+    background-color: var(--user-accent-color);
     /* margin: 0 auto; */
     display: flex;
     flex-flow: row nowrap;
@@ -18,7 +18,7 @@
 }
 
 .editorBackground{
-    background-color: rgba(88,116,194,255);
+    background-color: var(--editor-accent-color);
 }
 
 #logo {
