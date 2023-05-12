@@ -31,6 +31,10 @@
     width: auto;
 }
 
+.userName {
+    font-size: 0.5em;
+}
+
 .menuListItem {
     text-align: right;
     font-weight: 500;
