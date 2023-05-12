@@ -8,8 +8,5 @@ export async function getVideoInfoFromMediaserver(videoId) {
   }
 
   export function getRecources(videoId){
-    axios.get(`https://mediaserver.htwk-leipzig.de/api/v2/medias/playlist/?all&?oid=${videoId}`, { params: { oid: videoId } })
-      .then(function (response) {
-        return response
-      })
+    return axios.get(`https://mediaserver.htwk-leipzig.de/api/v2/medias/playlist/?oid=${videoId}`)
   }

@@ -6,7 +6,7 @@ import * as utils from '../utils.js'
 import Score from '../components/Score'
 import * as api from '../api'
 import { getRecources, getVideoInfoFromMediaserver } from '../mediaserverApi'
-import Player from '../components/Player'
+import HlsPlayer from '../components/HlsPlayer'
 
 function WatchVideo() {
   const queryParameters = new URLSearchParams(window.location.search)
@@ -17,26 +17,22 @@ function WatchVideo() {
   const [currentQuestionId, setCurrentQuestionId] = useState(null)
   const [duration, setDuration] = useState(null)
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [sources, setSources] = useState(null);
 
   const iframe = useRef(null);
   const fullScreenWrapper = useRef(null);
-  const playerRef = useRef(null);
-
-
-  const videoJsOptions = {
-    autoplay: true,
-    controls: true,
-    responsive: true,
-    fluid: true,
-    sources: getSources(videoId)
-  };
+  const oldTimeRef = useRef(null);
+  const timecodesRef = useRef(questionTimecodes);
+  const videoRef = useRef(null)
 
   useEffect(() => {
-    window.removeEventListener('message', handlePlayerEvent, false)
-    window.addEventListener('message', handlePlayerEvent, false)
-    return () => {
-      window.removeEventListener('message', handlePlayerEvent, false)
-    };
+    getRecources(videoId).then(response => {
+      setSources(response.data)
+    })
+  }, [])
+
+  useEffect(() => {
+    timecodesRef.current = questionTimecodes
   }, [questionTimecodes]);
 
   useEffect(() => {
@@ -48,10 +44,6 @@ function WatchVideo() {
     api.score().then(response => {
       setScore(response.data.score);
     })
-  }
-
-  function getSources(videoId){
-    return getRecources(videoId)
   }
 
   function getTimecodes() {
@@ -74,76 +66,67 @@ function WatchVideo() {
     setIsFullscreen(!isFullscreen);
   }
 
-  const handlePlayerReady = (player) => {
-    playerRef.current = player;
-
-    // You can handle player events here, for example:
-    player.on('waiting', () => {
-      videojs.log('player is waiting');
-    });
-
-    player.on('dispose', () => {
-      videojs.log('player will dispose');
-    });
-  };
-
   return (
     <div className={[styles.wrapper, isFullscreen ? styles.wrapperFS : ''].join(' ')} >
-      <div ref={fullScreenWrapper} className={[styles.videoWrapper, isFullscreen ? styles.videoWrapperFS : ''].join(' ')}>
-        {/* <iframe ref={iframe}
-          className={[styles.iframe, isFullscreen ? styles.iframeFS : ''].join(' ')}
-          src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe`}></iframe> */}
-        <Player options={videoJsOptions} onReady={handlePlayerReady} className={[styles.iframe, isFullscreen ? styles.iframeFS : ''].join(' ')}></Player>
+      <div
+        ref={fullScreenWrapper}
+        className={[styles.videoWrapper, isFullscreen ? styles.videoWrapperFS : ''].join(' ')}>
+        <HlsPlayer
+          url={`https://mediaserver.htwk-leipzig.de/api/v2/medias/playlist/?oid=${videoId}&?all`}
+          timeUpdate={handleTimeUpdate}
+          setDuration={setDuration}
+          ref={videoRef}
+        />
         <div className={[styles.fsButton].join(' ')} onClick={fullscreen}></div>
       </div>
       <div className={[styles.score, isFullscreen ? styles.scoreFS : ''].join(' ')}>
         {score != null ? <Score newscore={score}></Score> : null}
       </div>
       {displayQuestion()}
-      {questionTimecodes && duration ? (
+      {questionTimecodes && duration ?
         <div className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}  >
           <QuestionsTimeline
             className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}
             questionTimecodes={questionTimecodes}
             duration={duration}
-            jumpToTime={(time) => utils.jumpToTime(iframe, time)} />
-        </div>) : null}
+            jumpToTime={(time) => videoRef.current.seek(time)} />
+        </div> : null}
     </div >
   )
 
   function displayQuestion() {
-    if (currentQuestionId) {
-      utils.pauseVideo(iframe);
-      return (
-        <div className={[styles.questionWrapper, isFullscreen ? styles.questionWrapperFS : ''].join(' ')} >
-          <Question questionId={currentQuestionId} setQuestionId={setCurrentQuestionId} videoId={videoId}></Question>
-        </div>
-      )
-    }
-    else {
-      utils.playVideo(iframe);
-      return null;
+    if (videoRef.current) {
+      if (currentQuestionId && videoRef.current) {
+        videoRef.current.pause()
+        return (
+          <div className={[styles.questionWrapper, isFullscreen ? styles.questionWrapperFS : ''].join(' ')} >
+            <Question
+              questionId={currentQuestionId}
+              setQuestionId={setCurrentQuestionId}
+              videoId={videoId}
+            />
+          </div>
+        )
+      }
+      else {
+        videoRef.current.play()
+        return null;
+      }
     }
   }
 
-  function handlePlayerEvent(event) {
-    if ('time' in event.data) {
-      let questionId = findQuestionId(event.data.time);
-      if (questionId) {
-        setCurrentQuestionId(questionId);
-      }
-    } else if ('state' in event.data) {
-    } else if ('duration' in event.data) {
-      if (!duration) {
-        setDuration(event.data.duration)
-      }
+  function handleTimeUpdate(time) {
+    let questionId = findQuestionId(time);
+    if (questionId) {
+      setCurrentQuestionId(questionId);
     }
   }
 
   function findQuestionId(time) {
-    let question = questionTimecodes.find(element => {
-      return element.timecode == time
+    let question = timecodesRef.current.find(element => {
+      return oldTimeRef.current < element.timecode && element.timecode < time
     })
+    oldTimeRef.current = time
     return question ? question.id : null
   }
 
