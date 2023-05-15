@@ -1,9 +1,19 @@
 .frame {
-
+    margin: auto;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10em;
+    gap: 2em;
 }
 
 .text {
 
+}
+
+.icon {
+    width: 100px;
 }
 
 .visibility {
