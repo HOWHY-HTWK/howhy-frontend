@@ -16,6 +16,7 @@ This App can be startet either locally when node is installed or with docker
 
 ## deploy with docker
 
+- set the correct subdirectory with the 'base' option in vite.config.js
 - run `cp .env.example .env` and set the correct api url
 - run `docker compose -f docker-compose-prod.yml up`
 - this commands builds the app and starts an nginx server on port 4173

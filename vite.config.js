@@ -4,7 +4,7 @@ import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
   plugins: [svgr(), react()],
-  base: process.env.VITE_BASE_PATH,
+  base: /geheimcode/,
   server: {
     host: true,
     port: 5173,
