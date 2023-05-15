@@ -8,15 +8,6 @@ import UserLogin from './components/UserLogin'
 import { useStateContext } from './contexts/ContextProvider'
 
 function App() {
-  const queryParameters = new URLSearchParams(window.location.search)
-  const verified = queryParameters.get("verified")
-
-  useEffect(() => {
-    if(verified == 1){
-      alert('Email erfolgreich verifiziert!')
-    }
-  }, [])
-  
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
   const [loginActive, setLoginActive] = useState(false)
