@@ -24,13 +24,16 @@
     gap: 1rem;
 }
 
-.delete{
+.smallButton{
     color: white;
     border-radius: 0.5rem;
     border: none;
-    background-color: rgba(255, 0, 0, 0.757);
     /* position: absolute; */
     right: 0;
+}
+
+.delete {
+    background-color: rgba(255, 0, 0, 0.757);
 }
 
 .inputWrapper{
@@ -38,4 +41,8 @@
     flex-flow: column nowrap;
     gap: 1rem;
     padding-top: 1rem;
+}
+
+.makeAdmin {
+ background-color: green;
 }

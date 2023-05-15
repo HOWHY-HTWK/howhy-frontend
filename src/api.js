@@ -47,5 +47,12 @@ export function deleteEmail(id){
     return apiClient.delete(`/allowed-email/${id}`)
 }
 
+// bearbeiten Rechte geben
 
+export function getUsers(){
+    return apiClient.get(`/users/`)
+}
 
+export function giveEditorRights(id){
+    return apiClient.post(`/makeEditor/${id}`)
+}

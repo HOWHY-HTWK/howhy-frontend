@@ -12,10 +12,6 @@ export default function AddEmail() {
     const [newEmail, setNewEmail] = useState('');
 
     useEffect(() => {
-        document.title = "Einstellungen";
-    }, [])
-
-    useEffect(() => {
         getEmails()
             .then(response => {
                 setallowedEmails(response.data)
@@ -54,7 +50,7 @@ export default function AddEmail() {
                 return (
                     <div key={email.id} className={styles.email}>
                         {email.email}
-                        {user.role == 'admin' ? <button className={styles.delete} onClick={() => deleteEmail(email.id, email.email)}>Löschen</button> : null}
+                        {user.role == 'admin' ? <button className={[styles.smallButton, styles.delete].join(' ')}  onClick={() => deleteEmail(email.id, email.email)}>Löschen</button> : null}
                     </div>
                 )
             })}
