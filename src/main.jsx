@@ -17,45 +17,49 @@ import EditorDash from './pages/EditorDash';
 import WatchVideo from './pages/WatchVideo';
 import Settings from './pages/Settings';
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/editor",
+      element: <Editor />,
+      children: [
+        {
+          index: true,
+          element: <EditorDash />
+        },
+        {
+          path: "/editor/edit/*",
+          element: <EditQuestions />
+        },
+        {
+          path: "/editor/settings",
+          element: <Settings />
+        }
+      ]
+    },
+    {
+      path: "/login",
+      element: <LogIn></LogIn>
+    },
+    {
+      path: "/",
+      element: <App />,
+      children: [
+        {
+          index: true,
+          element: <Dashboard />
+        },
+        {
+          path: "/watch",
+          element: <WatchVideo />
+        }
+      ]
+    }
+  ],
   {
-    path: "/editor",
-    element: <Editor />,
-    children: [
-      {
-        index: true,
-        element:<EditorDash/>
-      },  
-      {
-        path: "/editor/edit/*",
-        element: <EditQuestions />
-      },
-      {
-        path: "/editor/settings",
-        element: <Settings />
-      }
-    ]
-  },
-  {
-    path: "/login",
-    element: <LogIn></LogIn>
-  },
-  {
-    path: "/",
-    element: <App />,
-    children: [
-      {
-        index: true,
-        element: <Dashboard/>
-      },
-      {
-        path: "/watch",
-        element: <WatchVideo/>
-      }
-
-    ]
+    basename: `${import.meta.env.VITE_BASE_PATH}`,
   }
-]);
+  );
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
