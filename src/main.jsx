@@ -16,6 +16,7 @@ import Dashboard from './pages/Dashboard';
 import EditorDash from './pages/EditorDash';
 import WatchVideo from './pages/WatchVideo';
 import Settings from './pages/Settings';
+import Redirect from './pages/Redirect';
 
 const router = createBrowserRouter(
   [
@@ -40,6 +41,10 @@ const router = createBrowserRouter(
     {
       path: "/login",
       element: <LogIn></LogIn>
+    },
+    {
+      path: "/redirect",
+      element: <Redirect></Redirect>
     },
     {
       path: "/",
