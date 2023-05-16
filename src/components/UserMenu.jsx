@@ -13,7 +13,7 @@ export default function UserMenu({ setLoginActive }) {
     return (
       <div className={[styles.menu, open ? styles.menuOpen : ''].join(' ')} >
         <div className={[styles.menuListItem].join(' ')} onClick={() => { }}>Einstellungen</div>
-        <div className={[styles.userName, styles.menuListItem].join(' ')} >Eingeloggt als: {user.username}</div>
+        <div className={[styles.userName, styles.menuListItem].join(' ')} >Eingeloggt als: {user.name}</div>
         <div className={[styles.menuListItem].join(' ')} onClick={() => utils.logout(setUser)}>Log Out</div>
       </div>
     )
