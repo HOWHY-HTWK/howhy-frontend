@@ -1,17 +1,28 @@
-import { useEffect, useReducer, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import styles from './App.module.css'
 import { Outlet } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import UserMenu from './components/UserMenu'
 import LogIn from './components/LogIn'
-import { useStateContext } from './contexts/ContextProvider'
 
 function App() {
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
   const [loginActive, setLoginActive] = useState(false)
   const [frame, setFrame] = useState(determinIfSmartphone(windowSize.current));
+  
+  function toggleFrame() {
+    setFrame(prev => !prev)
+  }
+
+  function determinIfSmartphone(windowSize) {
+    if (windowSize[0] < 1000) {
+      return false
+    } else {
+      return true
+    }
+  }
 
   return (
     <div className={[frame ? styles.phone : styles.phoneOff].join(' ')} >
@@ -27,18 +38,6 @@ function App() {
 
     </div>
   )
-  
-  function toggleFrame() {
-    setFrame(prev => !prev)
-  }
-
-  function determinIfSmartphone(windowSize) {
-    if (windowSize[0] < 1000) {
-      return false
-    } else {
-      return true
-    }
-  }
 }
 
 export default App

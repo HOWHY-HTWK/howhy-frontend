@@ -6,9 +6,18 @@ import { useNavigate } from 'react-router-dom'
 import * as utils from '../utils'
 
 export default function UserMenu({ setLoginActive }) {
-  const { user, authenticated, setUser, setAuthenticated } = useStateContext()
+  const { user, setUser } = useStateContext()
   const [open, setOpen] = useState(false)
-  const navigate = useNavigate()
+
+  function getMenu() {
+    return (
+      <div className={[styles.menu, open ? styles.menuOpen : ''].join(' ')} >
+        <div className={[styles.menuListItem].join(' ')} onClick={() => { }}>Einstellungen</div>
+        <div className={[styles.userName, styles.menuListItem].join(' ')} >Eingeloggt als: {user.username}</div>
+        <div className={[styles.menuListItem].join(' ')} onClick={() => utils.logout(setUser)}>Log Out</div>
+      </div>
+    )
+  }
 
   return (
     <>
@@ -21,14 +30,4 @@ export default function UserMenu({ setLoginActive }) {
       }
     </>
   )
-
-  function getMenu() {
-    return (
-      <div className={[styles.menu, open ? styles.menuOpen : ''].join(' ')} >
-        <div className={[styles.menuListItem].join(' ')} onClick={() => { }}>Einstellungen</div>
-        <div className={[styles.userName, styles.menuListItem].join(' ')} >Eingeloggt als: {user.username}</div>
-        <div className={[styles.menuListItem].join(' ')} onClick={() => utils.logout(setUser)}>Log Out</div>
-      </div>
-    )
-  }
 }

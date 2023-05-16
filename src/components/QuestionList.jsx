@@ -3,17 +3,10 @@ import styles from './css/QuestionList.module.css'
 import * as utils from '../utils.js'
 
 
-export default function QuestionList({questions , editQuestion, deleteQuestion }) {
+export default function QuestionList({ questions, editQuestion, deleteQuestion }) {
 
     const orderedQuestions = questions.sort((first, last) => first.timecode - last.timecode)
     const listElements = orderedQuestions.map(question => getListElement(question));
-
-    return (
-        <>
-            <h3>Existierende Fragen:</h3>
-            {listElements.length > 0 ? <div>{listElements}</div> : 'Für dieses Video gibt es noch keine Fragen'}
-        </>
-    )
 
     function getListElement(question) {
         return (
@@ -30,4 +23,11 @@ export default function QuestionList({questions , editQuestion, deleteQuestion }
             </div>
         )
     }
+
+    return (
+        <>
+            <h3>Existierende Fragen:</h3>
+            {listElements.length > 0 ? <div>{listElements}</div> : 'Für dieses Video gibt es noch keine Fragen'}
+        </>
+    )
 }

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import styles from './css/Question.module.css'
-import axiosClient from '../../axios-client'
 import * as api from '../api'
 
 export default function Question({ questionId, setQuestionId}) {
 
   const [questionData, setQuestionData] = useState({ data: null, selected: [] });
-  // const [selectedAnswers, setselectedAnswers] = useState(selected);
   const [answerCorrect, setAnswerCorrect] = useState(null);
 
   const answers = questionData.data ? getAnswers(questionData.data) : null;

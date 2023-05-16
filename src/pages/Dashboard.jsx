@@ -6,7 +6,7 @@ import { useStateContext } from '../contexts/ContextProvider';
 import styles from './css/Dashboard.module.css';
 
 export default function Dashboard() {
-    const { user, authenticated, setUser } = useStateContext()
+    const { user, setUser } = useStateContext()
     const [score, setscore] = useState(null)
 
     useEffect(() => {

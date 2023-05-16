@@ -24,6 +24,10 @@ export default function DropDown() {
     };
   }, []);
 
+  function handleUserClick() {
+    setIsOpen(!isOpen)
+  }
+
   return (
     <div className={[styles.user].join(' ')} ref={dropdownRef} onClick={handleUserClick}>
       <div className={[styles.name].join(' ')} >Hallo {user.name} <MdArrowDropDown></MdArrowDropDown></div>
@@ -35,25 +39,4 @@ export default function DropDown() {
       </div>
     </div>
   )
-
-  function handleOutsideClick(event) {
-    if (!dropdownRef.current.contains(event.target)) {
-      setIsOpen(false)
-    }
-  }
-
-  function handleUserClick() {
-    setIsOpen(!isOpen)
-  }
-
-  // function logout() {
-  //   axiosClient.post('/logout').then(response => {
-  //     if (response.status === 204) {
-  //       console.log(response)
-  //       setUser(null);
-  //     }
-  //   }).catch(error => {
-  //     console.log(error.response.data)
-  //   })
-  // }
 }

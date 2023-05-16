@@ -7,16 +7,10 @@ import videoListStyles from '../components/css/VideoList.module.css'
 import { Link } from 'react-router-dom'
 
 export default function EditorDash() {
+
   useEffect(() => {
     document.title = "Dashboard";
   }, [])
-  return (
-    <div className={[styles.wrap].join(' ')} >
-      <AllStoredVideosList title={<h2>Alle Videos für die Daten gespeichert sind: </h2>} getListItem={getListItem} />
-      <ChannelVideoList title={<h2>Alle Videos im Howhy Channel: </h2>} getListItem={getListItem} />
-      <div className={[styles.addVideo].join(' ')} ><AddVideo /></div>
-    </div >
-  )
 
   function getListItem(video) {
     return (
@@ -30,6 +24,14 @@ export default function EditorDash() {
       </div>
     )
   }
+
+  return (
+    <div className={[styles.wrap].join(' ')} >
+      <AllStoredVideosList title={<h2>Alle Videos für die Daten gespeichert sind: </h2>} getListItem={getListItem} />
+      <ChannelVideoList title={<h2>Alle Videos im Howhy Channel: </h2>} getListItem={getListItem} />
+      <div className={[styles.addVideo].join(' ')} ><AddVideo /></div>
+    </div >
+  )
 }
 
 

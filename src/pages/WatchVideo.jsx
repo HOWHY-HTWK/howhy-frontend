@@ -5,7 +5,6 @@ import QuestionsTimeline from '../components/QuestionsTimeline'
 import * as utils from '../utils.js'
 import Score from '../components/Score'
 import * as api from '../api'
-import { getVideoInfoFromMediaserver } from '../mediaserverApi'
 
 function WatchVideo() {
   const queryParameters = new URLSearchParams(window.location.search)
@@ -59,29 +58,6 @@ function WatchVideo() {
     setIsFullscreen(!isFullscreen);
   }
 
-  return (
-    <div className={[styles.wrapper, isFullscreen ? styles.wrapperFS : ''].join(' ')} >
-      <div ref={fullScreenWrapper} className={[styles.videoWrapper, isFullscreen ? styles.videoWrapperFS : ''].join(' ')}>
-        <iframe ref={iframe}
-          className={[styles.iframe, isFullscreen ? styles.iframeFS : ''].join(' ')}
-          src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe`}></iframe>
-        <div className={[styles.fsButton].join(' ')} onClick={fullscreen}></div>
-      </div>
-      <div className={[styles.score, isFullscreen ? styles.scoreFS : ''].join(' ')}>
-        {score != null ? <Score newscore={score}></Score> : null}
-      </div>
-      {displayQuestion()}
-      {questionTimecodes && duration ? (
-        <div className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}  >
-          <QuestionsTimeline
-            className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}
-            questionTimecodes={questionTimecodes}
-            duration={duration}
-            jumpToTime={(time) => utils.jumpToTime(iframe, time)} />
-        </div>) : null}
-    </div >
-  )
-
   function displayQuestion() {
     if (currentQuestionId) {
       utils.pauseVideo(iframe);
@@ -117,6 +93,29 @@ function WatchVideo() {
     })
     return question ? question.id : null
   }
+
+  return (
+    <div className={[styles.wrapper, isFullscreen ? styles.wrapperFS : ''].join(' ')} >
+      <div ref={fullScreenWrapper} className={[styles.videoWrapper, isFullscreen ? styles.videoWrapperFS : ''].join(' ')}>
+        <iframe ref={iframe}
+          className={[styles.iframe, isFullscreen ? styles.iframeFS : ''].join(' ')}
+          src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe`}></iframe>
+        <div className={[styles.fsButton].join(' ')} onClick={fullscreen}></div>
+      </div>
+      <div className={[styles.score, isFullscreen ? styles.scoreFS : ''].join(' ')}>
+        {score != null ? <Score newscore={score}></Score> : null}
+      </div>
+      {displayQuestion()}
+      {questionTimecodes && duration ? (
+        <div className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}  >
+          <QuestionsTimeline
+            className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}
+            questionTimecodes={questionTimecodes}
+            duration={duration}
+            jumpToTime={(time) => utils.jumpToTime(iframe, time)} />
+        </div>) : null}
+    </div >
+  )
 
 }
 

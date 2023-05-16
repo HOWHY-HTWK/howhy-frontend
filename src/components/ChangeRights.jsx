@@ -8,9 +8,8 @@ import { useStateContext } from '../contexts/ContextProvider';
 
 export default function ChangeRights() {
     const { user, setUser } = useStateContext()
-
+    
     const [users, setUsers] = useState([])
-    const [newEmail, setNewEmail] = useState('');
 
     useEffect(() => {
         getUsers()

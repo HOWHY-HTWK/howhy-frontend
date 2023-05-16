@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import axiosClient from '../../axios-client';
 import styles from './css/AddEmail.module.css'
-import { getEmails, postEmail } from '../api';
 import * as api from '../api';
 import { useStateContext } from '../contexts/ContextProvider';
 
@@ -12,7 +10,7 @@ export default function AddEmail() {
     const [newEmail, setNewEmail] = useState('');
 
     useEffect(() => {
-        getEmails()
+        api.getEmails()
             .then(response => {
                 setallowedEmails(response.data)
             }).catch(error => {
@@ -23,7 +21,7 @@ export default function AddEmail() {
 
     function saveNewEmail() {
         let request = { 'email': newEmail }
-        postEmail(request)
+        api.postEmail(request)
             .then(response => {
                 setallowedEmails(response.data)
             }).catch(error => {
@@ -50,15 +48,15 @@ export default function AddEmail() {
                 return (
                     <div key={email.id} className={styles.email}>
                         {email.email}
-                        {user.role == 'admin' ? <button className={[styles.smallButton, styles.delete].join(' ')}  onClick={() => deleteEmail(email.id, email.email)}>Löschen</button> : null}
+                        {user.role == 'admin' ? <button className={[styles.smallButton, styles.delete].join(' ')} onClick={() => deleteEmail(email.id, email.email)}>Löschen</button> : null}
                     </div>
                 )
             })}
             {user.role == 'admin' ?
-            <div className={[styles.inputWrapper].join(' ')} >
-                <input value={newEmail} type="email" name="email" placeholder='E-mail' onInput={e => setNewEmail(e.target.value)}></input>
-                 <button onClick={saveNewEmail} className='button'>Neue Email speichern</button>
-            </div> : <div style={{color: 'red'}}>Sie bestizen nicht die Rechte<br /> um die Emails zu bearbeiten.</div>}
+                <div className={[styles.inputWrapper].join(' ')} >
+                    <input value={newEmail} type="email" name="email" placeholder='E-mail' onInput={e => setNewEmail(e.target.value)}></input>
+                    <button onClick={saveNewEmail} className='button'>Neue Email speichern</button>
+                </div> : <div style={{ color: 'red' }}>Sie bestizen nicht die Rechte<br /> um die Emails zu bearbeiten.</div>}
         </div>
     )
 }

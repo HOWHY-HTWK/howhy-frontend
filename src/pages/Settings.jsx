@@ -5,7 +5,7 @@ import AddEmail from '../components/AddEmail';
 import ChangeRights from '../components/ChangeRights';
 
 export default function Settings() {
-    
+
     useEffect(() => {
         document.title = "Einstellungen";
     }, [])

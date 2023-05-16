@@ -21,6 +21,20 @@ import Redirect from './pages/Redirect';
 const router = createBrowserRouter(
   [
     {
+      path: "/",
+      element: <App />,
+      children: [
+        {
+          index: true,
+          element: <Dashboard />
+        },
+        {
+          path: "/watch",
+          element: <WatchVideo />
+        }
+      ]
+    },
+    {
       path: "/editor",
       element: <Editor />,
       children: [
@@ -45,26 +59,12 @@ const router = createBrowserRouter(
     {
       path: "/redirect",
       element: <Redirect></Redirect>
-    },
-    {
-      path: "/",
-      element: <App />,
-      children: [
-        {
-          index: true,
-          element: <Dashboard />
-        },
-        {
-          path: "/watch",
-          element: <WatchVideo />
-        }
-      ]
     }
   ],
   {
     basename: `${import.meta.env.BASE_URL}`,
   }
-  );
+);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

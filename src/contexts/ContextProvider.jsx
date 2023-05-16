@@ -2,9 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 const StateContext = createContext({
     user: null,
-    // authenticated: false,
     setUser: () => { },
-    // setAuthenticated: () => { }
 })
 
 export const ContextProvider = ({ children }) => {

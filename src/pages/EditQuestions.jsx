@@ -39,16 +39,6 @@ export default function EditQuestions() {
 
   refreshCurrentTime()
 
-  return (
-    <div className={[styles.wrapper].join(' ')} >
-      <div>{videoId}</div>
-      <iframe ref={iframe} className={[styles.iframe].join(' ')} src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe/player/`} allowFullScreen={false} ></iframe>
-      {displayAddQuestion()}
-      {displayQuestionEditor()}
-      {!editedQuestion && questions ? <QuestionList questions={questions} editQuestion={setEditedQuestion} deleteQuestion={deleteQuestion} seteditedQuestion={setEditedQuestion}></QuestionList> : null}
-    </div>
-  )
-
   function displayAddQuestion() {
     if (editedQuestion == null) {
       return (
@@ -93,4 +83,14 @@ export default function EditQuestions() {
       }
     }, false)
   }
+
+  return (
+    <div className={[styles.wrapper].join(' ')} >
+      <div>{videoId}</div>
+      <iframe ref={iframe} className={[styles.iframe].join(' ')} src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe/player/`} allowFullScreen={false} ></iframe>
+      {displayAddQuestion()}
+      {displayQuestionEditor()}
+      {!editedQuestion && questions ? <QuestionList questions={questions} editQuestion={setEditedQuestion} deleteQuestion={deleteQuestion} seteditedQuestion={setEditedQuestion}></QuestionList> : null}
+    </div>
+  )
 }
