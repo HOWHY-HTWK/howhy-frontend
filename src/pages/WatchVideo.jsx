@@ -54,12 +54,12 @@ function WatchVideo() {
 
   function fullscreen() {
     if (!isFullscreen) {
-      // fullScreenWrapper.current.requestFullscreen();
-      // screen.orientation.lock("landscape")
+      fullScreenWrapper.current.requestFullscreen();
+      screen.orientation.lock("landscape")
       document.body.style.height = "100vh";
       document.body.style.overflow = "clip";
     } else {
-      // document.exitFullscreen();
+      document.exitFullscreen();
       document.body.style.height = "unset";
       document.body.style.overflow = "unset";
     }
@@ -82,20 +82,19 @@ function WatchVideo() {
       <div className={[styles.score, isFullscreen ? styles.scoreFS : ''].join(' ')}>
         {score != null ? <Score newscore={score}></Score> : null}
       </div>
-      {displayQuestion()}
+      {videoRef.current ? displayQuestion() : null}
       {questionTimecodes && duration ?
         <div className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}  >
           <QuestionsTimeline
             className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}
             questionTimecodes={questionTimecodes}
             duration={duration}
-            jumpToTime={(time) => videoRef.current.seek(time)} />
+            jumpToTime={(time) => {videoRef.current.currentTime = time}} />
         </div> : null}
     </div >
   )
 
   function displayQuestion() {
-    if (videoRef.current) {
       if (currentQuestionId && videoRef.current) {
         videoRef.current.pause()
         return (
@@ -112,7 +111,6 @@ function WatchVideo() {
         videoRef.current.play()
         return null;
       }
-    }
   }
 
   function handleTimeUpdate(time) {
