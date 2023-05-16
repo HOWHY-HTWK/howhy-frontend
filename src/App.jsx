@@ -9,7 +9,7 @@ import LogIn from './components/LogIn'
 function App() {
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
-  const [loginActive, setLoginActive] = useState(true)
+  const [loginActive, setLoginActive] = useState(false)
   const [frame, setFrame] = useState(determinIfSmartphone(windowSize.current));
   
   function toggleFrame() {
@@ -35,7 +35,6 @@ function App() {
       :
       <LogIn returnSuccess={success => setLoginActive(!success)}></LogIn>}
       <div className={[styles.toggle].join(' ')} onClick={toggleFrame}>Toggle Frame</div>
-
     </div>
   )
 }
