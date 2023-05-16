@@ -5,7 +5,7 @@
     gap: 1rem;
     width: 15rem;
     margin: 5rem auto;
-    background-color: aliceblue;
+    background-color: var(--item-color);
     padding: 1rem;
     border-radius: 1rem;
 }
@@ -21,11 +21,14 @@
     text-align: center;
 }
 
+.input {
+    border-radius: 0.5em;
+}
+
 .register {
     font-size: 0.8rem;
     color: blue;
     cursor: pointer;
-
 }
 
 .error {

@@ -7,6 +7,7 @@ export default function SignUp({ toggleSignUp, showEditorOption = false }) {
   const { user, setUser } = useStateContext()
 
   const [signUpData, setsignUpData] = useState({
+    name: makeUserName(6),
     email: '', password: '',
     repeatPassword: '',
     editorRights: showEditorOption ? true : false
@@ -17,7 +18,7 @@ export default function SignUp({ toggleSignUp, showEditorOption = false }) {
     axiosClient.get('/sanctum/csrf-cookie')
       .then(response => {
         let requestObject = {
-          name: makeUserName(5),
+          name: signUpData.name,
           email: signUpData.email,
           password: signUpData.password,
           password_confirmation: signUpData.repeatPassword,
@@ -67,6 +68,15 @@ export default function SignUp({ toggleSignUp, showEditorOption = false }) {
       <form method="post" className={[styles.vertical].join(' ')} onSubmit={handleSignup}>
         <span>Registrieren</span>
         <input
+        className={[styles.input].join(' ')} 
+          value={signUpData.name}
+          onInput={e => setsignUpData({ ...signUpData, name: e.target.value })}
+          type="username"
+          name="username"
+          placeholder='Benutzername'
+          autoComplete='username' />
+        <input
+        className={[styles.input].join(' ')} 
           value={signUpData.email}
           onInput={e => setsignUpData({ ...signUpData, email: e.target.value })}
           type="email"
@@ -74,6 +84,7 @@ export default function SignUp({ toggleSignUp, showEditorOption = false }) {
           placeholder='E-mail'
           autoComplete='username' />
         <input
+        className={[styles.input].join(' ')} 
           value={signUpData.password}
           onInput={e => setsignUpData({ ...signUpData, password: e.target.value })}
           type="password"
@@ -81,6 +92,7 @@ export default function SignUp({ toggleSignUp, showEditorOption = false }) {
           placeholder='Passwort'
           autoComplete='new-password' />
         <input
+        className={[styles.input].join(' ')} 
           value={signUpData.repeatPassword}
           onInput={e => setsignUpData({ ...signUpData, repeatPassword: e.target.value })}
           type="password"

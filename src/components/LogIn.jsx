@@ -46,9 +46,29 @@ export default function LogIn({ returnSuccess = (success) => success, showEditor
       <div className={[styles.formwrapper].join(' ')} >
         <form method="post" className={[styles.vertical].join(' ')} onSubmit={handleLogin}>
           <span>Log In</span>
-          <label><input ref={emailRef} type="email" name="email" placeholder='E-mail' autoComplete='username' /></label>
-          <label><input ref={passwordRef} type="password" name="password" placeholder='Passwort' autoComplete='current-password' /></label>
-          <label>Angemeldet Bleiben<input checked={remember} onChange={e => setRemember(e.target.checked)} type='checkbox' name='remember'></input></label>
+          <input
+            className={[styles.input].join(' ')}
+            ref={emailRef}
+            type="email"
+            name="email"
+            placeholder='E-mail'
+            autoComplete='username' />
+          <input
+            className={[styles.input].join(' ')}
+            ref={passwordRef}
+            type="password"
+            name="password"
+            placeholder='Passwort'
+            autoComplete='current-password' />
+          <label>
+            Angemeldet Bleiben
+            <input
+              className={[styles.input].join(' ')}
+              checked={remember}
+              onChange={e => setRemember(e.target.checked)}
+              type='checkbox'
+              name='remember'></input>
+          </label>
           <button className={['button'].join(' ')} type="submit">LogIn</button>
         </form>
         <div className={[styles.register].join(' ')} onClick={toggleSignUp}> Registrieren</div>
