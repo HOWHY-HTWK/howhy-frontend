@@ -74,7 +74,7 @@ export default function SignUp({ toggleSignUp, showEditorOption = false }) {
           type="username"
           name="username"
           placeholder='Benutzername'
-          autoComplete='username' />
+          autoComplete='off' />
         <input
         className={[styles.input].join(' ')} 
           value={signUpData.email}
@@ -82,7 +82,7 @@ export default function SignUp({ toggleSignUp, showEditorOption = false }) {
           type="email"
           name="email"
           placeholder='E-mail'
-          autoComplete='username' />
+          autoComplete='email' />
         <input
         className={[styles.input].join(' ')} 
           value={signUpData.password}
