@@ -21,8 +21,40 @@
     text-align: center;
 }
 
+.info{
+    cursor: pointer;
+}
+
+.infoBox{
+    font-size: medium;
+    position: absolute;
+    background-color: var(--background-color);
+    padding: 1em;
+    max-width: 15em;
+    margin-left: -3em;
+    border: 1px solid black;
+    border-radius: 1em;
+    visibility: hidden;
+}
+
+.visible{
+    visibility: visible;
+}
+
+.label {
+    margin-top: -1em;
+    font-size: 0.7em;
+    align-self: center;
+}
+
+.hidden{
+    visibility: hidden;
+}
+
 .input {
-    border-radius: 0.5em;
+    border: 1px solid black;
+    border-radius: 0.4em;
+    padding: 0.5em;
 }
 
 .register {
@@ -46,9 +78,9 @@
     background-color: rgba(0, 0, 0, 0.262);
 }
 
-.alert{
+.alert {
     display: flex;
-    flex-flow: column nowrap ;
+    flex-flow: column nowrap;
     /* align-items: center; */
     gap: 1rem;
     background-color: var(--item-color);
