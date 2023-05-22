@@ -24,7 +24,7 @@ export default function Score({ newscore }) {
             setscore(oldscore)
             setTimeout(() => {
                 countup(oldscore, newscore)
-            }, (newscore - oldscore) / 10);
+            }, (newscore - oldscore) / 20);
         } else {
             return;
         }
