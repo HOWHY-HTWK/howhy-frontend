@@ -15,6 +15,7 @@ export default function Score({ newscore }) {
 
     useEffect(() => {
         countup(scoreRef.current, newscore)
+        scoreRef.current = newscore
     }, [newscore])
 
     function countup(oldscore, newscore) {
