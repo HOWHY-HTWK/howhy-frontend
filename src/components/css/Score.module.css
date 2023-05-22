@@ -1,0 +1,25 @@
+.scoreWrap {
+    width: fit-content;
+    margin: 0.7rem 0.5rem;
+    margin-left: auto;
+    border: 1px solid black;
+    border-radius: 1rem;
+    position: relative;
+    background-color: var(--background-color);
+}
+
+.scoreLogo {
+    position: absolute;
+    height: 4rem;
+    margin-left: -1.25rem;
+    margin-top: -0.5rem;
+}
+
+.scoreCounter {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 2em;
+    text-shadow: black 1px 0  10px;
+    margin: 0rem 2rem;
+    color: gold;
+}
+

@@ -1,0 +1,9 @@
+.wrap{
+    padding: 1rem;
+}
+
+.contentWrap{
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1rem;
+}

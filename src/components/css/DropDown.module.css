@@ -1,0 +1,53 @@
+.wrap {
+    min-width: 10rem;
+    border-radius: 1rem;
+    padding: 0.5rem 0;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .3), 0 2px 6px 2px rgba(60, 64, 67, .15);
+    background-color: var(--background-color);
+}
+
+.user {
+    cursor: pointer;
+    padding: 0 1rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.menuListItem {
+    display: block;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    text-align: left;
+}
+
+.menuListItem:hover {
+    background-color: rgba(128, 128, 128, 0.541);
+}
+
+.name{
+    color: white;
+}
+.user:hover,
+.home:hover {
+    background-color: rgba(0, 0, 0, 0.619);
+}
+
+
+.dropDownWrapper {
+    position: absolute;
+    padding-top: 3.5rem;
+    right: 2rem;
+    visibility: hidden;
+    transform: translate(0rem, 3rem);
+}
+
+.user:hover .dropDownWrapper {
+    visibility: visible;
+}
+
+.visible {
+    visibility: visible;
+}

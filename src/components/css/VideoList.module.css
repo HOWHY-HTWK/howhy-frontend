@@ -1,0 +1,55 @@
+
+.videoListWrapper{
+    width: 27rem;
+    max-width: 100%;
+}
+
+.videoListBody {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.videoInList {
+    height: 7rem;
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: 40% auto;
+    grid-template-areas:
+        "thumb title"
+        "thumb buttons";
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .3);
+    margin-bottom: 0.8rem;
+
+}
+
+.Title {
+    padding-top: .5rem;
+    padding-left: 1rem;
+    grid-area: title;
+    font-weight: 500;
+}
+
+.Thumb {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    grid-area: thumb;
+    object-fit: cover;
+}
+
+.questions{
+    grid-area: questions;
+}
+
+.buttonWrap {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
+    grid-area: buttons;
+    padding-right: 1rem;
+}
