@@ -3,20 +3,23 @@ import axiosClient from '../../axios-client.jsx'
 import styles from './css/Login.module.css'
 import { useStateContext } from '../contexts/ContextProvider.jsx'
 
-export default function SignUp({ toggleSignUp, showEditorOption = false }) {
+export default function SignUp({ toggleSignUp, showEditorOption = false, logIn }) {
   const { user, setUser } = useStateContext()
 
   const [info, setInfo] = useState(false)
   const infoRef = useRef()
 
   const [signUpData, setsignUpData] = useState({
-    name: makeUserName(6),
+    name: '',
     email: '', password: '',
     repeatPassword: '',
     editorRights: showEditorOption ? true : false
   })
 
   useEffect(() => {
+    //set random username initially
+    setsignUpData({ ...signUpData , name: makeUserName(6)})
+
     const handleOutsideClick = (event) => {
       if (!infoRef.current.contains(event.target)) {
         setInfo(false)
@@ -43,7 +46,7 @@ export default function SignUp({ toggleSignUp, showEditorOption = false }) {
           .then(response => {
             console.log(response)
             // alert('Registrierung erfolgreich!')
-            logIn()
+            logIn(signUpData.email, signUpData.password, true)
           }).catch((error) => {
             // debugger
             alert(error.response.data.message)
@@ -57,25 +60,7 @@ export default function SignUp({ toggleSignUp, showEditorOption = false }) {
     for (let counter = 0; counter < length; counter++) {
       result += characters.charAt(Math.floor(Math.random() * characters.length));
     }
-    console.log(result);
     return result;
-  }
-
-  function logIn() {
-    axiosClient.get('/sanctum/csrf-cookie')
-      .then(response => {
-        axiosClient.post('/login', {
-          email: signUpData.email,
-          password: signUpData.password,
-          remember: false
-        }).then(response => {
-          console.log(response)
-          setUser(response.data)
-        }).catch((error) => {
-          alert(error.response.data.message)
-          console.log(error.response)
-        });
-      })
   }
 
   function getUserNameInfo() {

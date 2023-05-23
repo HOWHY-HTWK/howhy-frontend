@@ -16,15 +16,15 @@ export default function LogIn({ returnSuccess = (success) => success, showEditor
 
   function handleLogin(e) {
     e.preventDefault();
-    logIn()
+    logIn(emailRef.current.value, passwordRef.current.value, remember)
   }
 
-  function logIn() {
+  function logIn(email, password, remember) {
     axiosClient.get('/sanctum/csrf-cookie')
       .then(response => {
         axiosClient.post('/login', {
-          email: emailRef.current.value,
-          password: passwordRef.current.value,
+          email: email,
+          password: password,
           remember: remember
         }).then(response => {
           console.log(response)
@@ -78,7 +78,10 @@ export default function LogIn({ returnSuccess = (success) => success, showEditor
 
   return (
     <>
-      {!signUp ? getLogin() : <SignUp showEditorOption={showEditorOption} toggleSignUp={toggleSignUp}></SignUp>}
+      {!signUp ? getLogin() : <SignUp showEditorOption={showEditorOption}
+        toggleSignUp={toggleSignUp}
+        logIn={logIn}>
+          </SignUp>}
     </>
   )
 }
