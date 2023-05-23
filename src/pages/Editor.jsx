@@ -8,6 +8,7 @@ import Footer from '../components/Footer'
 import DropDown from '../components/DropDown'
 import axios from 'axios'
 import styles from './css/Editor.module.css'
+import VerifyEmail from './VerifyEmail'
 
 export default function Editor() {
     const { user, setUser } = useStateContext()
@@ -43,12 +44,6 @@ export default function Editor() {
             )
     }, [])
 
-    function refreshUser() {
-        axiosClient.get('/api/user').then(response => {
-            setUser(response.data)
-        })
-    }
-
     function content() {
         return (
             <div className={['pageWrap'].join(' ')} >
@@ -61,27 +56,11 @@ export default function Editor() {
         )
     }
 
-    function verifiyEmail() {
-        return (
-            <div className={['center', styles.mail].join(' ')} >
-                Bitte verifizieren sie ihre E-mail adresse und drücken sie dann auf "Weiter"
-                <button className={['button'].join(' ')} onClick={resendLink}>Link erneut senden</button>
-                <button className={['button'].join(' ')} onClick={refreshUser}>Weiter</button>
-            </ div>
-        )
-    }
-
-    function resendLink() {
-        axiosClient.post('/email/verification-notification').then(response => {
-            alert('Ein neuer Link wurde gesendet')
-        })
-    }
-
     return user ?
         (user && user.role == 'creator' || user.role == 'admin') ?
             user.email_verified_at != null ?
                 content()
-                : verifiyEmail()
+                : <VerifyEmail></VerifyEmail>
             :
             (() => {
                 alert('Sie dürfen leider nicht auf diese seite zugreifen')
@@ -89,5 +68,4 @@ export default function Editor() {
             })()
         :
         <LogIn showEditorOption={true}></LogIn>
-
 }
