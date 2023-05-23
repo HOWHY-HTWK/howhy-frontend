@@ -17,6 +17,7 @@ import EditorDash from './pages/EditorDash';
 import WatchVideo from './pages/WatchVideo';
 import Settings from './pages/Settings';
 import Redirect from './pages/Redirect';
+import UserLogin from './components/UserLogin';
 
 const router = createBrowserRouter(
   [
@@ -55,6 +56,10 @@ const router = createBrowserRouter(
     {
       path: "/login",
       element: <LogIn></LogIn>
+    },
+    {
+      path: "/userlogin",
+      element: <UserLogin></UserLogin>
     },
     {
       path: "/redirect",

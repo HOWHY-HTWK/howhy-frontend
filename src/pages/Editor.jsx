@@ -64,8 +64,8 @@ export default function Editor() {
             :
             (() => {
                 alert('Sie dürfen leider nicht auf diese seite zugreifen')
-                return <LogIn showEditorOption={true}></LogIn>
+                return <Navigate to="/login" />
             })()
         :
-        <LogIn showEditorOption={true}></LogIn>
+        <Navigate to="/login" />
 }

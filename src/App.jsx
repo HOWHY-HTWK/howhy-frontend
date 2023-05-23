@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import styles from './App.module.css'
-import { Outlet } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import UserMenu from './components/UserMenu'
@@ -15,7 +15,6 @@ function App() {
 
 	const { user, setUser } = useStateContext()
 
-	const [loginActive, setLoginActive] = useState(false)
 	const [frame, setFrame] = useState(determinIfSmartphone(windowSize.current));
 
 	useEffect(() => {
@@ -42,14 +41,11 @@ function App() {
 
 	return (
 		<div className={[frame ? styles.phone : styles.phoneOff].join(' ')} >
-			{!loginActive ?
 				<div className={['pageWrap'].join(' ')} >
-					<Header><UserMenu setLoginActive={setLoginActive} /></Header>
+					<Header><UserMenu/></Header>
 					<Outlet />
 					<Footer></Footer>
 				</div>
-				: <LogIn returnSuccess={success => setLoginActive(!success)}></LogIn>
-			}
 			{user && user.email_verified_at == null ?
 				<VerifyEmailBanner></VerifyEmailBanner>
 				: null

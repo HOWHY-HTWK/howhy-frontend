@@ -2,13 +2,15 @@ import React, { createRef, useEffect, useState } from 'react'
 import axiosClient from '../../axios-client.jsx'
 import { useStateContext } from '../contexts/ContextProvider.jsx';
 import styles from './css/Login.module.css'
-import UserSignUp from './UserSignUp.jsx';
+import SignUp from './SignUp.jsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export default function UserLogin({ returnSuccess = (success) => success }) {
+export default function UserLogIn({ showEditorOption = false }) {
+  const navigate = useNavigate();
+
   const { user, setUser } = useStateContext()
 
-  const usernameRef = createRef()
+  const emailRef = createRef()
   const passwordRef = createRef()
   const [remember, setRemember] = useState(false)
 
@@ -16,20 +18,20 @@ export default function UserLogin({ returnSuccess = (success) => success }) {
 
   function handleLogin(e) {
     e.preventDefault();
-    logIn()
+    logIn(emailRef.current.value, passwordRef.current.value, remember)
   }
 
-  function logIn() {
+  function logIn(email, password, remember) {
     axiosClient.get('/sanctum/csrf-cookie')
       .then(response => {
-        axiosClient.post('/api/userlogin', {
-          username: usernameRef.current.value,
-          password: passwordRef.current.value,
+        axiosClient.post('/login', {
+          email: email,
+          password: password,
           remember: remember
         }).then(response => {
           console.log(response)
           setUser(response.data)
-          returnSuccess(true)
+          navigate(-1)
         }).catch((error) => {
           alert(error.response.data.message)
           console.log(error.response)
@@ -46,9 +48,29 @@ export default function UserLogin({ returnSuccess = (success) => success }) {
       <div className={[styles.formwrapper].join(' ')} >
         <form method="post" className={[styles.vertical].join(' ')} onSubmit={handleLogin}>
           <span>Log In</span>
-          <label><input ref={usernameRef} type="username" name="username" placeholder='Nutzername' autoComplete='username' /></label>
-          <label><input ref={passwordRef} type="password" name="password" placeholder='Passwort' autoComplete='current-password' /></label>
-          <label>Angemeldet Bleiben<input checked={remember} onChange={e => setRemember(e.target.checked)} type='checkbox' name='remember'></input></label>
+          <input
+            className={[styles.input].join(' ')}
+            ref={emailRef}
+            type="email"
+            name="email"
+            placeholder='E-mail'
+            autoComplete='username' />
+          <input
+            className={[styles.input].join(' ')}
+            ref={passwordRef}
+            type="password"
+            name="password"
+            placeholder='Passwort'
+            autoComplete='current-password' />
+          <label>
+            Angemeldet Bleiben
+            <input
+              className={[styles.input].join(' ')}
+              checked={remember}
+              onChange={e => setRemember(e.target.checked)}
+              type='checkbox'
+              name='remember'></input>
+          </label>
           <button className={['button'].join(' ')} type="submit">LogIn</button>
         </form>
         <div className={[styles.register].join(' ')} onClick={toggleSignUp}> Registrieren</div>
@@ -58,8 +80,10 @@ export default function UserLogin({ returnSuccess = (success) => success }) {
 
   return (
     <>
-      {!signUp ? getLogin() : <UserSignUp returnSuccess={returnSuccess} toggleSignUp={toggleSignUp}></UserSignUp>}
-
+      {!signUp ? getLogin() : <SignUp showEditorOption={showEditorOption}
+        toggleSignUp={toggleSignUp}
+        logIn={logIn}>
+          </SignUp>}
     </>
   )
 }

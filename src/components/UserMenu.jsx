@@ -5,7 +5,9 @@ import { useStateContext } from '../contexts/ContextProvider'
 import { useNavigate } from 'react-router-dom'
 import * as utils from '../utils'
 
-export default function UserMenu({ setLoginActive }) {
+export default function UserMenu() {
+  const navigate = useNavigate();
+
   const { user, setUser } = useStateContext()
   const [open, setOpen] = useState(false)
 
@@ -26,7 +28,7 @@ export default function UserMenu({ setLoginActive }) {
           <MdMenu onClick={() => setOpen(prev => !prev)} className={[styles.icon].join(' ')} ></MdMenu>
           {getMenu()}
         </div>
-        : <div className={['button', 'center', styles.logIn].join(' ')} onClick={() => setLoginActive(true)} >Log In</div>
+        : <div className={['button', 'center', styles.logIn].join(' ')} onClick={() => navigate("/userlogin")} >Log In</div>
       }
     </>
   )

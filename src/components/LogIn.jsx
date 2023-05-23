@@ -6,6 +6,8 @@ import SignUp from './SignUp.jsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function LogIn({ returnSuccess = (success) => success, showEditorOption = false }) {
+  const navigate = useNavigate();
+
   const { user, setUser } = useStateContext()
 
   const emailRef = createRef()
@@ -29,7 +31,7 @@ export default function LogIn({ returnSuccess = (success) => success, showEditor
         }).then(response => {
           console.log(response)
           setUser(response.data)
-          returnSuccess(true)
+          navigate(-1)
         }).catch((error) => {
           alert(error.response.data.message)
           console.log(error.response)
