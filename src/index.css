@@ -15,7 +15,8 @@
   --background-color:#242424;
   --item-color: #3f3f3f;
   --color: white;
-  --user-accent-color: rgb(184, 56, 126);
+  --color-inverted: black;
+  --user-accent-color: #FF62D5;
   --editor-accent-color: rgba(88,116,194,255);
 }
 
@@ -47,10 +48,10 @@ h1 {
 }
 
 .button {
-  /* box-sizing: border-box; */
-  border-radius: 8px;
+  box-sizing: border-box;
+  border-radius: 2em;
   border: 1px solid transparent;
-  padding: 0.4em 0.8em;
+  padding: 10px 30px;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
@@ -101,6 +102,8 @@ h1 {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
+    --color-inverted: white;
+
     background-color: #ffffff;
 
     --background-color:white;

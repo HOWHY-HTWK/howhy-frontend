@@ -1,9 +1,14 @@
 import React, { createRef, useEffect, useState } from 'react'
 import axiosClient from '../../axios-client.jsx'
 import { useStateContext } from '../contexts/ContextProvider.jsx';
-import styles from './css/Login.module.css'
+import styles from './css/UserLogin.module.css'
 import SignUp from './SignUp.jsx';
 import { useLocation, useNavigate } from 'react-router-dom';
+
+import howhyLogo from '../assets/howhy_logo.svg'
+import info from '../assets/infographic.svg'
+import background from '../assets/loginBackground.png'
+import UserSignUp from './UserSignUp.jsx';
 
 export default function UserLogIn({ showEditorOption = false }) {
   const navigate = useNavigate();
@@ -12,13 +17,19 @@ export default function UserLogIn({ showEditorOption = false }) {
 
   const emailRef = createRef()
   const passwordRef = createRef()
-  const [remember, setRemember] = useState(false)
+
+  const [loginData, setLoginData] = useState({
+    email: '',
+    password: ''
+  })
+
+  const [remember, setRemember] = useState(true)
 
   const [signUp, setSignUp] = useState(false);
 
   function handleLogin(e) {
     e.preventDefault();
-    logIn(emailRef.current.value, passwordRef.current.value, remember)
+    logIn(loginData.email, loginData.password, remember)
   }
 
   function logIn(email, password, remember) {
@@ -43,35 +54,35 @@ export default function UserLogIn({ showEditorOption = false }) {
     setSignUp(!signUp)
   }
 
-  function getLogin() {
+  function getLoginForm() {
     return (
       <div className={[styles.formwrapper].join(' ')} >
-        <form method="post" className={[styles.vertical].join(' ')} onSubmit={handleLogin}>
-          <span>Log In</span>
-          <input
-            className={[styles.input].join(' ')}
-            ref={emailRef}
-            type="email"
-            name="email"
-            placeholder='E-mail'
-            autoComplete='username' />
-          <input
-            className={[styles.input].join(' ')}
-            ref={passwordRef}
-            type="password"
-            name="password"
-            placeholder='Passwort'
-            autoComplete='current-password' />
-          <label>
-            Angemeldet Bleiben
+        <form method="post" className={[styles.form].join(' ')} onSubmit={handleLogin}>
+          <div className={[styles.label].join(' ')} >
+            <div className={[styles.labelText, loginData.email == '' ? styles.hidden : null].join(' ')} >E-Mail</div>
             <input
               className={[styles.input].join(' ')}
-              checked={remember}
-              onChange={e => setRemember(e.target.checked)}
-              type='checkbox'
-              name='remember'></input>
-          </label>
-          <button className={['button'].join(' ')} type="submit">LogIn</button>
+              ref={emailRef}
+              value={loginData.email}
+              onInput={e => setLoginData({ ...loginData, email: e.target.value })}
+              type="email"
+              name="email"
+              placeholder='E-mail'
+              autoComplete='username' />
+          </div>
+          <div className={[styles.label].join(' ')} >
+            <div className={[styles.labelText, loginData.password == '' ? styles.hidden : null].join(' ')} >Passwort</div>
+            <input
+              className={[styles.input].join(' ')}
+              ref={passwordRef}
+              value={loginData.password}
+              onInput={e => setLoginData({ ...loginData, password: e.target.value })}
+              type="password"
+              name="password"
+              placeholder='Passwort'
+              autoComplete='current-password' />
+          </div>
+          <button className={['button', styles.loginButton].join(' ')} type="submit">Einloggen</button>
         </form>
         <div className={[styles.register].join(' ')} onClick={toggleSignUp}> Registrieren</div>
       </div>
@@ -79,11 +90,15 @@ export default function UserLogIn({ showEditorOption = false }) {
   }
 
   return (
-    <>
-      {!signUp ? getLogin() : <SignUp showEditorOption={showEditorOption}
+    <div className={[styles.wrap].join(' ')}
+      style={{ backgroundImage: `url(${background})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }} >
+      <div className={[styles.logoWrap].join(' ')} >
+        <img className={[styles.logo].join(' ')} src={howhyLogo} ></img>
+        {!signUp ? <img className={[styles.infoGraphic].join(' ')} src={info} ></img> : null}
+      </div>
+      {!signUp ? getLoginForm() : <UserSignUp showEditorOption={showEditorOption}
         toggleSignUp={toggleSignUp}
-        logIn={logIn}>
-          </SignUp>}
-    </>
+        logIn={logIn} />}
+    </div>
   )
 }
