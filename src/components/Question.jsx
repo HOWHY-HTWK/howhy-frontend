@@ -42,10 +42,10 @@ export default function Question({ questionId, setQuestionId}) {
   function processAnswer(answers) {
     if (answers.length != 0) {
       var request = {
-        "questionId": questionData.id,
+        "questionId": questionId,
         "answers": answers
       }
-      api.checkAnswers(questionId, request)
+      api.checkAnswers(request)
         .then((response) => {
           setAnswerCorrect(response.data.success)
           setTimeout(function () {

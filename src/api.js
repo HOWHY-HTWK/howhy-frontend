@@ -16,8 +16,8 @@ export function getQuestionData(id){
     return apiClient.get(`/question/${id}`)
 }
 
-export function checkAnswers(id, request){
-    return apiClient.post(`/question/checkAnswers/${id}`, request)
+export function checkAnswers(request){
+    return apiClient.post(`/question/checkAnswers/`, request)
 }
 
 export function getQuestions(videoId){
