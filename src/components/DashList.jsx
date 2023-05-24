@@ -16,10 +16,12 @@ export default function DashList() {
     return (
       <NavLink className={[styles.listItem, 'listElement'].join(' ')} key={video.oid} to={`/watch/?id=${video.oid}`}>
         <img className={[styles.img].join(' ')} src={video.thumb}></img>
-        <div className={[styles.title].join(' ')} >{video.title}</div>
-        <div className={[styles.statsWrap].join(' ')} >
+        <div className={[styles.title, styles.item].join(' ')} >{video.title}</div>
+        <div className={[styles.statsWrap, styles.item].join(' ')} >
           <div className={[styles.stats, getBackground(video.success)].join(' ')} >{video.success.correctCount + ' / ' + video.success.questionCount}</div>
         </div>
+        <div className={[styles.points, styles.item].join(' ')} >300 Points</div>
+        <div className={[styles.views, styles.item].join(' ')} >20 Views</div>
       </NavLink>
     )
   }
@@ -53,7 +55,7 @@ export default function DashList() {
 
   return (
     <div className={[styles.wrap, 'center'].join(' ')} >
-      {videoList ? <div className={[].join(' ')} >{videos}</div> : null}
+      {videoList ? videos : null}
     </div>
   )
 }

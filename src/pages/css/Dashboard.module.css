@@ -1,4 +1,11 @@
 .wrap {
     margin: auto;
-    max-width: 500px;
+}
+
+.page {
+    display: none;
+}
+
+.active {
+    display:block;
 }

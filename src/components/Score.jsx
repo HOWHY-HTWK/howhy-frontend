@@ -32,8 +32,9 @@ export default function Score({ newscore }) {
 
     return (
         <div className={[styles.scoreWrap].join(' ')} >
-            <Logo className={[styles.scoreLogo].join(' ')} ></Logo>
-            <div className={[styles.scoreCounter].join(' ')} >{score}</div>
+            <div className={[styles.level].join(' ')} >LV 2</div>
+            <div className={[styles.divider].join(' ')} ></div>
+            <div className={[styles.scoreCounter].join(' ')} >{score} Pt.</div>
         </div>
     )
 }

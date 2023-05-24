@@ -9,6 +9,7 @@ import { useStateContext } from './contexts/ContextProvider'
 import VerifyEmail from './pages/VerifyEmail'
 import VerifyEmailBanner from './components/VerifyEmailBanner'
 import axiosClient from '../axios-client'
+import UserHeader from './components/UserHeader'
 
 function App() {
 	const windowSize = useRef([window.innerWidth, window.innerHeight]);
@@ -20,7 +21,7 @@ function App() {
 	useEffect(() => {
 		refreshUser()
 	}, [])
-	
+
 	function refreshUser() {
 		axiosClient.get('/api/user').then(response => {
 			setUser(response.data)
@@ -41,11 +42,11 @@ function App() {
 
 	return (
 		<div className={[frame ? styles.phone : styles.phoneOff].join(' ')} >
-				<div className={['pageWrap'].join(' ')} >
-					<Header><UserMenu/></Header>
-					<Outlet />
-					<Footer></Footer>
-				</div>
+			<div className={['pageWrap'].join(' ')} >
+				<UserHeader ></UserHeader>
+				<Outlet />
+				<Footer></Footer>
+			</div>
 			{user && user.email_verified_at == null ?
 				<VerifyEmailBanner></VerifyEmailBanner>
 				: null

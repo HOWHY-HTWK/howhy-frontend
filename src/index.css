@@ -13,10 +13,12 @@
   min-height: 100vh;
 
   --background-color:#242424;
+  --background-blue: #EAE8FF;
   --item-color: #3f3f3f;
   --color: white;
   --color-inverted: black;
   --user-accent-color: #FF62D5;
+  --dark-accent: #191C47;
   --editor-accent-color: rgba(88,116,194,255);
 }
 
