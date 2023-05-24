@@ -5,7 +5,7 @@ import styles from './css/Login.module.css'
 import SignUp from './SignUp.jsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export default function LogIn({ returnSuccess = (success) => success, showEditorOption = false }) {
+export default function LogIn({ returnSuccess = (success) => success, showEditorOption = true }) {
   const navigate = useNavigate();
 
   const { user, setUser } = useStateContext()
