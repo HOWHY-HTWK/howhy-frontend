@@ -3,21 +3,38 @@ import styles from './css/UserPage.module.css'
 import { useStateContext } from '../contexts/ContextProvider'
 import { Link, useNavigate } from 'react-router-dom'
 import { logout } from '../utils'
+import { MdOutlineSave } from "react-icons/md";
+
 
 import user_image_icon from '../assets/user_image_icon.svg'
 import pencil from '../assets/icons/pencil.svg'
 import logout_icon from '../assets/icons/logout.svg'
+import { saveUsername } from '../api'
 
 
 
 export default function UserPage() {
     const { user, setUser } = useStateContext()
     const [name, setName] = useState(user ? user.name : '')
+    const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
     function logoutAndGoToHome() {
         logout(setUser)
         navigate('/')
+    }
+
+    function saveName() {
+        let request = {
+            username: name
+        }
+        setMessage('')
+        saveUsername(request).then(response => {
+            setMessage('Erfolgreich gespeichert!')
+            setUser(response.data)
+        }).catch(error => {
+            setMessage(<span style={{color: 'red'}}>{error.response.data.message}</span>)
+        })
     }
 
     return (
@@ -26,8 +43,17 @@ export default function UserPage() {
                 <img src={user_image_icon}></img>
                 <div className={[styles.username].join(' ')} >
                     <input className={[styles.nameInput].join(' ')} value={name} onInput={e => setName(e.target.value)} />
-                    <img className={[styles.pencil].join(' ')} src={pencil}></img>
+                    {name == user.name ?
+                        <img className={[styles.editName].join(' ')} src={pencil}></img>
+                        :
+                        <MdOutlineSave className={[styles.editName, styles.saveIcon].join(' ')} onClick={saveName} ></MdOutlineSave>
+                    }
                 </div>
+                {message != '' ?
+                    <div className={[styles.message].join(' ')} >{message} </div>
+                    :
+                    <div className={[styles.message, styles.invisible ].join(' ')} >E</div>
+                }
                 <div>
                 </div>
             </div>

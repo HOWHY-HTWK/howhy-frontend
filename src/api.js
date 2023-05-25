@@ -56,3 +56,9 @@ export function getUsers(){
 export function giveEditorRights(id){
     return apiClient.post(`/makeEditor/${id}`)
 }
+
+//user 
+
+export function saveUsername(request){
+    return apiClient.post(`/username/`, request)
+}
