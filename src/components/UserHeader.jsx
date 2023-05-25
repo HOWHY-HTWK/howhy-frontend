@@ -1,16 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
-import logoBig from '../assets/logo_big.png'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import styles from './css/UserHeader.module.css'
 import * as api from '../api';
 
 import profil from '../assets/icons/Profil.svg'
 import { useStateContext } from '../contexts/ContextProvider'
-import UserMenu from './UserMenu'
 import Score from './Score'
 
 export default function UserHeader({ children, setPage }) {
     const { user, setUser } = useStateContext()
+    const navigate = useNavigate();
 
     const [score, setscore] = useState(null)
 
@@ -23,13 +22,16 @@ export default function UserHeader({ children, setPage }) {
     return (
         <div className={[styles.background].join(' ')} >
             <div className={[styles.topbar].join(' ')} >
-                <Link to={'/'} className={[styles.home].join(' ')} >
-                    <img className={[styles.imgLogo].join(' ')} src={profil} />
-                    <div className={[styles.username].join(' ')} >{user.name}</div>
-                </Link>
+                {user ?
+                    <Link to={'/user'} className={[styles.home].join(' ')} >
+                        <img className={[styles.imgLogo].join(' ')} src={profil} />
+                        <div className={[styles.username].join(' ')} >{user ? user.name : ''}</div>
+                    </Link>
+                    :
+                    <div className={['button', styles.loginButton].join(' ')} onClick={() => navigate('/userlogin')}>Einloggen</ div>
+                }
                 {score != null && user ? <Score newscore={score}></Score> : null}
             </div>
-
         </div>
     )
 }

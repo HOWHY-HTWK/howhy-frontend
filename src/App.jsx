@@ -33,11 +33,12 @@ function App() {
 	}
 
 	function determinIfSmartphone(windowSize) {
-		if (windowSize[0] < 1000) {
-			return false
-		} else {
-			return true
-		}
+		// if (windowSize[0] < 1000) {
+		// 	return false
+		// } else {
+		// 	return true
+		// }
+		return false
 	}
 
 	return (
@@ -51,7 +52,7 @@ function App() {
 				<VerifyEmailBanner></VerifyEmailBanner>
 				: null
 			}
-			<div className={[styles.toggle].join(' ')} onClick={toggleFrame}>Toggle Frame</div>
+			{/* <div className={[styles.toggle].join(' ')} onClick={toggleFrame}>Toggle Frame</div> */}
 		</div>
 	)
 }

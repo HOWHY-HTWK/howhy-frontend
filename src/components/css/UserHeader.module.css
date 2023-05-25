@@ -31,11 +31,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    color: var(--color);
 }
 
 .username {
     padding: 0 6px;
 }
 
-.imgLogo {}
+.loginButton {
+    background-color: rgb(255, 0, 0);
+}
 
+.imgLogo {}

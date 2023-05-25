@@ -5,9 +5,9 @@ import styles from './css/UserLogin.module.css'
 import SignUp from './SignUp.jsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import howhyLogo from '../assets/howhy_logo.svg'
+import howhyLogo from '../assets/login_logo.svg'
 import info from '../assets/infographic.svg'
-import background from '../assets/loginBackground.png'
+import background from '../assets/Muster.svg'
 import UserSignUp from './UserSignUp.jsx';
 
 export default function UserLogIn({ showEditorOption = false }) {
