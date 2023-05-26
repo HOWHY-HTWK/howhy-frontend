@@ -20,17 +20,19 @@ export default function UserHeader({ children, setPage }) {
     }, [])
 
     return (
-        <div className={[styles.background].join(' ')} >
+        <div className={['center', styles.background].join(' ')} >
             <div className={[styles.topbar].join(' ')} >
                 {user ?
-                    <Link to={'/user'} className={[styles.home].join(' ')} >
-                        <img className={[styles.imgLogo].join(' ')} src={profil} />
-                        <div className={[styles.username].join(' ')} >{user ? user.name : ''}</div>
-                    </Link>
+                    <>
+                        <Link to={'/user'} className={[styles.home].join(' ')} >
+                            <img className={[styles.imgLogo].join(' ')} src={profil} />
+                            <div className={[styles.username].join(' ')} >{user ? user.name : ''}</div>
+                        </Link>
+                        <Score newscore={score}></Score>
+                    </>
                     :
-                    <div className={['button', styles.loginButton].join(' ')} onClick={() => navigate('/userlogin')}>Einloggen</ div>
+                    <div className={['button', 'center', styles.loginButton, styles.loginButton].join(' ')} onClick={() => navigate('/userlogin')}>Einloggen</ div>
                 }
-                {score != null && user ? <Score newscore={score}></Score> : null}
             </div>
         </div>
     )
