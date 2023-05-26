@@ -14,19 +14,13 @@ import UserHeader from './components/UserHeader'
 function App() {
 	const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
-	const { user, setUser } = useStateContext()
+	const { user, setUser, updateUserData } = useStateContext()
 
 	const [frame, setFrame] = useState(determinIfSmartphone(windowSize.current));
 
 	useEffect(() => {
-		refreshUser()
+		updateUserData()
 	}, [])
-
-	function refreshUser() {
-		axiosClient.get('/api/user').then(response => {
-			setUser(response.data)
-		})
-	}
 
 	function toggleFrame() {
 		setFrame(prev => !prev)

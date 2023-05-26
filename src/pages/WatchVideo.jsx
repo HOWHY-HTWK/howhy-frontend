@@ -5,12 +5,14 @@ import QuestionsTimeline from '../components/QuestionsTimeline'
 import * as utils from '../utils.js'
 import Score from '../components/Score'
 import * as api from '../api'
+import { useStateContext } from '../contexts/ContextProvider'
 
 function WatchVideo() {
   const queryParameters = new URLSearchParams(window.location.search)
   const videoId = queryParameters.get("id")
 
-  const [score, setScore] = useState(null)
+  const { user, setUser, updateUserData } = useStateContext()
+
   const [questionTimecodes, setQuestionTimecodes] = useState([])
   const [currentQuestionId, setCurrentQuestionId] = useState(null)
   const [duration, setDuration] = useState(null)
@@ -29,14 +31,8 @@ function WatchVideo() {
 
   useEffect(() => {
     getTimecodes()
-    getUserScore()
+    updateUserData()
   }, [currentQuestionId])
-
-  function getUserScore() {
-    api.score().then(response => {
-      setScore(response.data.score);
-    })
-  }
 
   function getTimecodes() {
     api.getQuestionTimecodes(videoId).then(response => {

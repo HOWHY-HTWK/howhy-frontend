@@ -11,8 +11,6 @@ import pencil from '../assets/icons/pencil.svg'
 import logout_icon from '../assets/icons/logout.svg'
 import { saveUsername } from '../api'
 
-
-
 export default function UserPage() {
     const { user, setUser } = useStateContext()
     const [name, setName] = useState(user ? user.name : '')
