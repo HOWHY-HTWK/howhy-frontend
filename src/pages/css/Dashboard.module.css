@@ -1,9 +1,13 @@
 .wrap {
-    margin: auto;
+    box-sizing: border-box;
+    position: relative;
+    /* margin: auto; */
+    height: 100%;
 }
 
 .page {
     display: none;
+    min-height: 100%;
 }
 
 .active {

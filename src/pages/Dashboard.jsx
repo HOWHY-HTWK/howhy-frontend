@@ -5,6 +5,8 @@ import { useStateContext } from '../contexts/ContextProvider';
 import styles from './css/Dashboard.module.css';
 import TabBar from '../components/TabBar';
 import SearchBar from '../components/SearchBar';
+import Prizes from '../components/Prizes';
+import Home from '../components/Home';
 
 export default function Dashboard() {
     const { user, setUser } = useStateContext()
@@ -23,11 +25,15 @@ export default function Dashboard() {
         <div className={[styles.wrap].join(' ')} >
             <SearchBar setSearchTerm={setSearchTerm}></SearchBar>
             <TabBar setPage={setPage}></TabBar>
-            <div className={[styles.page, page == 0 ? styles.active : null].join(' ')} >Home</div>
+            <div className={[styles.page, page == 0 ? styles.active : null].join(' ')} >
+                <Home></Home>
+            </div>
             <div className={[styles.page, page == 1 ? styles.active : null].join(' ')}>
                 <DashList searchterm={searchterm}></DashList>
             </div>
-            <div className={[styles.page, page == 2 ? styles.active : null].join(' ')}>Preise</div>
+            <div className={[styles.page, page == 2 ? styles.active : null].join(' ')}>
+                <Prizes></Prizes>
+            </div>
         </div>
     );
 }

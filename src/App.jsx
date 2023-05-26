@@ -37,7 +37,7 @@ function App() {
 
 	return (
 		<div className={[frame ? styles.phone : styles.phoneOff].join(' ')} >
-			<div className={['pageWrap'].join(' ')} >
+			<div className={['pageWrap', styles.background].join(' ')} >
 				<UserHeader ></UserHeader>
 				<Outlet />
 				<Footer></Footer>

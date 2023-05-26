@@ -22,6 +22,10 @@
   display: none;
 }
 
+.background {
+ background-color: var(--background-blue);
+}
+
 .toggle {
   padding: 0.5rem;
   border-radius: 0.5rem;
