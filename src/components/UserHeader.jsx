@@ -17,20 +17,21 @@ export default function UserHeader({ children, setPage }) {
     return (
         <div className={['center', styles.background].join(' ')} >
             <div className={[styles.topbar].join(' ')} >
-                {user ?
-                    <>
-                        <div className={['center', styles.leftWrap].join(' ')} >
-                            {subRoute ? <img className={[styles.back].join(' ')} src={back} onClick={() => navigate(-1)}></img> : null }
+                <div className={['center', styles.leftWrap].join(' ')} >
+                    {subRoute ? <img className={[styles.back].join(' ')} src={back} onClick={() => navigate(-1)}></img> : null}
+                    {user ?
+                        <>
                             <Link to={'/user'} className={[styles.home].join(' ')} >
                                 <img className={[styles.imgLogo].join(' ')} src={profil} />
                                 <div className={[styles.username].join(' ')} >{user ? user.name : ''}</div>
                             </Link>
-                        </div>
                             <Score ></Score>
-                    </>
-                    :
-                    <div className={['button', 'center', styles.loginButton, styles.loginButton].join(' ')} onClick={() => navigate('/userlogin')}>Einloggen</ div>
-                }
+                        </>
+                        :
+                        <div className={['button', 'center', styles.loginButton, styles.loginButton].join(' ')} onClick={() => navigate('/userlogin')}>Einloggen</ div>
+                    }
+                </div>
+
             </div>
         </div>
     )

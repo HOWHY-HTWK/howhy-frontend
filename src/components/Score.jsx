@@ -11,14 +11,18 @@ export default function Score({ }) {
     const [score, setscore] = useState(0)
 
     useEffect(() => {
-        scoreRef.current = user.score
-        setscore(user.score)
+        if(user){
+            scoreRef.current = user.score
+            setscore(user.score)
+        } 
     }, [])
 
     useEffect(() => {
-        countup(scoreRef.current, user.score)
-        scoreRef.current = user.score
-    }, [user.score])
+        if(user){
+            countup(scoreRef.current, user.score)
+            scoreRef.current = user.score
+        }
+    }, [user])
 
     function countup(oldscore, newscore) {
         if (oldscore < newscore) {
