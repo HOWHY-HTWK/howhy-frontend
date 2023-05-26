@@ -11,14 +11,6 @@ export default function UserHeader({ children, setPage }) {
     const { user, setUser } = useStateContext()
     const navigate = useNavigate();
 
-    const [score, setscore] = useState(null)
-
-    useEffect(() => {
-        api.score().then(response => {
-            setscore(response.data.score)
-        })
-    }, [])
-
     return (
         <div className={['center', styles.background].join(' ')} >
             <div className={[styles.topbar].join(' ')} >
@@ -28,7 +20,7 @@ export default function UserHeader({ children, setPage }) {
                             <img className={[styles.imgLogo].join(' ')} src={profil} />
                             <div className={[styles.username].join(' ')} >{user ? user.name : ''}</div>
                         </Link>
-                        <Score newscore={score}></Score>
+                        <Score ></Score>
                     </>
                     :
                     <div className={['button', 'center', styles.loginButton, styles.loginButton].join(' ')} onClick={() => navigate('/userlogin')}>Einloggen</ div>
