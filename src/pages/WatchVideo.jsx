@@ -6,10 +6,15 @@ import * as utils from '../utils.js'
 import Score from '../components/Score'
 import * as api from '../api'
 import { useStateContext } from '../contexts/ContextProvider'
+import { useParams } from 'react-router-dom'
 
 function WatchVideo() {
-  const queryParameters = new URLSearchParams(window.location.search)
-  const videoId = queryParameters.get("id")
+  // const queryParameters = new URLSearchParams(window.location.search)
+  // const videoId = queryParameters.get("id")
+
+  const videoId = useParams().videoId;
+
+  console.log(videoId)
 
   const { user, setUser, updateUserData } = useStateContext()
 

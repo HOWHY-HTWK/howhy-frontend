@@ -32,7 +32,7 @@ export default function DashList({ searchterm = ''}) {
 
   function getListItem(video) {
     return (
-      <NavLink className={[styles.listItem, 'listElement'].join(' ')} key={video.oid} to={`/watch/?id=${video.oid}`}>
+      <NavLink className={[styles.listItem, 'listElement'].join(' ')} key={video.oid} to={`/watch/${video.oid}`}>
         <img className={[styles.img].join(' ')} src={video.thumb}></img>
         <div className={[styles.title, styles.item].join(' ')} >{video.title}</div>
         <div className={[styles.statsWrap, styles.item].join(' ')} >
