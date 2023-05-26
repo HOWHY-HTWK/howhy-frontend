@@ -35,11 +35,11 @@
 }
 
 .back {
-    justify-self: start;
+    /* justify-self: start; */
 }
 
 .score {
- justify-self: end;
+    /* justify-self: end; */
 }
 
 .home {

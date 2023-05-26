@@ -25,13 +25,12 @@ export default function UserHeader({ children, setPage }) {
                                 <img className={[styles.imgLogo].join(' ')} src={profil} />
                                 <div className={[styles.username].join(' ')} >{user ? user.name : ''}</div>
                             </Link>
-                            <Score ></Score>
                         </>
                         :
                         <div className={['button', 'center', styles.loginButton, styles.loginButton].join(' ')} onClick={() => navigate('/userlogin')}>Einloggen</ div>
                     }
                 </div>
-
+                <Score ></Score>
             </div>
         </div>
     )
