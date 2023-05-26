@@ -1,0 +1,29 @@
+.wrap {
+    position: relative;
+    padding: 10px;
+    padding-top: 5px;
+}
+
+.bar {
+    box-sizing: border-box;
+    background-color: var(--background-blue);
+    border-radius: 25px;
+    padding: 5px 12px;
+    padding-right: 15px;
+    width: 100%;
+    height: 30px;
+    /* justify-content: ; */
+}
+
+.link {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.input {
+    all: unset;
+    padding: 0 10px;
+    width: 100%;
+    flex-grow: 3;
+}

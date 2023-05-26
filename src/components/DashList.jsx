@@ -4,13 +4,31 @@ import { Link, NavLink } from 'react-router-dom'
 import * as api from '../api.js'
 import * as mediaserverApi from '../mediaserverApi.js'
 
-export default function DashList() {
+export default function DashList({ searchterm = ''}) {
   const [videoList, setvideoList] = useState([]);
-  const videos = videoList ? videoList.map(video => getListItem(video)) : null
+
+  const filteredList = filterList(videoList);
+  const videos = videoList ? filteredList.map(video => getListItem(video)) : null
 
   useEffect(() => {
     getVideos()
   }, [])
+
+  function filterList(list) {
+    return list.filter(item => {
+      return (
+        item
+          .title
+          .toString()
+          .toLowerCase()
+          .includes(searchterm.toLowerCase()) ||
+        item
+          .speaker
+          .toLowerCase()
+          .includes(searchterm.toLowerCase())
+      );
+    })
+  }
 
   function getListItem(video) {
     return (
