@@ -1,11 +1,8 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react'
 import DashList from '../components/DashList';
-import Score from '../components/Score';
 import * as api from '../api';
 import { useStateContext } from '../contexts/ContextProvider';
 import styles from './css/Dashboard.module.css';
-import UserHeader from '../components/UserHeader';
-import UserMenu from '../components/UserMenu';
 import TabBar from '../components/TabBar';
 import SearchBar from '../components/SearchBar';
 

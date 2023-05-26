@@ -30,7 +30,20 @@
     background-color: var(--editor-accent-color);
 }
 
+.leftWrap {
+    gap: 20px;
+}
+
+.back {
+    justify-self: start;
+}
+
+.score {
+ justify-self: end;
+}
+
 .home {
+    justify-self: start;
     position: relative;
     display: flex;
     justify-content: center;
