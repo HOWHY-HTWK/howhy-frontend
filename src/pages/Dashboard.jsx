@@ -9,7 +9,6 @@ import Prizes from '../components/Prizes';
 import Home from '../components/Home';
 
 export default function Dashboard() {
-    const { user, setUser } = useStateContext()
     const [score, setscore] = useState(null)
     const [page, setPage] = useState()
 

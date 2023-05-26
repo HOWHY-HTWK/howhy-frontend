@@ -11,8 +11,10 @@ import location_white from '../assets/icons/location_white.svg'
 import clock_white from '../assets/icons/clock_white.svg'
 import close from '../assets/icons/close.svg'
 import { QRCodeSVG } from 'qrcode.react'
+import { useStateContext } from '../contexts/ContextProvider'
 
 export default function Prizes() {
+    const { user, setUser } = useStateContext()
 
     const [qrOverlay, setQrOverlay] = useState()
 
@@ -52,6 +54,10 @@ export default function Prizes() {
     ]
 
     const prizes = prizesData.map(prize => {
+        return getPrizeListItem(prize)
+    })
+
+    function getPrizeListItem(prize) {
         return (
             <div className={['center', styles.listItem, !prize.valid ? styles.used : null].join(' ')} >
                 {prize.valid ?
@@ -73,7 +79,23 @@ export default function Prizes() {
                 </div>
             </div>
         )
-    })
+    }
+
+    function getQrOverlay() {
+        return (
+            <div className={['center', styles.overlay].join(' ')} >
+                <div className={['center', styles.bigQr].join(' ')} >
+                    <img
+                        className={[styles.close].join(' ')}
+                        src={close}
+                        onClick={() => setQrOverlay(null)} />
+                    <QRCodeSVG
+                        className={[styles.qrCode].join(' ')}
+                        value={makeQrCheckUrl(qrOverlay)} />
+                </div>
+            </div>
+        )
+    }
 
     function makeQrCheckUrl(code) {
         return 'http://192.168.0.164:5173/qr/' + code
@@ -81,22 +103,13 @@ export default function Prizes() {
 
     return (
         <div className={['centerVertical', styles.wrap].join(' ')} >
-            {prizes}
-            {qrOverlay ?
-                <div className={['center', styles.overlay].join(' ')} >
-                    <div className={['center', styles.bigQr].join(' ')} >
-                        <img
-                            className={[styles.close].join(' ')}
-                            src={close}
-                            onClick={() => setQrOverlay(null)} />
-                        <QRCodeSVG
-                            className={[styles.qrCode].join(' ')}
-                            value={makeQrCheckUrl(qrOverlay)} />
-                    </div>
-                </div>
+            {user ?
+                <>
+                    {prizes}
+                    {qrOverlay ? getQrOverlay() : null}
+                </>
                 :
-                null
-            }
+                <>Bitte melden Sie sich an um Preise zu sammeln</> }
         </div>
     )
 }
