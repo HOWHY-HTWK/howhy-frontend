@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
 import './index.css'
 import {
   createBrowserRouter,
   Navigate,
   RouterProvider,
 } from "react-router-dom";
+import App from './App'
 import AddVideo from './components/AddVideo'
 import EditQuestions from './pages/EditQuestions';
 import Editor from './pages/Editor';
@@ -25,6 +25,7 @@ import UserSettings from './pages/UserSettings';
 import User from './pages/User';
 import Privacy from './pages/Privacy';
 import Imprint from './pages/Imprint';
+import Search from './pages/Search';
 
 const router = createBrowserRouter(
   [
@@ -39,6 +40,10 @@ const router = createBrowserRouter(
         {
           path: "/watch",
           element: <WatchVideo />
+        },
+        {
+          path: "/search",
+          element: <Search />
         },
         {
           path: "/user",
