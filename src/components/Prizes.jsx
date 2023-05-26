@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './css/Prizes.module.css'
 
 import qrCode from '../assets/QR code.svg'
@@ -9,36 +9,45 @@ import clock from '../assets/icons/clock.svg'
 import calendar_white from '../assets/icons/calendar_white.svg'
 import location_white from '../assets/icons/location_white.svg'
 import clock_white from '../assets/icons/clock_white.svg'
+import close from '../assets/icons/close.svg'
+import { QRCodeSVG } from 'qrcode.react'
 
 export default function Prizes() {
+
+    const [qrOverlay, setQrOverlay] = useState()
+
     const prizesData = [
         {
             name: 'Kitkat',
             date: '13. - 17. Juli',
             location: 'Li 210',
-            time: '12:00 -14:00',
+            time: '12:00 - 14:00',
+            code: '239487808972135098162098734',
             valid: true
         },
         {
-            name: 'Kitkat',
+            name: 'Mars',
             date: '13. - 17. Juli',
             location: 'Li 210',
-            time: '12:00 -14:00',
+            time: '12:00 - 14:00',
+            code: '239487808972135098162098734',
+            valid: true
+        },
+        {
+            name: 'M&M',
+            date: '13. - 17. Juli',
+            location: 'Li 210',
+            time: '12:00 - 14:00',
+            code: '239487808972135098162098734',
             valid: false
         },
         {
             name: 'Kitkat',
             date: '13. - 17. Juli',
             location: 'Li 210',
-            time: '12:00 -14:00',
+            time: '12:00 - 14:00',
+            code: '239487808972135098162098734',
             valid: false
-        },
-        {
-            name: 'Kitkat',
-            date: '13. - 17. Juli',
-            location: 'Li 210',
-            time: '12:00 -14:00',
-            valid: true
         }
     ]
 
@@ -46,13 +55,9 @@ export default function Prizes() {
         return (
             <div className={['center', styles.listItem, !prize.valid ? styles.used : null].join(' ')} >
                 {prize.valid ?
-                    <div className={[styles.imgWrap].join(' ')} >
-                        <img className={[styles.img].join(' ')} src={qrCode} />
-                    </div>
+                    <img className={[styles.img].join(' ')} src={qrCode} onClick={() => setQrOverlay(prize.code)} />
                     :
-                    <div className={[styles.imgWrap].join(' ')} >
-                        <img className={[styles.img, styles.filter].join(' ')} src={qr_used} />
-                    </div>
+                    <img className={[styles.img, styles.filter].join(' ')} src={qr_used} />
                 }
                 <div className={['centerVertical', styles.rightWrap].join(' ')} >
                     <div className={[styles.name].join(' ')} >{prize.name}</div>
@@ -66,14 +71,32 @@ export default function Prizes() {
                         <img src={prize.valid ? clock : clock_white}></img> {prize.time}
                     </div>
                 </div>
-                {/* {!prize.valid ? <div className={[styles.overlay].join(' ')} ></div> : null} */}
             </div>
         )
     })
 
+    function makeQrCheckUrl(code) {
+        return 'http://192.168.0.164:5173/qr/' + code
+    }
+
     return (
         <div className={['centerVertical', styles.wrap].join(' ')} >
             {prizes}
+            {qrOverlay ?
+                <div className={['center', styles.overlay].join(' ')} >
+                    <div className={['center', styles.bigQr].join(' ')} >
+                        <img
+                            className={[styles.close].join(' ')}
+                            src={close}
+                            onClick={() => setQrOverlay(null)} />
+                        <QRCodeSVG
+                            className={[styles.qrCode].join(' ')}
+                            value={makeQrCheckUrl(qrOverlay)} />
+                    </div>
+                </div>
+                :
+                null
+            }
         </div>
     )
 }

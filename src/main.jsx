@@ -26,6 +26,7 @@ import User from './pages/User';
 import Privacy from './pages/Privacy';
 import Imprint from './pages/Imprint';
 import Search from './pages/Search';
+import QrCheck from './pages/QrCheck';
 
 const router = createBrowserRouter(
   [
@@ -106,6 +107,10 @@ const router = createBrowserRouter(
     {
       path: "/redirect",
       element: <Redirect></Redirect>
+    },
+    {
+      path: "/qr/:code",
+      element: <QrCheck></QrCheck>,
     }
   ],
   {
