@@ -24,10 +24,13 @@
     grid-template-rows: 1fr auto auto;
     grid-template-areas:
         "thumb thumb"
-        "title stats"
+        "title star"
         "points views";
     box-shadow: 0px 2px 10px rgba(135, 135, 135, 0.25);
+}
 
+.listItem:hover {
+    color: var(--color);
 }
 
 .item {
@@ -44,14 +47,16 @@
 }
 
 .title {
-    /* padding: 0.2rem 0.5rem; */
     font-weight: 500;
     grid-area: title;
     hyphens: auto;
 }
 
-.points {
-    grid-area: points;
+.star {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    grid-area: star;
 }
 
 .views {
@@ -63,25 +68,25 @@
 }
 
 .statsWrap {
+    color: var(--user-accent-color);
+    font-weight: 00;
     display: flex;
     flex-flow: row nowrap;
-    justify-content: end;
+    justify-content: start;
     align-items: center;
-    grid-area: stats;
+    grid-area: points;
 }
 
 .stats{
-    background-color: rgb(221, 221, 221);
-    color: black;
     padding: 0 0.5rem;
     border-radius: 0.5rem;
 }
 
 .all{
-    background-color: rgb(123, 226, 100);
+    background-color: rgba(255, 255, 255, 0);
 }
 
 .partly{
-    background-color: rgb(245, 245, 0);
+    background-color: rgba(255, 255, 195, 0);
 }
 

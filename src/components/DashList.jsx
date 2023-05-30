@@ -4,76 +4,93 @@ import { Link, NavLink } from 'react-router-dom'
 import * as api from '../api.js'
 import * as mediaserverApi from '../mediaserverApi.js'
 
-export default function DashList({ searchterm = ''}) {
-  const [videoList, setvideoList] = useState([]);
+import viewsIcon from '../assets/icons/views.svg'
+import starIcon from '../assets/icons/star.svg'
 
-  const filteredList = filterList(videoList);
-  const videos = videoList ? filteredList.map(video => getListItem(video)) : null
+export default function DashList({ searchterm = '' }) {
+	const [videoList, setvideoList] = useState([]);
 
-  useEffect(() => {
-    getVideos()
-  }, [])
+	const filteredList = filterList(videoList);
+	const videos = videoList ? filteredList.map(video => getListItem(video)) : null
 
-  function filterList(list) {
-    return list.filter(item => {
-      return (
-        item
-          .title
-          .toString()
-          .toLowerCase()
-          .includes(searchterm.toLowerCase()) ||
-        item
-          .speaker
-          .toLowerCase()
-          .includes(searchterm.toLowerCase())
-      );
-    })
-  }
+	useEffect(() => {
+		getVideos()
+	}, [])
 
-  function getListItem(video) {
-    return (
-      <NavLink className={[styles.listItem, 'listElement'].join(' ')} key={video.oid} to={`/watch/${video.oid}`}>
-        <img className={[styles.img].join(' ')} src={video.thumb}></img>
-        <div className={[styles.title, styles.item].join(' ')} >{video.title}</div>
-        <div className={[styles.statsWrap, styles.item].join(' ')} >
-          <div className={[styles.stats, getBackground(video.success)].join(' ')} >{video.success.correctCount + ' / ' + video.success.questionCount}</div>
-        </div>
-        <div className={[styles.points, styles.item].join(' ')} >300 Points</div>
-        <div className={[styles.views, styles.item].join(' ')} >20 Views</div>
-      </NavLink>
-    )
-  }
+	function filterList(list) {
+		return list.filter(item => {
+			return (
+				item
+					.title
+					.toString()
+					.toLowerCase()
+					.includes(searchterm.toLowerCase()) ||
+				item
+					.speaker
+					.toLowerCase()
+					.includes(searchterm.toLowerCase())
+			);
+		})
+	}
 
-  function getBackground(success) {
-    if (success.correctCount == success.questionCount) {
-      return styles.all
-    }
-    if (success.correctCount > 0) {
-      return styles.partly
-    }
-  }
+	function getListItem(video) {
+		return (
+			<NavLink
+				className={[styles.listItem, 'listElement'].join(' ')}
+				key={video.oid} to={`/watch/${video.oid}`}>
+				<img
+					className={[styles.img].join(' ')}
+					src={video.thumb}>
+				</img>
+				<div className={[styles.title, styles.item].join(' ')} >
+					{video.title}
+				</div>
+				<div className={[styles.star, styles.item].join(' ')} >
+					<img src={starIcon}></img>
+				</div>
+				<div className={[styles.statsWrap, styles.item].join(' ')} >
+					<div className={[styles.stats, getBackground(video.success)].join(' ')} >
+						{video.success.correctCount + ' / ' + video.success.questionCount}
+					</div>
+				</div>
+				<div className={[styles.views, styles.item].join(' ')} >
+					{video.views}&nbsp;
+					<img src={viewsIcon}></img>
+				</div>
+			</NavLink>
+		)
+	}
 
-  function getVideos() {
-    api.getVideos()
-      .then(response => {
-        makeVideoList(response.data)
-      })
-  }
+	function getBackground(success) {
+		if (success.correctCount == success.questionCount) {
+			return styles.all
+		}
+		if (success.correctCount > 0) {
+			return styles.partly
+		}
+	}
 
-  async function makeVideoList(videos) {
-    let videoList = await Promise.all(
-      videos.map(async video => {
-        let videoWithData = await mediaserverApi.getVideoInfoFromMediaserver(video.videoId)
-        videoWithData.success = video.success;
-        return videoWithData;
-      })
-    )
-    setvideoList(videoList)
-  }
+	function getVideos() {
+		api.getVideos()
+			.then(response => {
+				makeVideoList(response.data)
+			})
+	}
 
-  return (
-    <div className={[styles.wrap, 'center'].join(' ')} >
-      {videoList ? videos : null}
-    </div>
-  )
+	async function makeVideoList(videos) {
+		let videoList = await Promise.all(
+			videos.map(async video => {
+				let videoWithData = await mediaserverApi.getVideoInfoFromMediaserver(video.videoId)
+				videoWithData.success = video.success;
+				return videoWithData;
+			})
+		)
+		setvideoList(videoList)
+	}
+
+	return (
+		<div className={[styles.wrap, 'center'].join(' ')} >
+			{videoList ? videos : null}
+		</div>
+	)
 }
