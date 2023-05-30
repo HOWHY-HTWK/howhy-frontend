@@ -67,51 +67,23 @@ function WatchVideo() {
     setIsFullscreen(!isFullscreen);
   }
 
-  return (
-    <div className={[styles.wrapper, isFullscreen ? styles.wrapperFS : ''].join(' ')} >
-      <div
-        ref={fullScreenWrapper}
-        className={[styles.videoWrapper, isFullscreen ? styles.videoWrapperFS : ''].join(' ')}>
-        <HlsPlayer
-          url={`https://mediaserver.htwk-leipzig.de/api/v2/medias/playlist/?oid=${videoId}&?all`}
-          timeUpdate={handleTimeUpdate}
-          setDuration={setDuration}
-          ref={videoRef}
-        />
-        <div className={[styles.fsButton].join(' ')} onClick={fullscreen}></div>
-      </div>
-      <div className={[styles.score, isFullscreen ? styles.scoreFS : ''].join(' ')}>
-        {score != null ? <Score newscore={score}></Score> : null}
-      </div>
-      {videoRef.current ? displayQuestion() : null}
-      {questionTimecodes && duration ?
-        <div className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}  >
-          <QuestionsTimeline
-            className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}
-            questionTimecodes={questionTimecodes}
-            duration={duration}
-            jumpToTime={(time) => {videoRef.current.currentTime = time}} />
-        </div> : null}
-    </div >
-  )
-
   function displayQuestion() {
-      if (currentQuestionId && videoRef.current) {
-        videoRef.current.pause()
-        return (
-          <div className={[styles.questionWrapper, isFullscreen ? styles.questionWrapperFS : ''].join(' ')} >
-            <Question
-              questionId={currentQuestionId}
-              setQuestionId={setCurrentQuestionId}
-              videoId={videoId}
-            />
-          </div>
-        )
-      }
-      else {
-        videoRef.current.play()
-        return null;
-      }
+    if (currentQuestionId && videoRef.current) {
+      videoRef.current.pause()
+      return (
+        <div className={[styles.questionWrapper, isFullscreen ? styles.questionWrapperFS : ''].join(' ')} >
+          <Question
+            questionId={currentQuestionId}
+            setQuestionId={setCurrentQuestionId}
+            videoId={videoId}
+          />
+        </div>
+      )
+    }
+    else {
+      videoRef.current.play()
+      return null;
+    }
   }
 
   function handleTimeUpdate(time) {
@@ -131,23 +103,26 @@ function WatchVideo() {
 
   return (
     <div className={[styles.wrapper, isFullscreen ? styles.wrapperFS : ''].join(' ')} >
-      <div ref={fullScreenWrapper} className={[styles.videoWrapper, isFullscreen ? styles.videoWrapperFS : ''].join(' ')}>
-        <iframe ref={iframe}
-          className={[styles.iframe, isFullscreen ? styles.iframeFS : ''].join(' ')}
-          src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe`}></iframe>
+      <div
+        ref={fullScreenWrapper}
+        className={[styles.videoWrapper, isFullscreen ? styles.videoWrapperFS : ''].join(' ')}>
+        <HlsPlayer
+          url={`https://mediaserver.htwk-leipzig.de/api/v2/medias/playlist/?oid=${videoId}&?all`}
+          timeUpdate={handleTimeUpdate}
+          setDuration={setDuration}
+          ref={videoRef}
+        />
         <div className={[styles.fsButton].join(' ')} onClick={fullscreen}></div>
       </div>
-      <div className={[styles.score, isFullscreen ? styles.scoreFS : ''].join(' ')}>
-      </div>
-      {displayQuestion()}
-      {questionTimecodes && duration ? (
+      {videoRef.current ? displayQuestion() : null}
+      {questionTimecodes && duration ?
         <div className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}  >
           <QuestionsTimeline
             className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}
             questionTimecodes={questionTimecodes}
             duration={duration}
-            jumpToTime={(time) => utils.jumpToTime(iframe, time)} />
-        </div>) : null}
+            jumpToTime={(time) => { videoRef.current.currentTime = time }} />
+        </div> : null}
     </div >
   )
 
