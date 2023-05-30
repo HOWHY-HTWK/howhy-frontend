@@ -1,5 +1,5 @@
 .wrap {
-    padding: 0.5rem 24px;
+    padding: 14px 15px;
     cursor: pointer;
     background-color: var(--background-blue);
     min-height: 100%;
@@ -15,7 +15,7 @@
     background-color: var(--background-color);
     padding: 0;
     width: 100%;
-    max-width: 350px;
+    max-width: 400px;
     max-height: 230px;
     display: grid;
     gap: 6px;
