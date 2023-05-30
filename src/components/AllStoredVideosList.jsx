@@ -3,7 +3,7 @@ import EditorVideoList from './EditorVideoList.jsx';
 import * as api from '../api.js'
 import * as mediaserverApi from '../mediaserverApi.js'
 
-export default function AllStoredVideosList({ title, getListItem }) {
+export default function AllStoredVideosList({ title }) {
   const [videoList, setvideoList] = useState([]);
 
   useEffect(() => {
@@ -28,6 +28,6 @@ export default function AllStoredVideosList({ title, getListItem }) {
   }
 
   return (
-    videoList ? <EditorVideoList title={title} videoList={videoList} getListItem={getListItem}></EditorVideoList> : null
+    videoList ? <EditorVideoList title={title} videoList={videoList}></EditorVideoList> : null
   )
 }
