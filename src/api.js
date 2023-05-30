@@ -62,6 +62,11 @@ export function giveEditorRights(id){
 export function refreshUser(){
     return apiClient.get(`/user/`)
 }
+
 export function saveUsername(request){
     return apiClient.post(`/username/`, request)
+}
+
+export function ranking(){
+    return apiClient.get(`/ranking/`)
 }
