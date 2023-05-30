@@ -6,6 +6,8 @@ import { useStateContext } from '../contexts/ContextProvider.jsx'
 export default function UserSignUp({ toggleSignUp, logIn }) {
     const { user, setUser } = useStateContext()
 
+    const [message, setMessage] = useState('');
+
     const [info, setInfo] = useState(false)
     const infoRef = useRef()
 
@@ -49,7 +51,7 @@ export default function UserSignUp({ toggleSignUp, logIn }) {
                         logIn(signUpData.email, signUpData.password, true)
                     }).catch((error) => {
                         // debugger
-                        alert(error.response.data.message)
+                        setMessage(<span style={{ color: 'red' }}>{error.response.data.message}</span>)
                     });
             })
     }
@@ -123,8 +125,14 @@ export default function UserSignUp({ toggleSignUp, logIn }) {
                         name="repeat-password"
                         placeholder='Passwort wiederholen'
                         autoComplete='new-password' />
+                                        <div className={[styles.message, signUpData.password == signUpData.repeatPassword ? styles.hidden : null].join(' ')} >Keine übereinstimmung</div>
+                {message != '' ?
+                    <div className={[styles.message].join(' ')} >{message} </div>
+                    :
+                    <div className={[styles.message, styles.invisible].join(' ')} >E</div>
+                }
                 </div>
-                <div className={[styles.error, signUpData.password == signUpData.repeatPassword ? styles.hidden : null].join(' ')} >Keine übereinstimmung</div>
+
                 <button className={['button', styles.loginButton, styles.space].join(' ')} type="submit">Registrieren</button>
             </form >
             <div className={[styles.register].join(' ')} onClick={toggleSignUp}>Doch einloggen?</div>

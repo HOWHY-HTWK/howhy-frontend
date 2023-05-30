@@ -50,7 +50,7 @@ export default function UserPage() {
                 {message != '' ?
                     <div className={[styles.message].join(' ')} >{message} </div>
                     :
-                    <div className={[styles.message, styles.invisible ].join(' ')} >E</div>
+                    <div className={[styles.message, styles.invisible ].join(' ')} ></div>
                 }
                 <div>
                 </div>
