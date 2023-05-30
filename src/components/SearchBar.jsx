@@ -16,8 +16,8 @@ export default function SearchBar({ setSearchTerm }) {
         <div className={[styles.wrap].join(' ')} >
             <div className={[styles.link].join(' ')}>
                 <div className={['center', styles.bar].join(' ')} >
-                    <img src={lupe}></img>
-                    <input value={term} onChange={e => setTerm(e.target.value)} className={[styles.input].join(' ')} ></input>
+                    <img className={[styles.img].join(' ')}  src={lupe}></img>
+                    <input className={[styles.img].join(' ')}  value={term} onChange={e => setTerm(e.target.value)} className={[styles.input].join(' ')} ></input>
                     <img src={filter}></img>
                 </div>
             </div>

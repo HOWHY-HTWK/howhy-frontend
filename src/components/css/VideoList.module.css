@@ -2,6 +2,7 @@
 .videoListWrapper{
     width: 27rem;
     max-width: 100%;
+    color: var(--color);
 }
 
 .videoListBody {
