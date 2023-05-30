@@ -1,0 +1,25 @@
+.tabs {
+    box-sizing: border-box;
+    position: sticky;
+    top: 50px;
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    align-content: stretch;
+    /* justify-content: space-around; */
+    background-color: var(--background-blue);
+    box-shadow: 0px 2px 10px rgba(135, 135, 135, 0.25);
+    z-index: 89;
+}
+
+.tab {
+    padding: 6px 0;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.selected {
+    background-color: var(--dark-accent);
+    color: var(--color-inverted);
+}

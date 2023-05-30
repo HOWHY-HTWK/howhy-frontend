@@ -1,0 +1,24 @@
+.wrap {
+    padding: 15px;
+}
+
+.title {
+    font-weight: 700;
+}
+
+.list {
+    background-color: var(--background-color);
+    padding: 15px 30px;
+    border-radius: 16px;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 10px;
+}
+
+.listItem {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}

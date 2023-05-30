@@ -5,28 +5,31 @@ import { useStateContext } from '../contexts/ContextProvider'
 import { useNavigate } from 'react-router-dom'
 import * as utils from '../utils'
 
-export default function UserMenu({setLoginActive}) {
-  const { user, authenticated, setUser, setAuthenticated } = useStateContext()
+export default function UserMenu() {
+  const navigate = useNavigate();
+
+  const { user, setUser } = useStateContext()
   const [open, setOpen] = useState(false)
-  const navigate = useNavigate()
+
+  function getMenu() {
+    return (
+      <div className={[styles.menu, open ? styles.menuOpen : ''].join(' ')} >
+        <div className={[styles.menuListItem].join(' ')} onClick={() => { }}>Einstellungen</div>
+        <div className={[styles.userName, styles.menuListItem].join(' ')} >Eingeloggt als: {user.name}</div>
+        <div className={[styles.menuListItem].join(' ')} onClick={() => utils.logout(setUser)}>Log Out</div>
+      </div>
+    )
+  }
 
   return (
     <>
       {user ?
         <div className={[styles.wrap, 'center'].join(' ')} >
-          <MdMenu onClick={() => setOpen(!open)} className={[styles.icon].join(' ')} ></MdMenu>
-          {open ? getMenu() : null}
+          <MdMenu onClick={() => setOpen(prev => !prev)} className={[styles.icon].join(' ')} ></MdMenu>
+          {getMenu()}
         </div>
-        : <div className={['button', 'center', styles.logIn].join(' ')} onClick={() => setLoginActive(true)} >Log In</div>
-        }
+        : <div className={['button', 'center', styles.logIn].join(' ')} onClick={() => navigate("/userlogin")} >Log In</div>
+      }
     </>
   )
-
-  function getMenu() {
-    return (
-      <div className={[styles.menu].join(' ')} >
-        <div className={['button'].join(' ')} onClick={() => utils.logout(setUser)}>Log Out</div>
-      </div>
-    )
-  }
 }

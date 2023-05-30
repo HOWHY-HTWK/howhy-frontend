@@ -3,16 +3,12 @@ import EditorVideoList from './EditorVideoList.jsx';
 import * as api from '../api.js'
 import * as mediaserverApi from '../mediaserverApi.js'
 
-export default function AllStoredVideosList({ title, getListItem }) {
+export default function AllStoredVideosList({ title }) {
   const [videoList, setvideoList] = useState([]);
 
   useEffect(() => {
     getVideos()
   }, [])
-
-  return (
-    videoList ? <EditorVideoList title={title} videoList={videoList} getListItem={getListItem}></EditorVideoList> : null
-  )
 
   function getVideos() {
     api.getVideos()
@@ -27,7 +23,11 @@ export default function AllStoredVideosList({ title, getListItem }) {
       videoIds.map(async id => {
         return await mediaserverApi.getVideoInfoFromMediaserver(id)
       })
-    ) 
+    )
     setvideoList(responses)
   }
+
+  return (
+    videoList ? <EditorVideoList title={title} videoList={videoList}></EditorVideoList> : null
+  )
 }

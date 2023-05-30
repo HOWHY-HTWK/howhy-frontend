@@ -4,6 +4,7 @@
 }
 
 .phone {
+  position: relative;
   width: 350px;
   height: 700px;
   border: 12px solid black;
@@ -19,6 +20,10 @@
 
 .phone::-webkit-scrollbar {
   display: none;
+}
+
+.background {
+ background-color: var(--background-blue);
 }
 
 .toggle {

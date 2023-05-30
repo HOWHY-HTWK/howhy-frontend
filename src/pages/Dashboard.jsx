@@ -1,13 +1,18 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react'
 import DashList from '../components/DashList';
-import Score from '../components/Score';
 import * as api from '../api';
 import { useStateContext } from '../contexts/ContextProvider';
 import styles from './css/Dashboard.module.css';
+import TabBar from '../components/TabBar';
+import SearchBar from '../components/SearchBar';
+import Prizes from '../components/Prizes';
+import Home from '../components/Home';
 
 export default function Dashboard() {
-    const { user, authenticated, setUser } = useStateContext()
     const [score, setscore] = useState(null)
+    const [page, setPage] = useState()
+
+    const [searchterm, setSearchTerm] = useState()
 
     useEffect(() => {
         api.score().then(response => {
@@ -17,8 +22,17 @@ export default function Dashboard() {
 
     return (
         <div className={[styles.wrap].join(' ')} >
-            {score != null && user ? <Score newscore={score}></Score> : null}
-            <DashList></DashList>
+            <SearchBar setSearchTerm={setSearchTerm}></SearchBar>
+            <TabBar setPage={setPage}></TabBar>
+            <div className={[styles.page, page == 0 ? styles.active : null].join(' ')} >
+                <Home></Home>
+            </div>
+            <div className={[styles.page, page == 1 ? styles.active : null].join(' ')}>
+                <DashList searchterm={searchterm}></DashList>
+            </div>
+            <div className={[styles.page, page == 2 ? styles.active : null].join(' ')}>
+                <Prizes></Prizes>
+            </div>
         </div>
     );
 }

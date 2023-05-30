@@ -1,44 +1,49 @@
-import { useEffect, useReducer, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './App.module.css'
-import { Outlet } from 'react-router-dom'
-import Header from './components/Header'
+import { Navigate, Outlet } from 'react-router-dom'
 import Footer from './components/Footer'
-import UserMenu from './components/UserMenu'
-import LogIn from './components/LogIn'
 import { useStateContext } from './contexts/ContextProvider'
+import VerifyEmailBanner from './components/VerifyEmailBanner'
+import UserHeader from './components/UserHeader'
 
 function App() {
-  const windowSize = useRef([window.innerWidth, window.innerHeight]);
+	const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
-  const [loginActive, setLoginActive] = useState(false)
-  const [frame, setFrame] = useState(determinIfSmartphone(windowSize.current));
+	const { user, setUser, updateUserData } = useStateContext()
 
-  return (
-    <div className={[frame ? styles.phone : styles.phoneOff].join(' ')} >
-      {!loginActive ?
-      <div className={['pageWrap'].join(' ')} >
-        <Header><UserMenu setLoginActive={setLoginActive} /></Header>
-        <Outlet />
-        <Footer></Footer>
-      </div>
-      :
-      <LogIn returnSuccess={success => setLoginActive(!success)}></LogIn>}
-      <div className={[styles.toggle].join(' ')} onClick={toggleFrame}>Toggle Frame</div>
+	const [frame, setFrame] = useState(determinIfSmartphone(windowSize.current));
 
-    </div>
-  )
-  
-  function toggleFrame() {
-    setFrame(prev => !prev)
-  }
+	useEffect(() => {
+		updateUserData()
+	}, [])
 
-  function determinIfSmartphone(windowSize) {
-    if (windowSize[0] < 1000) {
-      return false
-    } else {
-      return true
-    }
-  }
+	function toggleFrame() {
+		setFrame(prev => !prev)
+	}
+
+	function determinIfSmartphone(windowSize) {
+		// if (windowSize[0] < 1000) {
+		// 	return false
+		// } else {
+		// 	return true
+		// }
+		return false
+	}
+
+	return (
+		<div className={[frame ? styles.phone : styles.phoneOff].join(' ')} >
+			<div className={['pageWrap', styles.background].join(' ')} >
+				<UserHeader ></UserHeader>
+				<Outlet />
+				<Footer></Footer>
+			</div>
+			{user && user.email_verified_at == null ?
+				<VerifyEmailBanner></VerifyEmailBanner>
+				: null
+			}
+			{/* <div className={[styles.toggle].join(' ')} onClick={toggleFrame}>Toggle Frame</div> */}
+		</div>
+	)
 }
 
 export default App

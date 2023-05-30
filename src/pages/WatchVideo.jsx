@@ -5,14 +5,21 @@ import QuestionsTimeline from '../components/QuestionsTimeline'
 import * as utils from '../utils.js'
 import Score from '../components/Score'
 import * as api from '../api'
+import { useStateContext } from '../contexts/ContextProvider'
+import { useParams } from 'react-router-dom'
 import { getRecources, getVideoInfoFromMediaserver } from '../mediaserverApi'
 import HlsPlayer from '../components/HlsPlayer'
 
 function WatchVideo() {
-  const queryParameters = new URLSearchParams(window.location.search)
-  const videoId = queryParameters.get("id")
+  // const queryParameters = new URLSearchParams(window.location.search)
+  // const videoId = queryParameters.get("id")
 
-  const [score, setScore] = useState(null)
+  const videoId = useParams().videoId;
+
+  console.log(videoId)
+
+  const { user, setUser, updateUserData } = useStateContext()
+
   const [questionTimecodes, setQuestionTimecodes] = useState([])
   const [currentQuestionId, setCurrentQuestionId] = useState(null)
   const [duration, setDuration] = useState(null)
@@ -37,14 +44,8 @@ function WatchVideo() {
 
   useEffect(() => {
     getTimecodes()
-    getUserScore()
+    updateUserData()
   }, [currentQuestionId])
-
-  function getUserScore() {
-    api.score().then(response => {
-      setScore(response.data.score);
-    })
-  }
 
   function getTimecodes() {
     api.getQuestionTimecodes(videoId).then(response => {
@@ -127,6 +128,28 @@ function WatchVideo() {
     oldTimeRef.current = time
     return question ? question.id : null
   }
+
+  return (
+    <div className={[styles.wrapper, isFullscreen ? styles.wrapperFS : ''].join(' ')} >
+      <div ref={fullScreenWrapper} className={[styles.videoWrapper, isFullscreen ? styles.videoWrapperFS : ''].join(' ')}>
+        <iframe ref={iframe}
+          className={[styles.iframe, isFullscreen ? styles.iframeFS : ''].join(' ')}
+          src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe`}></iframe>
+        <div className={[styles.fsButton].join(' ')} onClick={fullscreen}></div>
+      </div>
+      <div className={[styles.score, isFullscreen ? styles.scoreFS : ''].join(' ')}>
+      </div>
+      {displayQuestion()}
+      {questionTimecodes && duration ? (
+        <div className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}  >
+          <QuestionsTimeline
+            className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}
+            questionTimecodes={questionTimecodes}
+            duration={duration}
+            jumpToTime={(time) => utils.jumpToTime(iframe, time)} />
+        </div>) : null}
+    </div >
+  )
 
 }
 

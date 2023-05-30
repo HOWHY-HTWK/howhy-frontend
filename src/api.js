@@ -16,8 +16,8 @@ export function getQuestionData(id){
     return apiClient.get(`/question/${id}`)
 }
 
-export function checkAnswers(id, request){
-    return apiClient.post(`/question/checkAnswers/${id}`, request)
+export function checkAnswers(request){
+    return apiClient.post(`/question/checkAnswers/`, request)
 }
 
 export function getQuestions(videoId){
@@ -47,5 +47,26 @@ export function deleteEmail(id){
     return apiClient.delete(`/allowed-email/${id}`)
 }
 
+// bearbeiten Rechte geben
 
+export function getUsers(){
+    return apiClient.get(`/users/`)
+}
 
+export function giveEditorRights(id){
+    return apiClient.post(`/makeEditor/${id}`)
+}
+
+//user 
+
+export function refreshUser(){
+    return apiClient.get(`/user/`)
+}
+
+export function saveUsername(request){
+    return apiClient.post(`/username/`, request)
+}
+
+export function ranking(){
+    return apiClient.get(`/ranking/`)
+}

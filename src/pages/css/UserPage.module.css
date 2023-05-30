@@ -1,0 +1,106 @@
+.userWrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-color);
+    z-index: 99;
+}
+
+.wrap {
+    width: 100%;
+    height: 100%;
+    background-color: #242423;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: stretch;
+    z-index: 100;
+    overflow: scroll;
+}
+
+.top {
+    background-color: var(--background-blue);
+    border-radius: 0 0 38px 38px;
+    padding-bottom: 14px;
+    gap: 0;
+}
+
+.back {
+    position: absolute;
+    top: 21px;
+    left: 18px;
+}
+
+.username {
+    position: relative;
+    margin: 0 30px 0 30px;
+}
+
+.editName {
+    box-sizing: border-box;
+    position: absolute;
+    right: 5px;
+    top: 15px;
+}
+
+.message {
+    text-align: center;
+    box-sizing: border-box;
+    margin: 0 30px 0 30px;
+    padding: 5px;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.saveIcon{
+    scale: 2;
+}
+
+.nameInput {
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 40px;
+    border: none;
+    background-color: transparent;
+    border-bottom: 2px solid black;
+}
+
+.nameInput:focus {
+    outline: none;
+}
+
+.buttonwrapper {
+    height: 100%;
+    padding: 19px 30px;
+    /* max-width: 500px; */
+    align-items: center;
+}
+
+.button {
+    width: 100%;
+    max-width: 400px;
+    align-self: center;
+}
+
+.logout {
+    color: var(--user-accent-color);
+}
+
+.bottomWrap {
+    justify-self: flex-end;
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 10px 100px;
+}
+
+.link {
+    color: var(--color-inverted);
+    font-size: 12px;
+}

@@ -8,7 +8,7 @@ export default function QuestionsTimeline({ questionTimecodes, jumpToTime, durat
         let distance = percent + '%'
         return (
             <div style={{ left: distance }}
-                className={[styles.questionDot, getBackground(question.correct)].join(' ')} 
+                className={[styles.questionDot, getBackground(question.correct)].join(' ')}
                 key={question.id}
                 onClick={() => jumpToTime(question.timecode)}>
                 {getSymbol(question.correct)}
@@ -19,6 +19,28 @@ export default function QuestionsTimeline({ questionTimecodes, jumpToTime, durat
         )
     });
 
+    function getBackground(correct) {
+        if (correct == null) {
+            return null;
+        }
+        if (correct) {
+            return styles.correct
+        } else {
+            return styles.false
+        }
+    }
+
+    function getSymbol(correct) {
+        if (correct == null) {
+            return '?';
+        }
+        if (correct) {
+            return '✓'
+        } else {
+            return 'X'
+        }
+    }
+
     return (
         <div className={`center`}>
             <div className={styles.timelineWwrapper}>
@@ -26,27 +48,4 @@ export default function QuestionsTimeline({ questionTimecodes, jumpToTime, durat
                 {questions}</div>
         </div>
     )
-    
-function getBackground(correct){
-    if(correct == null){
-        return null;
-    } 
-    if(correct){
-        return styles.correct
-    } else {
-        return styles.false
-    }
-}
-
-function getSymbol(correct){
-    if(correct == null){
-        return '?';
-    } 
-    if(correct){
-        return '✓'
-    } else {
-        return 'X'
-    }
-}
-
 }

@@ -19,50 +19,13 @@ export default function QuestionEditor({ existingQuestion, duration, time, video
 
   const [question, setQuestion] = useState(basequestion);
 
-  return (
-    <div className={[questionStyles.question, styles.stretch].join(' ')} >
-      <TimeCodePicker duration={duration} time={question.timecode} setTimeCode={setNewTimecode}></TimeCodePicker>
-      <div className={[questionStyles.questionElement, questionStyles.questionText].join(' ')} >
-        <TextareaAutosize
-          className={[styles.input].join(' ')}
-          placeholder="Frage hier eingeben" value={question.questionText}
-          onInput={e => setQuestion({ ...question, questionText: e.target.value })} />
-      </div>
-      <div className={[questionStyles.answersWrapper].join(' ')} >
-        {getAnswers()}
-      </div>
-      <MdAdd className={[styles.addAnswer].join(' ')} onClick={addAnswer}></MdAdd>
-      <div className={[styles.buttonWrapper].join(' ')} >
-        <div className={['button', styles.saveQuestion, styles.cancel].join(' ')} onClick={cancelAndReset}>Abbrechen</div>
-        <div className={['button', styles.saveQuestion].join(' ')} onClick={saveQuestionAndReset}>Frage speichern</div>
-      </div>
-    </div>
-  )
-
   function setNewTimecode(timecode) {
     setQuestion({ ...question, timecode: timecode })
   }
 
-  function getAnswers() {
-    return (
-      question.answers.map((answer) =>
-        <div className={[questionStyles.questionElement, questionStyles.answer].join(' ')} key={answer.id}>
-          {question.answers.length > 1 ?
-            <div className={[styles.circle, styles.delete].join(' ')} onClick={() => deleteAnswer(answer.id)}>
-              <MdClose></MdClose>
-            </div>
-            : null}
-          {question.correctAnswers.find(e => e.id == answer.id).correct ?
-            <div className={[styles.circle, styles.answerCorrect, styles.correct].join(' ')} onClick={() => toggleCorrect(answer.id)}>richtig</div>
-            : <div className={[styles.circle, styles.answerCorrect].join(' ')} onClick={() => toggleCorrect(answer.id)}>falsch</div>}
-
-          <TextareaAutosize className={[styles.input, questionStyles.questionElement, styles.change, questionStyles.answer].join(' ')} placeholder="Antwort hier eingeben" value={answer.text} onInput={e => handleAnswerChange(answer.id, e.target.value)}></TextareaAutosize>
-        </div>
-      ));
-  }
-
   function toggleCorrect(id) {
-    const newCorrectAnswers = question.correctAnswers.map(e => e.id == id ? { ...e, correct: !e.correct } : e)
+    const newCorrectAnswers = question.correctAnswers.map(e =>
+      e.id == id ? { ...e, correct: !e.correct } : e)
     setQuestion({ ...question, correctAnswers: newCorrectAnswers });
   }
 
@@ -72,15 +35,24 @@ export default function QuestionEditor({ existingQuestion, duration, time, video
 
   function addAnswer() {
     let id = getNewId()
-    setQuestion({ ...question, answers: [...question.answers, { id: id, text: "" }], correctAnswers: [...question.correctAnswers, { id: id, correct: false }] });
+    setQuestion({
+      ...question,
+      answers: [...question.answers, { id: id, text: "" }],
+      correctAnswers: [...question.correctAnswers, { id: id, correct: false }]
+    });
   }
 
   function deleteAnswer(id) {
-    setQuestion({ ...question, answers: question.answers.filter(a => a.id !== id), correctAnswers: question.correctAnswers.filter(a => a.id !== id) });
+    setQuestion({
+      ...question,
+      answers: question.answers.filter(a => a.id !== id),
+      correctAnswers: question.correctAnswers.filter(a => a.id !== id)
+    });
   }
 
   function handleAnswerChange(id, input) {
-    let newAnswer = question.answers.map(answer => answer.id == id ? { ...answer, text: input } : answer);
+    let newAnswer = question.answers.map(answer =>
+      answer.id == id ? { ...answer, text: input } : answer);
     setQuestion({ ...question, answers: newAnswer });
   }
 
@@ -98,4 +70,53 @@ export default function QuestionEditor({ existingQuestion, duration, time, video
     setEditedQuestion(null)
   }
 
+  function getAnswers() {
+    return (
+      question.answers.map((answer) =>
+        <div className={[questionStyles.questionElement, questionStyles.answer].join(' ')}
+          key={answer.id}>
+          {question.answers.length > 1 ?
+            <div className={[styles.circle, styles.delete].join(' ')} onClick={() => deleteAnswer(answer.id)}>
+              <MdClose></MdClose>
+            </div>
+            : null}
+          {question.correctAnswers.find(e => e.id == answer.id).correct ?
+            <div className={[styles.circle, styles.answerCorrect, styles.correct].join(' ')}
+              onClick={() => toggleCorrect(answer.id)}>richtig</div>
+            : <div className={[styles.circle, styles.answerCorrect].join(' ')}
+              onClick={() => toggleCorrect(answer.id)}>falsch</div>}
+
+          <TextareaAutosize className={[styles.input,
+          questionStyles.questionElement,
+          styles.change,
+          questionStyles.answer].join(' ')}
+            placeholder="Antwort hier eingeben"
+            value={answer.text}
+            onInput={e => handleAnswerChange(answer.id, e.target.value)}></TextareaAutosize>
+        </div>
+      ));
+  }
+
+  return (
+    <div className={[questionStyles.question, styles.stretch].join(' ')} >
+      <TimeCodePicker duration={duration} time={question.timecode}
+        setTimeCode={setNewTimecode}></TimeCodePicker>
+      <div className={[questionStyles.questionElement, questionStyles.questionText].join(' ')} >
+        <TextareaAutosize
+          className={[styles.input].join(' ')}
+          placeholder="Frage hier eingeben" value={question.questionText}
+          onInput={e => setQuestion({ ...question, questionText: e.target.value })} />
+      </div>
+      <div className={[questionStyles.answersWrapper].join(' ')} >
+        {getAnswers()}
+      </div>
+      <MdAdd className={[styles.addAnswer].join(' ')} onClick={addAnswer}></MdAdd>
+      <div className={[styles.buttonWrapper].join(' ')} >
+        <div className={['button', styles.saveQuestion, styles.cancel].join(' ')}
+          onClick={cancelAndReset}>Abbrechen</div>
+        <div className={['button', styles.saveQuestion].join(' ')}
+          onClick={saveQuestionAndReset}>Frage speichern</div>
+      </div>
+    </div>
+  )
 }

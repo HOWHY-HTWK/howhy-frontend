@@ -8,7 +8,7 @@ export default function AddVideo(props) {
 
   return (
     <div className={['center', 'listElement', styles.advidWrap].join(' ')} >
-      <h3 style={{margin: 0}}>Video per Id Hinzugügen</h3>
+      <h3 style={{ margin: 0 }}>Video per Id Hinzugügen</h3>
       <div className='FlexRow'>
         <div>Bitte Video-ID eingeben:</div>
         <input value={input} onInput={e => setInput(e.target.value)} />
