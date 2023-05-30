@@ -24,7 +24,7 @@ export default function UserPage() {
 
     function saveName() {
         let request = {
-            username: name
+            name: name
         }
         setMessage('')
         saveUsername(request).then(response => {
