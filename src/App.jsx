@@ -1,14 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import styles from './App.module.css'
 import { Navigate, Outlet } from 'react-router-dom'
-import Header from './components/Header'
 import Footer from './components/Footer'
-import UserMenu from './components/UserMenu'
-import LogIn from './components/LogIn'
 import { useStateContext } from './contexts/ContextProvider'
-import VerifyEmail from './pages/VerifyEmail'
 import VerifyEmailBanner from './components/VerifyEmailBanner'
-import axiosClient from '../axios-client'
 import UserHeader from './components/UserHeader'
 
 function App() {

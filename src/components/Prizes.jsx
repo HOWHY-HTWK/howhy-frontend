@@ -53,13 +53,13 @@ export default function Prizes() {
         }
     ]
 
-    const prizes = prizesData.map(prize => {
-        return getPrizeListItem(prize)
+    const prizes = prizesData.map((prize, index) => {
+        return getPrizeListItem(prize, index)
     })
 
-    function getPrizeListItem(prize) {
+    function getPrizeListItem(prize, key) {
         return (
-            <div className={['center', styles.listItem, !prize.valid ? styles.used : null].join(' ')} >
+            <div key= {key} className={['center', styles.listItem, !prize.valid ? styles.used : null].join(' ')} >
                 {prize.valid ?
                     <img className={[styles.img].join(' ')} src={qrCode} onClick={() => setQrOverlay(prize.code)} />
                     :
