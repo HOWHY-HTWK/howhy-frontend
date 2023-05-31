@@ -7,6 +7,7 @@ import profil from '../assets/icons/Profil.svg'
 import { useStateContext } from '../contexts/ContextProvider'
 import Score from './Score'
 import back from '../assets/icons/back.svg'
+import lupe from '../assets/icons/lupe.svg'
 
 export default function UserHeader({ children, setPage }) {
     const { user, setUser } = useStateContext()
@@ -30,7 +31,13 @@ export default function UserHeader({ children, setPage }) {
                         <div className={['button', 'center', styles.loginButton, styles.loginButton].join(' ')} onClick={() => navigate('/userlogin')}>Einloggen</ div>
                     }
                 </div>
-                <Score ></Score>
+                <div className={['center', styles.rightWrap].join(' ')} >
+                    {!subRoute ?
+                        <Link className={['center'].join(' ')} to={'/search'}><img src={lupe}></img></Link>
+                        : null
+                    }
+                    <Score ></Score>
+                </div>
             </div>
         </div>
     )

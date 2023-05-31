@@ -1,10 +1,8 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react'
 import DashList from '../components/DashList';
 import * as api from '../api';
-import { useStateContext } from '../contexts/ContextProvider';
 import styles from './css/Dashboard.module.css';
 import TabBar from '../components/TabBar';
-import SearchBar from '../components/SearchBar';
 import Prizes from '../components/Prizes';
 import Home from '../components/Home';
 
@@ -22,7 +20,8 @@ export default function Dashboard() {
 
     return (
         <div className={[styles.wrap].join(' ')} >
-            <SearchBar setSearchTerm={setSearchTerm}></SearchBar>
+            {/* <SearchBar setSearchTerm={setSearchTerm}></SearchBar> */}
+            {/* <UserHeader ></UserHeader> */}
             <TabBar setPage={setPage}></TabBar>
             <div className={[styles.page, page == 0 ? styles.active : null].join(' ')} >
                 <Home></Home>
