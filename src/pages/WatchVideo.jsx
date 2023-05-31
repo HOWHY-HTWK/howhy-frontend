@@ -86,6 +86,7 @@ function WatchVideo() {
   }
 
   function handleTimeUpdate(time) {
+    console.log(time)
     let questionId = findQuestionId(time);
     if (questionId) {
       setCurrentQuestionId(questionId);
@@ -94,9 +95,10 @@ function WatchVideo() {
 
   function findQuestionId(time) {
     let question = timecodesRef.current.find(element => {
-      return oldTimeRef.current < element.timecode && element.timecode < time
+      console.log('oldtime: '+oldTimeRef.current +'  timecode: '+ element.timecode +'  time: '+ time)
+      return (oldTimeRef.current <= element.timecode && element.timecode <= time) || (element.timecode == time)
     })
-    oldTimeRef.current = time
+    oldTimeRef.current = time + 0.000001
     return question ? question.id : null
   }
 
