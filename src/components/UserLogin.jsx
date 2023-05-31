@@ -86,7 +86,7 @@ export default function UserLogIn({ showEditorOption = false }) {
 					{message != '' ?
 						<div className={[styles.message].join(' ')} >{message} </div>
 						:
-						<div className={[styles.message, styles.invisible].join(' ')} >E</div>
+						<div className={[styles.message, styles.invisible].join(' ')} ></div>
 					}
 					<button className={['button', styles.loginButton].join(' ')} type="submit">Einloggen</button>
 				</form>
@@ -98,10 +98,8 @@ export default function UserLogIn({ showEditorOption = false }) {
 	return (
 		<div className={[styles.wrap].join(' ')}
 			style={{ backgroundImage: `url(${background})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }} >
-			<div className={[styles.logoWrap].join(' ')} >
 				<img className={[styles.logo].join(' ')} src={howhyLogo} ></img>
 				{!signUp ? <img className={[styles.infoGraphic].join(' ')} src={info} ></img> : null}
-			</div>
 			{!signUp ? getLoginForm() : <UserSignUp showEditorOption={showEditorOption}
 				toggleSignUp={toggleSignUp}
 				logIn={logIn} />}

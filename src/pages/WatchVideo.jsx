@@ -9,14 +9,13 @@ import { useStateContext } from '../contexts/ContextProvider'
 import { useParams } from 'react-router-dom'
 import { getRecources, getVideoInfoFromMediaserver } from '../mediaserverApi'
 import HlsPlayer from '../components/HlsPlayer'
+import Loader from '../components/Loader'
 
 function WatchVideo() {
   // const queryParameters = new URLSearchParams(window.location.search)
   // const videoId = queryParameters.get("id")
 
   const videoId = useParams().videoId;
-
-  console.log(videoId)
 
   const { user, setUser, updateUserData } = useStateContext()
 
@@ -122,7 +121,7 @@ function WatchVideo() {
             questionTimecodes={questionTimecodes}
             duration={duration}
             jumpToTime={(time) => { videoRef.current.currentTime = time }} />
-        </div> : null}
+        </div> : <Loader></Loader>}
     </div >
   )
 

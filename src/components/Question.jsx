@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styles from './css/Question.module.css'
 import * as api from '../api'
+import Loader from './Loader';
 
 export default function Question({ questionId, setQuestionId}) {
 
@@ -75,5 +76,6 @@ export default function Question({ questionId, setQuestionId}) {
           </div>
         </div>}
     </div>
-    : <div>loading</div>
+    : 
+    <Loader></Loader>
 }
