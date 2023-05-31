@@ -6,6 +6,7 @@ import * as mediaserverApi from '../mediaserverApi.js'
 
 import viewsIcon from '../assets/icons/views.svg'
 import starIcon from '../assets/icons/star.svg'
+import Loader from './Loader'
 
 export default function DashList({ searchterm = '' }) {
 	const [videoList, setvideoList] = useState([]);
@@ -87,10 +88,9 @@ export default function DashList({ searchterm = '' }) {
 		)
 		setvideoList(videoList)
 	}
-
 	return (
 		<div className={[styles.wrap, 'center'].join(' ')} >
-			{videoList ? videos : null}
+			{videoList.length != 0 ? videos : <Loader></Loader>}
 		</div>
 	)
 }

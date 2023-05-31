@@ -1,8 +1,6 @@
 .wrap {
     padding: 14px 15px;
     cursor: pointer;
-    /* background-color: var(--background-blue); */
-    /* min-height: 100%; */
     display: flex;
     flex-flow: column nowrap;
     align-items: center;

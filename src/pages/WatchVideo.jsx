@@ -7,6 +7,7 @@ import Score from '../components/Score'
 import * as api from '../api'
 import { useStateContext } from '../contexts/ContextProvider'
 import { useParams } from 'react-router-dom'
+import Loader from '../components/Loader'
 
 function WatchVideo() {
   // const queryParameters = new URLSearchParams(window.location.search)
@@ -113,7 +114,7 @@ function WatchVideo() {
             questionTimecodes={questionTimecodes}
             duration={duration}
             jumpToTime={(time) => utils.jumpToTime(iframe, time)} />
-        </div>) : null}
+        </div>) : <Loader></Loader>}
     </div >
   )
 
