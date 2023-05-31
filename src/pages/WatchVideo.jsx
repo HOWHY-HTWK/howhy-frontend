@@ -25,7 +25,6 @@ function WatchVideo() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [sources, setSources] = useState(null);
 
-  const iframe = useRef(null);
   const fullScreenWrapper = useRef(null);
   const oldTimeRef = useRef(null);
   const timecodesRef = useRef(questionTimecodes);
@@ -95,7 +94,7 @@ function WatchVideo() {
 
   function findQuestionId(time) {
     let question = timecodesRef.current.find(element => {
-      console.log('oldtime: '+oldTimeRef.current +'  timecode: '+ element.timecode +'  time: '+ time)
+      console.log('oldtime: ' + oldTimeRef.current + '  timecode: ' + element.timecode + '  time: ' + time)
       return (oldTimeRef.current <= element.timecode && element.timecode <= time) || (element.timecode == time)
     })
     oldTimeRef.current = time + 0.000001
@@ -108,6 +107,7 @@ function WatchVideo() {
         ref={fullScreenWrapper}
         className={[styles.videoWrapper, isFullscreen ? styles.videoWrapperFS : ''].join(' ')}>
         <HlsPlayer
+          className={[styles.player, isFullscreen ? styles.playerFS : ''].join(' ')} 
           url={`https://mediaserver.htwk-leipzig.de/api/v2/medias/playlist/?oid=${videoId}&?all`}
           timeUpdate={handleTimeUpdate}
           setDuration={setDuration}
