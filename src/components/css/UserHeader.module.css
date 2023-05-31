@@ -34,12 +34,8 @@
     gap: 20px;
 }
 
-.back {
-    /* justify-self: start; */
-}
-
-.score {
-    /* justify-self: end; */
+.rightWrap {
+    gap: 13px;
 }
 
 .home {
