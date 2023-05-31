@@ -15,8 +15,6 @@ function WatchVideo() {
 
   const videoId = useParams().videoId;
 
-  console.log(videoId)
-
   const { user, setUser, updateUserData } = useStateContext()
 
   const [questionTimecodes, setQuestionTimecodes] = useState([])
