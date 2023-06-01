@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import * as utils from '../utils.js'
 import styles from './css/QuestionsTimeline.module.css'
 
-export default function QuestionsTimeline({ questionTimecodes, jumpToTime, duration }) {
+export default function QuestionsTimeline({ questionTimecodes, jumpToQuestion, duration }) {
     const questions = questionTimecodes.map(question => {
         let percent = question.timecode / duration * 100
         let distance = percent + '%'
@@ -10,7 +10,7 @@ export default function QuestionsTimeline({ questionTimecodes, jumpToTime, durat
             <div style={{ left: distance }}
                 className={[styles.questionDot, getBackground(question.correct)].join(' ')}
                 key={question.id}
-                onClick={() => jumpToTime(question.timecode)}>
+                onClick={() => jumpToQuestion(question.timecode, question.id)}>
                 {getSymbol(question.correct)}
                 <div className={styles.timecode}>
                     {utils.getTimeInReadable(question.timecode)}
