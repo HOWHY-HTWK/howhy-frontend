@@ -15,6 +15,16 @@
     border: 1px solid black;
 }
 
+.topWrapper {
+    justify-content: space-between;
+}
+
+.type {
+    background-color: var(--background-color);
+    padding: 0 5px;
+    border-radius: 5px;
+}
+
 .bottomWrapper {
     /* padding: 1rem 0.5rem; */
     padding-top: 1rem;
