@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { refreshUser } from "../api";
+import { logout } from "../utils";
 
 const StateContext = createContext({
     user: null,
@@ -13,7 +14,11 @@ export const ContextProvider = ({ children }) => {
     function updateUserData() {
         refreshUser().then(response => {
 			setUser(response.data)
-		})
+		}).catch(error => {
+            if(error.response.data.message == "Unauthenticated.") {
+                setUser(null)
+            }
+        })
     }
 
     useEffect(() => {

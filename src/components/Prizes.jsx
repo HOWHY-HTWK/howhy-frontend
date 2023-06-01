@@ -59,7 +59,7 @@ export default function Prizes() {
 
     function getPrizeListItem(prize, key) {
         return (
-            <div key= {key} className={['center', styles.listItem, !prize.valid ? styles.used : null].join(' ')} >
+            <div key={key} className={['center', styles.listItem, !prize.valid ? styles.used : null].join(' ')} >
                 {prize.valid ?
                     <img className={[styles.img].join(' ')} src={qrCode} onClick={() => setQrOverlay(prize.code)} />
                     :
@@ -109,7 +109,8 @@ export default function Prizes() {
                     {qrOverlay ? getQrOverlay() : null}
                 </>
                 :
-                <>Bitte melden Sie sich an um Preise zu sammeln</> }
+                <>Bitte melden Sie sich an um Preise zu sammeln</>
+            }
         </div>
     )
 }

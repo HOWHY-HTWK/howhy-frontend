@@ -11,38 +11,11 @@ import styles from './css/Editor.module.css'
 import VerifyEmail from './VerifyEmail'
 
 export default function Editor() {
-    const { user, setUser } = useStateContext()
-
-    axiosClient.interceptors.response.use(
-        res => {
-            return res;
-        },
-        err => {
-            // alert(err.response.data.message)
-            if (err.response.status === 401) {
-                console.log(err.response)
-                setUser(null)
-            }
-            if (err.response.status === 403) {
-                console.log(err.response.data.message)
-            }
-            throw err;
-        }
-    )
+    const { user, setUser, updateUserData } = useStateContext()
 
     useEffect(() => {
-        axiosClient.get('/sanctum/csrf-cookie')
-            .then(response => {
-                axiosClient.get('api/check').then(response => {
-                    console.log(response)
-                }).catch(error => {
-                    console.log(error.response)
-                })
-            }).catch(error => {
-                console.log(error.response.data)
-            }
-            )
-    }, [])
+		updateUserData()
+	}, [])
 
     function content() {
         return (

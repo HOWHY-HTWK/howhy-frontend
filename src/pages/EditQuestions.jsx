@@ -34,7 +34,7 @@ export default function EditQuestions() {
 			.then((response) => {
 				setQuestions(response.data)
 			}).catch((error) => {
-				alert('fragen konnten nicht geladen werden')
+
 			})
 	}
 
