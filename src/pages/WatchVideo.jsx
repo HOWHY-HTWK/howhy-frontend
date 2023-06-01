@@ -6,13 +6,15 @@ import * as utils from '../utils.js'
 import Score from '../components/Score'
 import * as api from '../api'
 import { useStateContext } from '../contexts/ContextProvider'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { getRecources, getVideoInfoFromMediaserver } from '../mediaserverApi'
 import HlsPlayer from '../components/HlsPlayer'
 import Loader from '../components/Loader'
 
 function WatchVideo() {
   const videoId = useParams().videoId;
+  const location = useLocation();
+  const videoData = location.state?.videoData;
 
   const { user, setUser, updateUserData } = useStateContext()
 
@@ -41,7 +43,7 @@ function WatchVideo() {
     refreshData()
   }, [])
 
-  function refreshData(){
+  function refreshData() {
     getTimecodes()
     updateUserData()
   }
@@ -87,7 +89,6 @@ function WatchVideo() {
   }
 
   function handleTimeUpdate(time) {
-    console.log(time)
     let questionId = findQuestionId(time);
     if (questionId) {
       setCurrentQuestionId(questionId);
@@ -96,11 +97,9 @@ function WatchVideo() {
 
   function findQuestionId(time) {
     let question = timecodesRef.current.find(element => {
-      console.log('oldtime: ' + oldTimeRef.current + '  timecode: ' + element.timecode + '  time: ' + time)
       return (oldTimeRef.current <= element.timecode && element.timecode <= time) || (element.timecode == time)
     })
     oldTimeRef.current = Number(time) + Number(0.000001)
-    // oldTimeRef.current = time
     return question ? question.id : null
   }
 
@@ -110,13 +109,14 @@ function WatchVideo() {
         ref={fullScreenWrapper}
         className={[styles.videoWrapper, isFullscreen ? styles.videoWrapperFS : ''].join(' ')}>
         <HlsPlayer
-          className={[styles.player, isFullscreen ? styles.playerFS : ''].join(' ')} 
+          className={[styles.player, isFullscreen ? styles.playerFS : ''].join(' ')}
           url={`https://mediaserver.htwk-leipzig.de/api/v2/medias/playlist/?oid=${videoId}&?all`}
           timeUpdate={handleTimeUpdate}
           setDuration={setDuration}
           ref={videoRef}
         />
         <div className={[styles.fsButton].join(' ')} onClick={fullscreen}></div>
+      <div className={[styles.title].join(' ')} >{videoData.title}</div>
       </div>
       {videoRef.current ? displayQuestion() : null}
       {questionTimecodes && duration ?
@@ -129,7 +129,6 @@ function WatchVideo() {
         </div> : <Loader></Loader>}
     </div >
   )
-
 }
 
 export default WatchVideo

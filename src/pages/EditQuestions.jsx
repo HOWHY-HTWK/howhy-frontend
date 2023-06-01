@@ -5,11 +5,15 @@ import axiosClient from '../../axios-client.jsx'
 import styles from './css/EditQuestions.module.css'
 import QuestionList from '../components/QuestionList'
 import * as api from '../api'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import HlsPlayer from '../components/HlsPlayer'
 
 export default function EditQuestions() {
 	const videoId = useParams().videoId;
+	const location = useLocation();
+	const videoData = location.state?.videoData;
+
+	console.log(videoData)
 
 	const [editedQuestion, setEditedQuestion] = useState(JSON.parse(localStorage.getItem('question')) != null ? 'multipleChoice' : null)
 	const [questionType, setquestionType] = useState('multipleChoice')
@@ -99,7 +103,7 @@ export default function EditQuestions() {
 
 	return (
 		<div className={['centerVertical', styles.wrapper].join(' ')} >
-			<div>{videoId}</div>
+			<div className={[styles.title].join(' ')} >{videoData.title}</div>
 			<div className={[styles.player].join(' ')} >
 				<HlsPlayer
 					className={[styles.player].join(' ')}

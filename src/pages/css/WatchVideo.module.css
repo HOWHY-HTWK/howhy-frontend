@@ -15,6 +15,14 @@
     "question";
 }
 
+.title {
+  font-weight: 500;
+  font-size: medium;
+  width: 100%;
+  max-width: 500px;
+  padding: 0 10px;
+}
+
 .wrapperFS{
   position: fixed;
   max-width: none;

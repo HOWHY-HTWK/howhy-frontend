@@ -36,9 +36,11 @@ export default function DashList({ searchterm = '' }) {
 
 	function getListItem(video) {
 		return (
-			<NavLink
+			<Link
 				className={[styles.listItem, 'listElement'].join(' ')}
-				key={video.oid} to={`/watch/${video.oid}`}>
+				key={video.oid} 
+				to={`/watch/${video.oid}`}
+				state={{videoData: video}}>
 				<img
 					className={[styles.img].join(' ')}
 					src={video.thumb}>
@@ -58,7 +60,7 @@ export default function DashList({ searchterm = '' }) {
 					{video.views}&nbsp;
 					<img src={viewsIcon}></img>
 				</div>
-			</NavLink>
+			</Link>
 		)
 	}
 
