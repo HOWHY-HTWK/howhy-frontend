@@ -8,12 +8,12 @@ import { storeQuestion } from '../api'
 import { getTimeInReadable } from '../utils'
 
 
-export default function QuestionEditor({ existingQuestion, duration, time, videoId, setEditedQuestion }) {
+export default function QuestionEditor({ existingQuestion, duration, time, videoId, setEditedQuestion, singleChoice }) {
   const basequestion = existingQuestion ? existingQuestion : {
     'videoId': videoId,
     'questionText': '',
     'timecode': time,
-    'type': 'multiplechoice',
+    'type': singleChoice ? 'singlechoice' : 'multiplechoice',
     'correctAnswers': [{ 'id': 0, 'correct': false }],
     'answers': [{ "id": 0, "text": '', }],
   }
@@ -25,9 +25,15 @@ export default function QuestionEditor({ existingQuestion, duration, time, video
   }
 
   function toggleCorrect(id) {
-    const newCorrectAnswers = question.correctAnswers.map(e =>
-      e.id == id ? { ...e, correct: !e.correct } : e)
-    setQuestion({ ...question, correctAnswers: newCorrectAnswers });
+    if (singleChoice) {
+      const newCorrectAnswers = question.correctAnswers.map(e =>
+        e.id == id ? { ...e, correct: !e.correct } : { ...e, correct: false })
+      setQuestion({ ...question, correctAnswers: newCorrectAnswers });
+    } else {
+      const newCorrectAnswers = question.correctAnswers.map(e =>
+        e.id == id ? { ...e, correct: !e.correct } : e)
+      setQuestion({ ...question, correctAnswers: newCorrectAnswers });
+    }
   }
 
   function getNewId() {
