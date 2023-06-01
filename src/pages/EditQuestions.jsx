@@ -13,8 +13,6 @@ export default function EditQuestions() {
 	const location = useLocation();
 	const videoData = location.state?.videoData;
 
-	console.log(videoData)
-
 	const [editedQuestion, setEditedQuestion] = useState(JSON.parse(localStorage.getItem('question')) != null ? 'multipleChoice' : null)
 	const [questionType, setquestionType] = useState('multipleChoice')
 	const [questions, setQuestions] = useState(null)
