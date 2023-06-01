@@ -5,22 +5,20 @@ import axiosClient from '../../axios-client.jsx'
 import styles from './css/EditQuestions.module.css'
 import QuestionList from '../components/QuestionList'
 import * as api from '../api'
+import { useParams } from 'react-router-dom'
+import HlsPlayer from '../components/HlsPlayer'
 
 export default function EditQuestions() {
-  const queryParameters = new URLSearchParams(window.location.search)
-  const videoId = queryParameters.get("id")
+  const videoId = useParams().videoId;
 
   const [editedQuestion, setEditedQuestion] = useState(JSON.parse(localStorage.getItem('question')) != null ? 'multipleChoice' : null)
   const [questionType, setquestionType] = useState('multipleChoice')
   const [questions, setQuestions] = useState(null)
+  const [duration, setDuration] = useState(null)
 
-  const iframe = useRef(null)
-  const time = useRef(null)
-  const duration = useRef(null)
-
-  useEffect(() => {
-    loadQuestions()
-  }, [])
+  const timeRef = useRef(null)
+  // const duration = useRef(null)
+  const videoRef = useRef(null)
 
   useEffect(() => {
     if (!editedQuestion) {
@@ -36,8 +34,6 @@ export default function EditQuestions() {
         alert('fragen konnten nicht geladen werden')
       })
   }
-
-  refreshCurrentTime()
 
   function displayAddQuestion() {
     if (editedQuestion == null) {
@@ -57,9 +53,9 @@ export default function EditQuestions() {
     if (editedQuestion == null) {
       return null
     } else if (editedQuestion == 'multipleChoice') {
-      return <QuestionEditor duration={duration.current} time={time.current} existingQuestion={null} videoId={videoId} setEditedQuestion={setEditedQuestion}></QuestionEditor>
+      return <QuestionEditor duration={duration} time={timeRef.current} existingQuestion={null} videoId={videoId} setEditedQuestion={setEditedQuestion}></QuestionEditor>
     } else if (typeof editedQuestion == 'object') {
-      return <QuestionEditor duration={duration.current} time={time.current} existingQuestion={editedQuestion} videoId={videoId} setEditedQuestion={setEditedQuestion}></QuestionEditor>
+      return <QuestionEditor duration={duration} time={timeRef.current} existingQuestion={editedQuestion} videoId={videoId} setEditedQuestion={setEditedQuestion}></QuestionEditor>
     }
   }
 
@@ -73,21 +69,21 @@ export default function EditQuestions() {
     }
   }
 
-  function refreshCurrentTime() {
-    window.addEventListener('message', function (event) {
-      if ('time' in event.data) {
-        time.current = event.data.time
-      }
-      if ('duration' in event.data) {
-        duration.current = event.data.duration
-      }
-    }, false)
+  function handleTimeUpdate(time) {
+    console.log(time)
+    timeRef.current = time
   }
 
   return (
     <div className={[styles.wrapper].join(' ')} >
       <div>{videoId}</div>
-      <iframe ref={iframe} className={[styles.iframe].join(' ')} src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe/player/`} allowFullScreen={false} ></iframe>
+      <HlsPlayer
+          className={[].join(' ')} 
+          url={`https://mediaserver.htwk-leipzig.de/api/v2/medias/playlist/?oid=${videoId}&?all`}
+          timeUpdate={handleTimeUpdate}
+          setDuration={setDuration}
+          ref={videoRef}
+        />
       {displayAddQuestion()}
       {displayQuestionEditor()}
       {!editedQuestion && questions ? <QuestionList questions={questions} editQuestion={setEditedQuestion} deleteQuestion={deleteQuestion} seteditedQuestion={setEditedQuestion}></QuestionList> : null}

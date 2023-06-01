@@ -81,7 +81,7 @@ const router = createBrowserRouter(
                     element: <EditorDash />
                 },
                 {
-                    path: "/editor/edit/*",
+                    path: "/editor/edit/:videoId",
                     element: <EditQuestions />
                 },
                 {

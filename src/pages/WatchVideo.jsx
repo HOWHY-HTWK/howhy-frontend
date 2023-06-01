@@ -12,9 +12,6 @@ import HlsPlayer from '../components/HlsPlayer'
 import Loader from '../components/Loader'
 
 function WatchVideo() {
-  // const queryParameters = new URLSearchParams(window.location.search)
-  // const videoId = queryParameters.get("id")
-
   const videoId = useParams().videoId;
 
   const { user, setUser, updateUserData } = useStateContext()
@@ -97,7 +94,8 @@ function WatchVideo() {
       console.log('oldtime: ' + oldTimeRef.current + '  timecode: ' + element.timecode + '  time: ' + time)
       return (oldTimeRef.current <= element.timecode && element.timecode <= time) || (element.timecode == time)
     })
-    oldTimeRef.current = time + 0.000001
+    oldTimeRef.current = Number(time) + Number(0.000001)
+    // oldTimeRef.current = time
     return question ? question.id : null
   }
 
