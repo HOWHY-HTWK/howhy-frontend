@@ -21,6 +21,8 @@
   --dark-accent: #191C47;
   --editor-accent-color: rgba(88, 116, 194, 255);
   --question-accent-color: rgba(216, 110, 169);
+
+  --shadow: 0 1px 2px 0 rgba(60, 64, 67, .3);
 }
 
 @media (prefers-color-scheme: dark) {

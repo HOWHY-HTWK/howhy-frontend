@@ -29,7 +29,7 @@ export default function Question({ questionId, setQuestionId, refreshData }) {
 	}
 
 	function selectAnswer(answerIndex) {
-		if(questionData.data.type == 'singlechoice') {
+		if (questionData.data.type == 'singlechoice') {
 			var arr = questionData.selected.map((element, index) => {
 				return answerIndex == index ? !element : false
 			})
@@ -84,7 +84,10 @@ export default function Question({ questionId, setQuestionId, refreshData }) {
 							{answers}
 						</div>
 						<div className={[styles.answerButtonWrapper, 'center'].join(' ')}>
-							<div className={[styles.questionElement, styles.answerButton, 'button'].join(' ')} onClick={calcAnswerIndexes}>Antwort abschicken</div>
+							<div className={['button', styles.answerButton].join(' ')}
+								onClick={calcAnswerIndexes}>
+								Antwort abschicken
+							</div>
 						</div>
 					</div>
 				}
