@@ -3,7 +3,7 @@ import styles from './css/Question.module.css'
 import * as api from '../api'
 import Loader from './Loader';
 
-export default function Question({ questionId, setQuestionId }) {
+export default function Question({ questionId, setQuestionId, refreshData }) {
 
 	const [questionData, setQuestionData] = useState({ data: null, selected: [] });
 	const [answerCorrect, setAnswerCorrect] = useState(null);
@@ -56,6 +56,7 @@ export default function Question({ questionId, setQuestionId }) {
 			api.checkAnswers(request)
 				.then((response) => {
 					setAnswerCorrect(response.data.success)
+					refreshData()
 					setTimeout(function () {
 						setAnswerCorrect(null)
 						setQuestionId(null)

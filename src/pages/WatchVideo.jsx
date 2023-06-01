@@ -38,9 +38,13 @@ function WatchVideo() {
   }, [questionTimecodes]);
 
   useEffect(() => {
+    refreshData()
+  }, [])
+
+  function refreshData(){
     getTimecodes()
     updateUserData()
-  }, [currentQuestionId])
+  }
 
   function getTimecodes() {
     api.getQuestionTimecodes(videoId).then(response => {
@@ -71,6 +75,7 @@ function WatchVideo() {
             questionId={currentQuestionId}
             setQuestionId={setCurrentQuestionId}
             videoId={videoId}
+            refreshData={refreshData}
           />
         </div>
       )
