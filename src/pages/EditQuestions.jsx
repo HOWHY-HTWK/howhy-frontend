@@ -69,7 +69,6 @@ export default function EditQuestions() {
   }
 
   function handleTimeUpdate(time) {
-    console.log(time)
     setTime(time)
   }
 

@@ -6,7 +6,6 @@
 }
 
 .box{
-    padding: 0.5rem;
     display: flex;
     flex-flow: row nowrap;
     gap: 0.5rem;

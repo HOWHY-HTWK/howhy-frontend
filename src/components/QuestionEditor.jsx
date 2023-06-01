@@ -5,6 +5,7 @@ import { MdClose, MdAdd } from "react-icons/md"
 import TimeCodePicker from './TimeCodePicker'
 import TextareaAutosize from 'react-textarea-autosize';
 import { storeQuestion } from '../api'
+import { getTimeInReadable } from '../utils'
 
 
 export default function QuestionEditor({ existingQuestion, duration, time, videoId, setEditedQuestion }) {
@@ -58,6 +59,7 @@ export default function QuestionEditor({ existingQuestion, duration, time, video
 
   function saveQuestionAndReset() {
     localStorage.setItem('question', null);
+    console.log(question)
     storeQuestion(question).then(response => {
       setEditedQuestion(null)
     }).catch(error => {
@@ -70,7 +72,7 @@ export default function QuestionEditor({ existingQuestion, duration, time, video
     setEditedQuestion(null)
   }
 
-  function setCurrentTime(){
+  function setCurrentTime() {
     setQuestion({ ...question, timecode: time })
   }
 
@@ -104,14 +106,17 @@ export default function QuestionEditor({ existingQuestion, duration, time, video
   return (
     <div className={['centerVertical', styles.wrap].join(' ')} >
       <div className={['center'].join(' ')} >
-        <TimeCodePicker
-          duration={duration}
-          time={question.timecode}
-          setTimeCode={setNewTimecode} />
-        <div 
-        className={['button', styles.setTimecodeButton].join(' ')}
-        onClick={setCurrentTime}>
-          Aktuellen Zeitpunkt des Videos für Frage übernehemen.
+        <div className={['centerVertical', styles.timeWrap].join(' ')} >
+          <div>Zeitpunkt der Frage: <span className={[styles.timecode].join(' ')} >{getTimeInReadable(question.timecode)}</span></div>
+          <TimeCodePicker
+            duration={duration}
+            time={question.timecode}
+            setTimeCode={setNewTimecode} />
+        </div>
+        <div
+          className={['button', styles.setTimecodeButton].join(' ')}
+          onClick={setCurrentTime}>
+          Aktuellen Zeitpunkt des Videos übernehemen.
         </div>
       </div>
       <div className={[questionStyles.question, styles.stretch].join(' ')} >
