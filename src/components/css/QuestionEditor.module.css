@@ -1,3 +1,8 @@
+.wrap {
+    align-items: center;
+    width: 100%;
+}
+
 .input {
     font-family: inherit;
     /* width: 100%; */
@@ -87,3 +92,8 @@
     background-color: lightcoral;
 }
 
+.setTimecodeButton {
+    padding: 0 inherit;
+    font-size: 0.9em;
+    max-width: 300px;
+}

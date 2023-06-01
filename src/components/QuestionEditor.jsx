@@ -70,6 +70,10 @@ export default function QuestionEditor({ existingQuestion, duration, time, video
     setEditedQuestion(null)
   }
 
+  function setCurrentTime(){
+    setQuestion({ ...question, timecode: time })
+  }
+
   function getAnswers() {
     return (
       question.answers.map((answer) =>
@@ -98,24 +102,37 @@ export default function QuestionEditor({ existingQuestion, duration, time, video
   }
 
   return (
-    <div className={[questionStyles.question, styles.stretch].join(' ')} >
-      <TimeCodePicker duration={duration} time={question.timecode}
-        setTimeCode={setNewTimecode}></TimeCodePicker>
-      <div className={[questionStyles.questionElement, questionStyles.questionText].join(' ')} >
-        <TextareaAutosize
-          className={[styles.input].join(' ')}
-          placeholder="Frage hier eingeben" value={question.questionText}
-          onInput={e => setQuestion({ ...question, questionText: e.target.value })} />
+    <div className={['centerVertical', styles.wrap].join(' ')} >
+      <div className={['center'].join(' ')} >
+        <TimeCodePicker
+          duration={duration}
+          time={question.timecode}
+          setTimeCode={setNewTimecode} />
+        <div 
+        className={['button', styles.setTimecodeButton].join(' ')}
+        onClick={setCurrentTime}>
+          Aktuellen Zeitpunkt des Videos für Frage übernehemen.
+        </div>
       </div>
-      <div className={[questionStyles.answersWrapper].join(' ')} >
-        {getAnswers()}
-      </div>
-      <MdAdd className={[styles.addAnswer].join(' ')} onClick={addAnswer}></MdAdd>
-      <div className={[styles.buttonWrapper].join(' ')} >
-        <div className={['button', styles.saveQuestion, styles.cancel].join(' ')}
-          onClick={cancelAndReset}>Abbrechen</div>
-        <div className={['button', styles.saveQuestion].join(' ')}
-          onClick={saveQuestionAndReset}>Frage speichern</div>
+      <div className={[questionStyles.question, styles.stretch].join(' ')} >
+        <div className={[questionStyles.questionElement, questionStyles.questionText].join(' ')} >
+          <TextareaAutosize
+            className={[styles.input].join(' ')}
+            placeholder="Frage hier eingeben" value={question.questionText}
+            onInput={e => setQuestion({ ...question, questionText: e.target.value })} />
+        </div>
+        <div className={[questionStyles.answersWrapper].join(' ')} >
+          {getAnswers()}
+        </div>
+        <MdAdd className={[styles.addAnswer].join(' ')} onClick={addAnswer}></MdAdd>
+        <div className={[styles.buttonWrapper].join(' ')} >
+          <div
+            className={['button', styles.saveQuestion, styles.cancel].join(' ')}
+            onClick={cancelAndReset}>Abbrechen</div>
+          <div
+            className={['button', styles.saveQuestion].join(' ')}
+            onClick={saveQuestionAndReset}>Frage speichern</div>
+        </div>
       </div>
     </div>
   )

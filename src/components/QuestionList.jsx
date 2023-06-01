@@ -25,9 +25,9 @@ export default function QuestionList({ questions, editQuestion, deleteQuestion }
     }
 
     return (
-        <>
+        <div className={[styles.wrap].join(' ')} >
             <h3>Existierende Fragen:</h3>
             {listElements.length > 0 ? <div>{listElements}</div> : 'Für dieses Video gibt es noch keine Fragen'}
-        </>
+        </div>
     )
 }

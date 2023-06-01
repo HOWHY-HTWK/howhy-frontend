@@ -15,9 +15,8 @@ export default function EditQuestions() {
   const [questionType, setquestionType] = useState('multipleChoice')
   const [questions, setQuestions] = useState(null)
   const [duration, setDuration] = useState(null)
+  const [time, setTime] = useState(null)
 
-  const timeRef = useRef(null)
-  // const duration = useRef(null)
   const videoRef = useRef(null)
 
   useEffect(() => {
@@ -39,9 +38,9 @@ export default function EditQuestions() {
     if (editedQuestion == null) {
       return (
         <div className={[styles.addWrapper].join(' ')} >
-          <select className="selector" value={questionType} onChange={e => setquestionType(e.target.value)}  >
+          <select className={['selector', styles.selector].join(' ')}  value={questionType} onChange={e => setquestionType(e.target.value)}  >
             <option value="multipleChoice">Multiple Choice</option>
-            <option value="singleChoice">Single Choice</option>
+            {/* <option value="singleChoice">Single Choice</option> */}
           </select>
           <button className="button" onClick={() => setEditedQuestion(questionType)}>{questionType}-Frage zum aktuellen Zeitpunk hinzufügen</button>
         </div>
@@ -53,9 +52,9 @@ export default function EditQuestions() {
     if (editedQuestion == null) {
       return null
     } else if (editedQuestion == 'multipleChoice') {
-      return <QuestionEditor duration={duration} time={timeRef.current} existingQuestion={null} videoId={videoId} setEditedQuestion={setEditedQuestion}></QuestionEditor>
+      return <QuestionEditor duration={duration} time={time} existingQuestion={null} videoId={videoId} setEditedQuestion={setEditedQuestion}></QuestionEditor>
     } else if (typeof editedQuestion == 'object') {
-      return <QuestionEditor duration={duration} time={timeRef.current} existingQuestion={editedQuestion} videoId={videoId} setEditedQuestion={setEditedQuestion}></QuestionEditor>
+      return <QuestionEditor duration={duration} time={time} existingQuestion={editedQuestion} videoId={videoId} setEditedQuestion={setEditedQuestion}></QuestionEditor>
     }
   }
 
@@ -71,19 +70,21 @@ export default function EditQuestions() {
 
   function handleTimeUpdate(time) {
     console.log(time)
-    timeRef.current = time
+    setTime(time)
   }
 
   return (
-    <div className={[styles.wrapper].join(' ')} >
+    <div className={['centerVertical', styles.wrapper].join(' ')} >
       <div>{videoId}</div>
-      <HlsPlayer
-          className={[].join(' ')} 
-          url={`https://mediaserver.htwk-leipzig.de/api/v2/medias/playlist/?oid=${videoId}&?all`}
-          timeUpdate={handleTimeUpdate}
-          setDuration={setDuration}
-          ref={videoRef}
-        />
+      <div className={[styles.player].join(' ')} >
+        <HlsPlayer
+            className={[styles.player].join(' ')}
+            url={`https://mediaserver.htwk-leipzig.de/api/v2/medias/playlist/?oid=${videoId}&?all`}
+            timeUpdate={handleTimeUpdate}
+            setDuration={setDuration}
+            ref={videoRef}
+          />
+      </div>
       {displayAddQuestion()}
       {displayQuestionEditor()}
       {!editedQuestion && questions ? <QuestionList questions={questions} editQuestion={setEditedQuestion} deleteQuestion={deleteQuestion} seteditedQuestion={setEditedQuestion}></QuestionList> : null}

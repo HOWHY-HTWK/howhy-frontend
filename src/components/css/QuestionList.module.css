@@ -1,3 +1,8 @@
+.wrap {
+    width: 100%;
+    max-width: 500px;
+}
+
 .text {
     box-shadow: 0px 0px 5px black;
     margin-bottom: 0;
@@ -36,7 +41,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-    .timecode{
+    .timecode {
         border: 1px solid white;
     }
-  }
+}

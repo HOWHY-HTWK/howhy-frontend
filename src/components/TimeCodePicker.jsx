@@ -3,14 +3,10 @@ import styles from './css/TimeCodePicker.module.css'
 import * as utils from '../utils.js'
 
 export default function TimeCodePicker({ duration, time, setTimeCode }) {
-    const timeHMS = utils.getHoursMinutesSeconds(time)
 
-    const [timecode, setLocalTimeCode] = useState(timeHMS);
+    // const [timecode, setLocalTimeCode] = useState(utils.getHoursMinutesSeconds(time));
 
-    useEffect(() => {
-        const totalSeconds = getTotalSeconds(timecode);
-        setTimeCode(totalSeconds)
-    }, [timecode])
+    const timecode = utils.getHoursMinutesSeconds(time);
 
     function getTotalSeconds(timeObject) {
         return timeObject.hours * 3600 + timeObject.minutes * 60 + timeObject.seconds
@@ -18,7 +14,7 @@ export default function TimeCodePicker({ duration, time, setTimeCode }) {
 
     function changeTimeCode(newTime) {
         if (getTotalSeconds(newTime) <= duration) {
-            setLocalTimeCode(newTime)
+            setTimeCode(getTotalSeconds(newTime))
         } else {
             alert("Dieser Timecode liegt nicht im Video")
         }
