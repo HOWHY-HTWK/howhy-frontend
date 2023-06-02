@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 export default function LogIn({ returnSuccess = (success) => success, showEditorOption = true }) {
     const navigate = useNavigate();
     const location = useLocation();
-    const backPath = location.state?.backPath;
+    const backPath = location.state ? location.state.backPath : '/editor';
 
     const { user, setUser } = useStateContext()
 
