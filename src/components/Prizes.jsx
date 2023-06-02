@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from './css/Prizes.module.css'
 
-import qrCode from '../assets/QR-code.svg'
+import qrCode from '../assets/QR-Code.svg'
 import qr_used from '../assets/icons/qr_used.svg'
 import calendar from '../assets/icons/calendar.svg'
 import location from '../assets/icons/location.svg'
