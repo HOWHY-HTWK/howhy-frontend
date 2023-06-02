@@ -1,65 +1,108 @@
 import React, { createRef, useEffect, useState } from 'react'
 import axiosClient from '../../axios-client.jsx'
 import { useStateContext } from '../contexts/ContextProvider.jsx';
-import styles from './css/Login.module.css'
-import UserSignUp from './UserSignUp.jsx';
+import styles from './css/UserLogin.module.css'
+import SignUp from './SignUp.jsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export default function UserLogin({ returnSuccess = (success) => success }) {
-  const { user, setUser } = useStateContext()
+import howhyLogo from '../assets/login_logo.svg'
+import info from '../assets/infographic.svg'
+import background from '../assets/Muster.svg'
+import UserSignUp from './UserSignUp.jsx';
 
-  const usernameRef = createRef()
-  const passwordRef = createRef()
-  const [remember, setRemember] = useState(false)
+export default function UserLogIn({ showEditorOption = false }) {
+    const navigate = useNavigate();
 
-  const [signUp, setSignUp] = useState(false);
+    const { user, setUser } = useStateContext()
+    const [message, setMessage] = useState('');
 
-  function handleLogin(e) {
-    e.preventDefault();
-    logIn()
-  }
+    const emailRef = createRef()
+    const passwordRef = createRef()
 
-  function logIn() {
-    axiosClient.get('/sanctum/csrf-cookie')
-      .then(response => {
-        axiosClient.post('/api/userlogin', {
-          username: usernameRef.current.value,
-          password: passwordRef.current.value,
-          remember: remember
-        }).then(response => {
-          console.log(response)
-          setUser(response.data)
-          returnSuccess(true)
-        }).catch((error) => {
-          alert(error.response.data.message)
-          console.log(error.response)
-        });
-      })
-  }
+    const [loginData, setLoginData] = useState({
+        email: '',
+        password: ''
+    })
 
-  function toggleSignUp() {
-    setSignUp(!signUp)
-  }
+    const [remember, setRemember] = useState(true)
 
-  function getLogin() {
+    const [signUp, setSignUp] = useState(false);
+
+    function handleLogin(e) {
+        e.preventDefault();
+        logIn(loginData.email, loginData.password, remember)
+    }
+
+    function logIn(email, password, remember) {
+        axiosClient.get('/sanctum/csrf-cookie')
+            .then(response => {
+                axiosClient.post('/login', {
+                    email: email,
+                    password: password,
+                    remember: remember
+                }).then(response => {
+                    console.log(response)
+                    setUser(response.data)
+                    navigate(-1)
+                }).catch((error) => {
+                    setMessage(<span style={{ color: 'red' }}>{error.response.data.message}</span>)
+                    console.log(error.response)
+                });
+            })
+    }
+
+    function toggleSignUp() {
+        setSignUp(!signUp)
+    }
+
+    function getLoginForm() {
+        return (
+            <div className={[styles.formwrapper].join(' ')} >
+                <form method="post" className={[styles.form].join(' ')} onSubmit={handleLogin}>
+                    <div className={[styles.label].join(' ')} >
+                        <div className={[styles.labelText, loginData.email == '' ? styles.hidden : null].join(' ')} >E-Mail</div>
+                        <input
+                            className={[styles.input].join(' ')}
+                            ref={emailRef}
+                            value={loginData.email}
+                            onInput={e => setLoginData({ ...loginData, email: e.target.value })}
+                            type="email"
+                            name="email"
+                            placeholder='E-mail'
+                            autoComplete='username' />
+                    </div>
+                    <div className={[styles.label].join(' ')} >
+                        <div className={[styles.labelText, loginData.password == '' ? styles.hidden : null].join(' ')} >Passwort</div>
+                        <input
+                            className={[styles.input].join(' ')}
+                            ref={passwordRef}
+                            value={loginData.password}
+                            onInput={e => setLoginData({ ...loginData, password: e.target.value })}
+                            type="password"
+                            name="password"
+                            placeholder='Passwort'
+                            autoComplete='current-password' />
+                    </div>
+                    {message != '' ?
+                        <div className={[styles.message].join(' ')} >{message} </div>
+                        :
+                        <div className={[styles.message, styles.invisible].join(' ')} ></div>
+                    }
+                    <button className={['button', styles.loginButton].join(' ')} type="submit">Einloggen</button>
+                </form>
+                <div className={[styles.register].join(' ')} onClick={toggleSignUp}> Registrieren</div>
+            </div>
+        )
+    }
+
     return (
-      <div className={[styles.formwrapper].join(' ')} >
-        <form method="post" className={[styles.vertical].join(' ')} onSubmit={handleLogin}>
-          <span>Log In</span>
-          <label><input ref={usernameRef} type="username" name="username" placeholder='Nutzername' autoComplete='username' /></label>
-          <label><input ref={passwordRef} type="password" name="password" placeholder='Passwort' autoComplete='current-password' /></label>
-          <label>Angemeldet Bleiben<input checked={remember} onChange={e => setRemember(e.target.checked)} type='checkbox' name='remember'></input></label>
-          <button className={['button'].join(' ')} type="submit">LogIn</button>
-        </form>
-        <div className={[styles.register].join(' ')} onClick={toggleSignUp}> Registrieren</div>
-      </div>
+        <div className={[styles.wrap].join(' ')}
+            style={{ backgroundImage: `url(${background})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }} >
+            <img className={[styles.logo].join(' ')} src={howhyLogo} ></img>
+            {!signUp ? <img className={[styles.infoGraphic].join(' ')} src={info} ></img> : null}
+            {!signUp ? getLoginForm() : <UserSignUp showEditorOption={showEditorOption}
+                toggleSignUp={toggleSignUp}
+                logIn={logIn} />}
+        </div>
     )
-  }
-
-  return (
-    <>
-      {!signUp ? getLogin() : <UserSignUp returnSuccess={returnSuccess} toggleSignUp={toggleSignUp}></UserSignUp>}
-
-    </>
-  )
 }

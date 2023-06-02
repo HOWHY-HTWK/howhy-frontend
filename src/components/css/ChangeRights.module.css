@@ -1,12 +1,12 @@
-.wrap{
-}
+.wrap {}
 
 .listItem {
     grid-template-columns: 10em 10em 10em;
     grid-template-rows: auto;
-    grid-template-areas: 
-    "email role button";
+    grid-template-areas:
+        "email role button";
 }
+
 .role {
     grid-area: role;
 }

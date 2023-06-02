@@ -8,14 +8,14 @@ import { useStateContext } from '../contexts/ContextProvider';
 
 export default function ChangeRights() {
     const { user, setUser } = useStateContext()
-    
+
     const [users, setUsers] = useState([])
 
     useEffect(() => {
         getUsers()
     }, [])
 
-    function getUsers(){
+    function getUsers() {
         api.getUsers()
             .then(response => {
                 console.log(response.data)
@@ -45,15 +45,15 @@ export default function ChangeRights() {
                         <div key={element.id} className={emailStyles.email}>
                             <div className={[styles.email].join(' ')} >{element.email}</div>
                             <div>{element.role}</div>
-                            {user.role == 'admin' ? <button className={[emailStyles.smallButton, emailStyles.makeAdmin].join(' ')}  onClick={() => giveEditorRights(element.id)}>Bearbeiten Rechte geben</button> : null}
+                            {user.role == 'admin' ? <button className={[emailStyles.smallButton, emailStyles.makeAdmin].join(' ')} onClick={() => giveEditorRights(element.id)}>Bearbeiten Rechte geben</button> : null}
                         </div>
                     )
                 })}
             </div>
             {user.role == 'admin' ?
-            <div className={[emailStyles.inputWrapper].join(' ')} >
+                <div className={[emailStyles.inputWrapper].join(' ')} >
 
-            </div> : <div style={{color: 'red'}}>Sie bestizen nicht die Rechte<br /> um die Emails zu bearbeiten.</div>}
+                </div> : <div style={{ color: 'red' }}>Sie bestizen nicht die Rechte<br /> um die Emails zu bearbeiten.</div>}
         </div>
     )
 }

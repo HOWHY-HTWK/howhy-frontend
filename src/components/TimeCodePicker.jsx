@@ -3,14 +3,10 @@ import styles from './css/TimeCodePicker.module.css'
 import * as utils from '../utils.js'
 
 export default function TimeCodePicker({ duration, time, setTimeCode }) {
-    const timeHMS = utils.getHoursMinutesSeconds(time)
 
-    const [timecode, setLocalTimeCode] = useState(timeHMS);
+    // const [timecode, setLocalTimeCode] = useState(utils.getHoursMinutesSeconds(time));
 
-    useEffect(() => {
-        const totalSeconds = getTotalSeconds(timecode);
-        setTimeCode(totalSeconds)
-    }, [timecode])
+    const timecode = utils.getHoursMinutesSeconds(time);
 
     function getTotalSeconds(timeObject) {
         return timeObject.hours * 3600 + timeObject.minutes * 60 + timeObject.seconds
@@ -18,43 +14,47 @@ export default function TimeCodePicker({ duration, time, setTimeCode }) {
 
     function changeTimeCode(newTime) {
         if (getTotalSeconds(newTime) <= duration) {
-            setLocalTimeCode(newTime)
+            setTimeCode(getTotalSeconds(newTime))
         } else {
             alert("Dieser Timecode liegt nicht im Video")
         }
+    }
+
+    function getOptions(length) {
+        let array = Array.from({ length: length })
+        return (
+            array.map((_, index) => (
+                <option key={index} value={index}>
+                    {index}
+                </option>
+            ))
+        )
     }
 
     return (
         <div className={styles.wrapper}>
             <div className={styles.box}>
                 <label>
-                    Zeitpunkt der Frage:&nbsp;
-                    <select value={timecode.hours} onChange={e => changeTimeCode({ ...timecode, hours: parseInt(e.target.value) })}>
-                        {Array.from({ length: 24 }).map((_, index) => (
-                            <option key={index} value={index}>
-                                {index}
-                            </option>
-                        ))}
-                    </select>
-                    h
+                    Zeitpunkt setzen:&nbsp;
+                    {utils.getHoursMinutesSeconds(duration).hours != 0 ?
+                        <>
+                            <select value={timecode.hours} onChange={e => changeTimeCode({ ...timecode, hours: parseInt(e.target.value) })}>
+                                {getOptions(24)}
+                            </select>
+                            h
+                        </>
+                        : null
+                    }
                 </label>
                 <label>
                     <select value={timecode.minutes} onChange={e => changeTimeCode({ ...timecode, minutes: parseInt(e.target.value) })}>
-                        {Array.from({ length: 60 }).map((_, index) => (
-                            <option key={index} value={index}>
-                                {index}
-                            </option>
-                        ))}
+                        {getOptions(60)}
                     </select>
                     m
                 </label>
                 <label>
                     <select value={timecode.seconds} onChange={e => changeTimeCode({ ...timecode, seconds: parseInt(e.target.value) })}>
-                        {Array.from({ length: 60 }).map((_, index) => (
-                            <option key={index} value={index}>
-                                {index}
-                            </option>
-                        ))}
+                        {getOptions(60)}
                     </select>
                     s
                 </label>

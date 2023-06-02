@@ -21,11 +21,11 @@
     text-align: center;
 }
 
-.info{
+.info {
     cursor: pointer;
 }
 
-.infoBox{
+.infoBox {
     font-size: medium;
     position: absolute;
     background-color: var(--background-color);
@@ -37,7 +37,7 @@
     visibility: hidden;
 }
 
-.visible{
+.visible {
     visibility: visible;
 }
 
@@ -47,7 +47,7 @@
     align-self: center;
 }
 
-.hidden{
+.hidden {
     visibility: hidden;
 }
 

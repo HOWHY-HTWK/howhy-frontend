@@ -1,11 +1,19 @@
-.bar{
-    width: 100%;
-    height: 2rem;
+.bar {
     position: absolute;
     bottom: 0;
-    background-color: lightgray;
+    justify-self: flex-end;
+    box-sizing: border-box;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
-    align-items: center;
+    gap: 20px;
+    width: 100%;
+    padding: 10px 10px;
+}
+
+.bottomWrap {}
+
+.link {
+    color: var(--color);
+    font-size: 12px;
 }

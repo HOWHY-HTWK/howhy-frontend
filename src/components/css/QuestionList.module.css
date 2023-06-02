@@ -1,3 +1,8 @@
+.wrap {
+    width: 100%;
+    max-width: 500px;
+}
+
 .text {
     box-shadow: 0px 0px 5px black;
     margin-bottom: 0;
@@ -8,6 +13,16 @@
     border-radius: 0.5rem;
     padding: 0 0.5rem;
     border: 1px solid black;
+}
+
+.topWrapper {
+    justify-content: space-between;
+}
+
+.type {
+    background-color: var(--background-color);
+    padding: 0 5px;
+    border-radius: 5px;
 }
 
 .bottomWrapper {
@@ -36,7 +51,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-    .timecode{
+    .timecode {
         border: 1px solid white;
     }
-  }
+}

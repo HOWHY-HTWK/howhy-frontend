@@ -1,109 +1,141 @@
 import React, { useEffect, useRef, useState } from 'react'
 import axiosClient from '../../axios-client.jsx'
-import styles from './css/Login.module.css'
+import styles from './css/UserLogin.module.css'
 import { useStateContext } from '../contexts/ContextProvider.jsx'
 
-export default function UserSignUp({ toggleSignUp, returnSuccess }) {
-  const { user, setUser } = useStateContext()
+export default function UserSignUp({ toggleSignUp, logIn }) {
+    const { user, setUser } = useStateContext()
 
-  useEffect(() => {
-    setsignUpData({ ...signUpData, username: makeUserName(5) })
-  }, [])
+    const [message, setMessage] = useState('');
 
-  const [showAlert, setShowAlert] = useState(false)
-  const [signUpData, setsignUpData] = useState({
-    username: '', password: '',
-    repeatPassword: '',
-  })
+    const [info, setInfo] = useState(false)
+    const infoRef = useRef()
 
-  function handleSignup(e) {
-    e.preventDefault();
-    axiosClient.get('/sanctum/csrf-cookie')
-      .then(response => {
-        let requestObject = {
-          name: signUpData.username,
-          username: signUpData.username,
-          password: signUpData.password,
-          password_confirmation: signUpData.repeatPassword,
-        }
-        axiosClient.post('/api/usersignup', requestObject)
-          .then(response => {
-            console.log(response)
-            setShowAlert(true)
-          }).catch((error) => {
-            alert(error.response.data.message)
-          });
-      })
-  }
+    const [signUpData, setsignUpData] = useState({
+        name: '',
+        email: '', password: '',
+        repeatPassword: '',
+        editorRights: false
+    })
 
-  function makeUserName(length) {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    for (let counter = 0; counter < length; counter++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    useEffect(() => {
+        //set random username initially
+        setsignUpData({ ...signUpData, name: makeUserName(6) })
+
+        const handleOutsideClick = (event) => {
+            if (!infoRef.current.contains(event.target)) {
+                setInfo(false)
+            }
+        };
+        document.addEventListener('click', handleOutsideClick);
+        return () => {
+            document.removeEventListener('click', handleOutsideClick);
+        };
+    }, []);
+
+    function handleSignup(e) {
+        e.preventDefault();
+        axiosClient.get('/sanctum/csrf-cookie')
+            .then(response => {
+                let requestObject = {
+                    name: signUpData.name,
+                    email: signUpData.email,
+                    password: signUpData.password,
+                    password_confirmation: signUpData.repeatPassword,
+                    editor: signUpData.editorRights
+                }
+                axiosClient.post('/register', requestObject)
+                    .then(response => {
+                        console.log(response)
+                        // alert('Registrierung erfolgreich!')
+                        logIn(signUpData.email, signUpData.password, true)
+                    }).catch((error) => {
+                        // debugger
+                        setMessage(<span style={{ color: 'red' }}>{error.response.data.message}</span>)
+                    });
+            })
     }
-    console.log(result);
-    return result;
-  }
 
-  function logIn() {
-    axiosClient.get('/sanctum/csrf-cookie')
-      .then(response => {
-        axiosClient.post('/api/userlogin', {
-          username: signUpData.username,
-          password: signUpData.password,
-          remember: false
-        }).then(response => {
-          console.log(response)
-          setUser(response.data)
-          returnSuccess(true)
-        }).catch((error) => {
-          alert(error.response.data.message)
-          console.log(error.response)
-        });
-      })
-  }
+    function makeUserName(length) {
+        let result = '';
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        for (let counter = 0; counter < length; counter++) {
+            result += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        return result;
+    }
 
-  function notePassword() {
+    function getUserNameInfo() {
+        return (
+            <div className={[styles.infoBox, info ? styles.visible : null].join(' ')} >Es wird automatisch ein anonymer Benutzername generiert. Dieser kann allerdings wie gewünscht angepasst werden.</div>
+        )
+    }
+
+    function handleInfoClick() {
+        setInfo(prev => !prev)
+    }
+
     return (
-      <div className={[styles.background, 'center'].join(' ')} >
-        <div className={[styles.alert].join(' ')} >
-          <div>Bitte notieren Sie sich ihre Anmeldedaten, da sie aus datenschutzrechtilen Gründen nicht wiederhergestellt werden können.</div>
-          <div>Nutzername: {signUpData.username}</div>
-          <div>Passwort: {signUpData.password}</div>
-          <div className={['button'].join(' ')} onClick={logIn}>Ich habe die Daten notiert</div>
-          <div>Sie können sich die Anmeldaten einmalig per E-Mail zusenden lassen. Die E-Mail Adresse wird dabei nicht gespeichert.</div>
-          <input type="email" name="email" placeholder='E-mail' autoComplete='username'></input>
-          <div className={['button'].join(' ')} >Email Senden</div>
-        </div>
-      </div>
-    )
-  }
+        <div className={[styles.formwrapper].join(' ')} >
+            <form method="post" className={[styles.form].join(' ')} onSubmit={handleSignup}>
+                <span>Registrieren</span>
+                <div className={[styles.labelText, styles.label].join(' ')} >
+                    <div className={[styles.labelText].join(' ')} >Benutzername
+                        <span ref={infoRef} className={[styles.info].join(' ')} onClick={handleInfoClick}> &#9432; {getUserNameInfo()}</span>
+                    </div>
+                    <input
+                        id="username"
+                        className={[styles.input].join(' ')}
+                        value={signUpData.name}
+                        onInput={e => setsignUpData({ ...signUpData, name: e.target.value })}
+                        type="username"
+                        name="username"
+                        placeholder='Benutzername'
+                        autoComplete='off' />
+                </div>
+                <div className={[styles.label].join(' ')} >
+                    <div className={[styles.labelText, signUpData.email == '' ? styles.hidden : null].join(' ')} >E-Mail</div>
+                    <input
+                        className={[styles.input].join(' ')}
+                        value={signUpData.email}
+                        onInput={e => setsignUpData({ ...signUpData, email: e.target.value })}
+                        type="email"
+                        name="email"
+                        placeholder='E-mail'
+                        autoComplete='email' />
+                </div>
+                <div className={[styles.label].join(' ')} >
+                    <div className={[styles.labelText, signUpData.password == '' ? styles.hidden : null].join(' ')}>Passwort</div>
+                    <input
+                        className={[styles.input].join(' ')}
+                        value={signUpData.password}
+                        onInput={e => setsignUpData({ ...signUpData, password: e.target.value })}
+                        type="password"
+                        name="password"
+                        placeholder='Passwort'
+                        autoComplete='new-password' />
+                </div>
+                <div className={[styles.label].join(' ')} >
+                    <div className={[styles.labelText, signUpData.repeatPassword == '' ? styles.hidden : null].join(' ')} >Passwort wiederholen</div>
+                    <input
+                        className={[styles.input].join(' ')}
+                        value={signUpData.repeatPassword}
+                        onInput={e => setsignUpData({ ...signUpData, repeatPassword: e.target.value })}
+                        type="password"
+                        name="repeat-password"
+                        placeholder='Passwort wiederholen'
+                        autoComplete='new-password' />
+                    <div className={[styles.message, signUpData.password == signUpData.repeatPassword ? styles.hidden : null].join(' ')} >Keine übereinstimmung</div>
+                    {message != '' ?
+                        <div className={[styles.message].join(' ')} >{message} </div>
+                        :
+                        <div className={[styles.message, styles.invisible].join(' ')} >E</div>
+                    }
+                </div>
 
-  return (
-    <div className={[styles.formwrapper].join(' ')} >
-      <form method="post" className={[styles.vertical].join(' ')} onSubmit={handleSignup}>
-        <span>Registrieren</span>
-        <label>Nutzername: {signUpData.username}</label>
-        <input
-          value={signUpData.password}
-          onInput={e => setsignUpData({ ...signUpData, password: e.target.value })}
-          type="password"
-          name="password"
-          placeholder='Passwort'
-          autoComplete='new-password' />
-        <input
-          value={signUpData.repeatPassword}
-          onInput={e => setsignUpData({ ...signUpData, repeatPassword: e.target.value })}
-          type="password"
-          name="repeat-password"
-          placeholder='Passwort wiederholen'
-          autoComplete='new-password' />
-        {signUpData.password != signUpData.repeatPassword ? <div className={[styles.error].join(' ')} >Keine übereinstimmung</div> : null}
-        <button className={['button'].join(' ')} type="submit">Registrieren</button>
-      </form>
-      <div className={[styles.register].join(' ')} onClick={toggleSignUp}>Einloggen</div>
-      {showAlert ? notePassword() : null}
-    </div>
-  )
+                <button className={['button', styles.loginButton, styles.space].join(' ')} type="submit">Registrieren</button>
+            </form >
+            <div className={[styles.register].join(' ')} onClick={toggleSignUp}>Doch einloggen?</div>
+        </div >
+    )
 }

@@ -1,13 +1,12 @@
 .wrap {
     display: flex;
     width: 100%;
-    flex-flow: row wrap;
-    align-items:flex-start;
-    align-content: center;
+    flex-flow: column nowrap;
+    align-items: center;
     justify-content: center;
     gap: 1rem;
 }
 
-.addVideo{
+.addVideo {
     margin: 3rem;
 }

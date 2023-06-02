@@ -1,4 +1,15 @@
 .wrap {
-    margin: auto;
-    max-width: 500px;
+    box-sizing: border-box;
+    position: relative;
+    /* margin: auto; */
+    height: 100%;
+}
+
+.page {
+    display: none;
+    min-height: 100%;
+}
+
+.active {
+    display: block;
 }

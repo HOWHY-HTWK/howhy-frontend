@@ -8,23 +8,37 @@
 }
 
 .questionElement {
-    box-shadow: 0px 0px 10px black;
+    box-shadow: var(--shadow);
     border-radius: 0.8rem;
     padding: 0.7rem;
-    background-color: rgba(216, 110, 169);
+    /* background-color: var(--question-accent-color); */
+    background-color: var(--background-color);
     text-align: center;
-    border: 2px solid transparent;
+    border: 3px solid transparent;
     cursor: pointer;
     position: relative;
 }
 
 .questionText {
-    border: 3px solid rgba(216, 110, 169);
+    border: 3px solid var(--dark-accent);
     background-color: var(--background-color);
+    /* color: var(--color); */
     color: var(--color);
     margin-bottom: 1.5rem;
     cursor: default;
     hyphens: auto;
+}
+
+.type {
+    position: absolute;
+    bottom: -10px;
+    right: 10px;
+    font-size: small;
+    background-color: var(--dark-accent);
+    color: var(--color-inverted);
+    border-radius: 10px;
+    padding: 0px 10px;
+    white-space: nowrap;
 }
 
 .answersWrapper {
@@ -35,7 +49,7 @@
 }
 
 .answer {
-    color: white;
+    color: var(--color);
     hyphens: auto;
 }
 
@@ -45,13 +59,12 @@
 
 .answerButton {
     margin-top: 20px;
-    float: right;
     cursor: pointer;
-    user-select: none;
+    padding: 7px 15px;
 }
 
 .whiteborder {
-    border-color: white;
+    border-color: var(--user-accent-color);
 }
 
 .feedback {
