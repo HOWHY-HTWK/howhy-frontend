@@ -27,9 +27,10 @@
     background-color: rgba(128, 128, 128, 0.541);
 }
 
-.name{
+.name {
     color: white;
 }
+
 .user:hover,
 .home:hover {
     background-color: rgba(0, 0, 0, 0.619);

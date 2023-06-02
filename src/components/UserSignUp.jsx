@@ -125,12 +125,12 @@ export default function UserSignUp({ toggleSignUp, logIn }) {
                         name="repeat-password"
                         placeholder='Passwort wiederholen'
                         autoComplete='new-password' />
-                                        <div className={[styles.message, signUpData.password == signUpData.repeatPassword ? styles.hidden : null].join(' ')} >Keine übereinstimmung</div>
-                {message != '' ?
-                    <div className={[styles.message].join(' ')} >{message} </div>
-                    :
-                    <div className={[styles.message, styles.invisible].join(' ')} >E</div>
-                }
+                    <div className={[styles.message, signUpData.password == signUpData.repeatPassword ? styles.hidden : null].join(' ')} >Keine übereinstimmung</div>
+                    {message != '' ?
+                        <div className={[styles.message].join(' ')} >{message} </div>
+                        :
+                        <div className={[styles.message, styles.invisible].join(' ')} >E</div>
+                    }
                 </div>
 
                 <button className={['button', styles.loginButton, styles.space].join(' ')} type="submit">Registrieren</button>

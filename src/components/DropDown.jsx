@@ -8,35 +8,35 @@ import * as utils from '../utils'
 
 
 export default function DropDown() {
-  const { user, authenticated, setUser } = useStateContext()
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+    const { user, authenticated, setUser } = useStateContext()
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef(null);
 
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('click', handleOutsideClick);
-    return () => {
-      document.removeEventListener('click', handleOutsideClick);
-    };
-  }, []);
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener('click', handleOutsideClick);
+        return () => {
+            document.removeEventListener('click', handleOutsideClick);
+        };
+    }, []);
 
-  function handleUserClick() {
-    setIsOpen(!isOpen)
-  }
+    function handleUserClick() {
+        setIsOpen(!isOpen)
+    }
 
-  return (
-    <div className={[styles.user].join(' ')} ref={dropdownRef} onClick={handleUserClick}>
-      <div className={[styles.name].join(' ')} >Hallo {user.name} <MdArrowDropDown></MdArrowDropDown></div>
-      <div className={[styles.dropDownWrapper, (isOpen ? styles.visible : null)].join(' ')}>
-        <div className={[styles.wrap, "itemBackground"].join(' ')} >
-          <Link to={'/editor/settings'} className={`${styles.menuListItem}`}>Einstellungen</Link>
-          <div className={styles.menuListItem} onClick={() => utils.logout(setUser)}>Log Out</div>
+    return (
+        <div className={[styles.user].join(' ')} ref={dropdownRef} onClick={handleUserClick}>
+            <div className={[styles.name].join(' ')} >Hallo {user.name} <MdArrowDropDown></MdArrowDropDown></div>
+            <div className={[styles.dropDownWrapper, (isOpen ? styles.visible : null)].join(' ')}>
+                <div className={[styles.wrap, "itemBackground"].join(' ')} >
+                    <Link to={'/editor/settings'} className={`${styles.menuListItem}`}>Einstellungen</Link>
+                    <div className={styles.menuListItem} onClick={() => utils.logout(setUser)}>Log Out</div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  )
+    )
 }

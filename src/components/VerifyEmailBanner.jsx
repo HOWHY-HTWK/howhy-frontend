@@ -18,7 +18,7 @@ export default function VerifyEmailBanner() {
             <div className={[styles.closeWrap].join(' ')} onClick={() => setClosed(true)}>
                 <MdClose></MdClose>
             </div>
-            <div className={[ 'center', styles.content].join(' ')} >
+            <div className={['center', styles.content].join(' ')} >
                 <div>Bitte verifiziere deine E-Mail Adresse um alle Funktionen nutzen zu können</div>
                 <button className={['button'].join(' ')} onClick={resendLink}>Link erneut senden</button>
             </div>

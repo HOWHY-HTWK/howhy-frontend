@@ -21,7 +21,7 @@
     position: absolute;
     top: 3rem;
     right: -100%;
-    transition:right 0.1s;
+    transition: right 0.1s;
     padding: 1rem 0rem;
 }
 

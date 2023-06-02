@@ -11,14 +11,14 @@ export default function Score({ }) {
     const [score, setscore] = useState(0)
 
     useEffect(() => {
-        if(user){
+        if (user) {
             scoreRef.current = user.score
             setscore(user.score)
-        } 
+        }
     }, [])
 
     useEffect(() => {
-        if(user){
+        if (user) {
             countup(scoreRef.current, user.score)
             scoreRef.current = user.score
         }

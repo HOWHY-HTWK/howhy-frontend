@@ -1,37 +1,37 @@
 .phoneOff {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .phone {
-  position: relative;
-  width: 350px;
-  height: 700px;
-  border: 12px solid black;
-  border-radius: 2rem;
-  margin: auto;
-  margin-top: 2rem;
-  overflow: auto;
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width: none;
-  /* Firefox */
+    position: relative;
+    width: 350px;
+    height: 700px;
+    border: 12px solid black;
+    border-radius: 2rem;
+    margin: auto;
+    margin-top: 2rem;
+    overflow: auto;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 .phone::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
 
 .background {
- background-color: var(--background-blue);
+    background-color: var(--background-blue);
 }
 
 .toggle {
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  position: fixed;
-  right: 2rem;
-  top: 90vh;
-  background-color: var(--item-color);
-  cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    position: fixed;
+    right: 2rem;
+    top: 90vh;
+    background-color: var(--item-color);
+    cursor: pointer;
 }

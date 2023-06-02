@@ -1,4 +1,4 @@
-.bar{
+.bar {
     position: absolute;
     bottom: 0;
     justify-self: flex-end;
@@ -11,9 +11,7 @@
     padding: 10px 10px;
 }
 
-.bottomWrap {
-
-}
+.bottomWrap {}
 
 .link {
     color: var(--color);

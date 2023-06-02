@@ -7,11 +7,11 @@ import Loader from './components/Loader';
 const Router = React.lazy(() => import('./Router.jsx'));
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-      <ContextProvider>
-        <Suspense fallback={<Loader></Loader>}>
-          <Router></Router>
-        </Suspense>
-      </ContextProvider>
-  </React.StrictMode>,
+    <React.StrictMode>
+        <ContextProvider>
+            <Suspense fallback={<Loader></Loader>}>
+                <Router></Router>
+            </Suspense>
+        </ContextProvider>
+    </React.StrictMode>,
 )

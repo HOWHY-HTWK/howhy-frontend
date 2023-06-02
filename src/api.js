@@ -5,73 +5,73 @@ const apiClient = axios.create({
     withCredentials: true,
 })
 
-export function getVideos(){
+export function getVideos() {
     return apiClient.get('/videos')
 }
 
-export function getVideo(videoId){
+export function getVideo(videoId) {
     return apiClient.get(`/video/${videoId}`)
 }
 
-export function getQuestionTimecodes(videoId){
+export function getQuestionTimecodes(videoId) {
     return apiClient.get(`/timecodes/${videoId}`)
 }
 
-export function getQuestionData(id){
+export function getQuestionData(id) {
     return apiClient.get(`/question/${id}`)
 }
 
-export function checkAnswers(request){
+export function checkAnswers(request) {
     return apiClient.post(`/question/checkAnswers/`, request)
 }
 
-export function getQuestions(videoId){
+export function getQuestions(videoId) {
     return apiClient.get(`/questions/${videoId}`)
 }
-export function storeQuestion(data){
+export function storeQuestion(data) {
     return apiClient.post(`/question`, data)
 }
-export function deleteQuestion(id){
+export function deleteQuestion(id) {
     return apiClient.post(`/deleteQuestion/${id}`)
 }
 
-export function score(){
+export function score() {
     return apiClient.get(`/score/`)
 }
 
 //email allowlist
-export function getEmails(){
+export function getEmails() {
     return apiClient.get('/allowed-email')
 }
 
-export function postEmail(request){
-    return apiClient.post('/allowed-email', request )
+export function postEmail(request) {
+    return apiClient.post('/allowed-email', request)
 }
 
-export function deleteEmail(id){
+export function deleteEmail(id) {
     return apiClient.delete(`/allowed-email/${id}`)
 }
 
 // bearbeiten Rechte geben
 
-export function getUsers(){
+export function getUsers() {
     return apiClient.get(`/users/`)
 }
 
-export function giveEditorRights(id){
+export function giveEditorRights(id) {
     return apiClient.post(`/makeEditor/${id}`)
 }
 
 //user 
 
-export function refreshUser(){
+export function refreshUser() {
     return apiClient.get(`/user/`)
 }
 
-export function saveUsername(request){
+export function saveUsername(request) {
     return apiClient.post(`/username/`, request)
 }
 
-export function ranking(){
+export function ranking() {
     return apiClient.get(`/ranking/`)
 }

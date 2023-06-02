@@ -12,140 +12,140 @@ import HlsPlayer from '../components/HlsPlayer'
 import Loader from '../components/Loader'
 
 function WatchVideo() {
-	const videoId = useParams().videoId;
+    const videoId = useParams().videoId;
 
-	const { user, setUser, updateUserData } = useStateContext()
+    const { user, setUser, updateUserData } = useStateContext()
 
-	const [questionTimecodes, setQuestionTimecodes] = useState([])
-	const [currentQuestionId, setCurrentQuestionId] = useState(null)
-	const [duration, setDuration] = useState(null)
-	const [isFullscreen, setIsFullscreen] = useState(false)
-	const [videoData, setVideoData] = useState(null)
-	// const [sources, setSources] = useState(null)
-	
-	const fullScreenWrapper = useRef(null);
-	const oldTimeRef = useRef(null);
-	const timecodesRef = useRef(questionTimecodes);
-	const videoRef = useRef(null)
+    const [questionTimecodes, setQuestionTimecodes] = useState([])
+    const [currentQuestionId, setCurrentQuestionId] = useState(null)
+    const [duration, setDuration] = useState(null)
+    const [isFullscreen, setIsFullscreen] = useState(false)
+    const [videoData, setVideoData] = useState(null)
+    // const [sources, setSources] = useState(null)
 
-	useEffect(() => {
-		// getRecources(videoId).then(response => {
-		// 	setSources(response.data)
-		// })
-		getVideoInfoFromMediaserver(videoId).then(response => {
-			console.log(response)
-			setVideoData(response)
-		}).catch(error => {
-		})
-	}, [])
+    const fullScreenWrapper = useRef(null);
+    const oldTimeRef = useRef(null);
+    const timecodesRef = useRef(questionTimecodes);
+    const videoRef = useRef(null)
 
-	useEffect(() => {
-		timecodesRef.current = questionTimecodes
-	}, [questionTimecodes]);
+    useEffect(() => {
+        // getRecources(videoId).then(response => {
+        // 	setSources(response.data)
+        // })
+        getVideoInfoFromMediaserver(videoId).then(response => {
+            console.log(response)
+            setVideoData(response)
+        }).catch(error => {
+        })
+    }, [])
 
-	useEffect(() => {
-		refreshData()
-	}, [])
+    useEffect(() => {
+        timecodesRef.current = questionTimecodes
+    }, [questionTimecodes]);
 
-	function refreshData() {
-		getTimecodes()
-		updateUserData()
-	}
+    useEffect(() => {
+        refreshData()
+    }, [])
 
-	function getTimecodes() {
-		api.getQuestionTimecodes(videoId).then(response => {
-			setQuestionTimecodes(response.data)
-		})
-	}
+    function refreshData() {
+        getTimecodes()
+        updateUserData()
+    }
 
-	function fullscreen() {
-		if (!isFullscreen) {
-			fullScreenWrapper.current.requestFullscreen();
-			screen.orientation.lock("landscape")
-			document.body.style.height = "100vh";
-			document.body.style.overflow = "clip";
-		} else {
-			document.exitFullscreen();
-			document.body.style.height = "unset";
-			document.body.style.overflow = "unset";
-		}
-		setIsFullscreen(!isFullscreen);
-	}
+    function getTimecodes() {
+        api.getQuestionTimecodes(videoId).then(response => {
+            setQuestionTimecodes(response.data)
+        })
+    }
 
-	function displayQuestion() {
-		if (currentQuestionId && videoRef.current) {
-			videoRef.current.pause()
-			return (
-				<div className={[styles.questionWrapper, isFullscreen ? styles.questionWrapperFS : ''].join(' ')} >
-					<Question
-						questionId={currentQuestionId}
-						setQuestionId={setCurrentQuestionId}
-						videoId={videoId}
-						refreshData={refreshData}
-					/>
-				</div>
-			)
-		}
-		else {
-			videoRef.current.play()
-			return null;
-		}
-	}
+    function fullscreen() {
+        if (!isFullscreen) {
+            fullScreenWrapper.current.requestFullscreen();
+            screen.orientation.lock("landscape")
+            document.body.style.height = "100vh";
+            document.body.style.overflow = "clip";
+        } else {
+            document.exitFullscreen();
+            document.body.style.height = "unset";
+            document.body.style.overflow = "unset";
+        }
+        setIsFullscreen(!isFullscreen);
+    }
 
-	function handleTimeUpdate(time) {
-		let questionId = findQuestionId(time);
-		if (questionId) {
-			setCurrentQuestionId(questionId);
-		}
-	}
+    function displayQuestion() {
+        if (currentQuestionId && videoRef.current) {
+            videoRef.current.pause()
+            return (
+                <div className={[styles.questionWrapper, isFullscreen ? styles.questionWrapperFS : ''].join(' ')} >
+                    <Question
+                        questionId={currentQuestionId}
+                        setQuestionId={setCurrentQuestionId}
+                        videoId={videoId}
+                        refreshData={refreshData}
+                    />
+                </div>
+            )
+        }
+        else {
+            videoRef.current.play()
+            return null;
+        }
+    }
 
-	function findQuestionId(time) {
-		let question = null
-		// only search question when not skipping (if time difference is less than 1s)
-		if (time - oldTimeRef.current < 1) {
-			question = timecodesRef.current.find(question => {
-				return (
-					(oldTimeRef.current <= question.timecode && question.timecode <= time)
-					||
-					(question.timecode == time)
-				)
-			})
-		}
-		oldTimeRef.current = Number(time) + Number(0.000001)
-		return question ? question.id : null
-	}
+    function handleTimeUpdate(time) {
+        let questionId = findQuestionId(time);
+        if (questionId) {
+            setCurrentQuestionId(questionId);
+        }
+    }
 
-	function jumpToQuestion(time, questionId) {
-		videoRef.current.currentTime = time
-		setCurrentQuestionId(questionId);
-	}
+    function findQuestionId(time) {
+        let question = null
+        // only search question when not skipping (if time difference is less than 1s)
+        if (time - oldTimeRef.current < 1) {
+            question = timecodesRef.current.find(question => {
+                return (
+                    (oldTimeRef.current <= question.timecode && question.timecode <= time)
+                    ||
+                    (question.timecode == time)
+                )
+            })
+        }
+        oldTimeRef.current = Number(time) + Number(0.000001)
+        return question ? question.id : null
+    }
 
-	return (
-		<div className={[styles.wrapper, isFullscreen ? styles.wrapperFS : ''].join(' ')} >
-			<div
-				ref={fullScreenWrapper}
-				className={[styles.videoWrapper, isFullscreen ? styles.videoWrapperFS : ''].join(' ')}>
-				<HlsPlayer
-					className={[styles.player, isFullscreen ? styles.playerFS : ''].join(' ')}
-					url={`https://mediaserver.htwk-leipzig.de/api/v2/medias/playlist/?oid=${videoId}&?all`}
-					timeUpdate={handleTimeUpdate}
-					setDuration={setDuration}
-					ref={videoRef}
-				/>
-				<div className={[styles.fsButton].join(' ')} onClick={fullscreen}></div>
-				<div className={[styles.title].join(' ')} >{videoData?.title}</div>
-			</div>
-			{videoRef.current ? displayQuestion() : null}
-			{questionTimecodes && duration ?
-				<div className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}  >
-					<QuestionsTimeline
-						className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}
-						questionTimecodes={questionTimecodes}
-						duration={duration}
-						jumpToQuestion={jumpToQuestion} />
-				</div> : <Loader></Loader>}
-		</div >
-	)
+    function jumpToQuestion(time, questionId) {
+        videoRef.current.currentTime = time
+        setCurrentQuestionId(questionId);
+    }
+
+    return (
+        <div className={[styles.wrapper, isFullscreen ? styles.wrapperFS : ''].join(' ')} >
+            <div
+                ref={fullScreenWrapper}
+                className={[styles.videoWrapper, isFullscreen ? styles.videoWrapperFS : ''].join(' ')}>
+                <HlsPlayer
+                    className={[styles.player, isFullscreen ? styles.playerFS : ''].join(' ')}
+                    url={`https://mediaserver.htwk-leipzig.de/api/v2/medias/playlist/?oid=${videoId}&?all`}
+                    timeUpdate={handleTimeUpdate}
+                    setDuration={setDuration}
+                    ref={videoRef}
+                />
+                <div className={[styles.fsButton].join(' ')} onClick={fullscreen}></div>
+                <div className={[styles.title].join(' ')} >{videoData?.title}</div>
+            </div>
+            {videoRef.current ? displayQuestion() : null}
+            {questionTimecodes && duration ?
+                <div className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}  >
+                    <QuestionsTimeline
+                        className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}
+                        questionTimecodes={questionTimecodes}
+                        duration={duration}
+                        jumpToQuestion={jumpToQuestion} />
+                </div> : <Loader></Loader>}
+        </div >
+    )
 }
 
 export default WatchVideo

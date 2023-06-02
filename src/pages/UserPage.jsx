@@ -31,7 +31,7 @@ export default function UserPage() {
             setMessage('Erfolgreich gespeichert!')
             setUser(response.data)
         }).catch(error => {
-            setMessage(<span style={{color: 'red'}}>{error.response.data.message}</span>)
+            setMessage(<span style={{ color: 'red' }}>{error.response.data.message}</span>)
         })
     }
 
@@ -50,7 +50,7 @@ export default function UserPage() {
                 {message != '' ?
                     <div className={[styles.message].join(' ')} >{message} </div>
                     :
-                    <div className={[styles.message, styles.invisible ].join(' ')} ></div>
+                    <div className={[styles.message, styles.invisible].join(' ')} ></div>
                 }
                 <div>
                 </div>

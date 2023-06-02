@@ -15,8 +15,8 @@ export default function Editor() {
     console.log(user)
 
     useEffect(() => {
-		updateUserData()
-	}, [])
+        updateUserData()
+    }, [])
 
     function content() {
         return (
@@ -32,17 +32,17 @@ export default function Editor() {
 
     return (
         user ?
-        (user && user.role == 'creator' || user.role == 'admin') ?
-            user.email_verified_at != null ?
-                content()
-                : 
-                <VerifyEmail></VerifyEmail>
+            (user && user.role == 'creator' || user.role == 'admin') ?
+                user.email_verified_at != null ?
+                    content()
+                    :
+                    <VerifyEmail></VerifyEmail>
+                :
+                (() => {
+                    alert('Sie dürfen leider nicht auf diese seite zugreifen')
+                    return <Navigate to="/login" state={{ backPath: currentPath }} />
+                })()
             :
-            (() => {
-                alert('Sie dürfen leider nicht auf diese seite zugreifen')
-                return <Navigate to="/login" state={{backPath: currentPath}} />
-            })()
-        :
-        <Navigate to="/login" state={{backPath: currentPath}}/>
+            <Navigate to="/login" state={{ backPath: currentPath }} />
     )
 }

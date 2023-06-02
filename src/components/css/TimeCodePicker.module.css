@@ -1,17 +1,16 @@
-
-.wrapper{
+.wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.box{
+.box {
     display: flex;
     flex-flow: row nowrap;
     gap: 0.5rem;
     align-items: center;
 }
 
-.selector{
+.selector {
     border: none;
 }

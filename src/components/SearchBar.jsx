@@ -17,11 +17,11 @@ export default function SearchBar({ setSearchTerm }) {
             <div className={[styles.link].join(' ')}>
                 <div className={['center', styles.bar].join(' ')} >
                     {/* <img className={[styles.img].join(' ')}  src={lupe}></img> */}
-                    <input 
-                    value={term} 
-                    onChange={e => setTerm(e.target.value)} 
-                    placeholder='Videos suchen'
-                    className={[styles.input].join(' ')} ></input>
+                    <input
+                        value={term}
+                        onChange={e => setTerm(e.target.value)}
+                        placeholder='Videos suchen'
+                        className={[styles.input].join(' ')} ></input>
                     <img src={filter}></img>
                 </div>
             </div>

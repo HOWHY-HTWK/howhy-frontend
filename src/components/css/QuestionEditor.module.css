@@ -30,9 +30,9 @@
     min-height: 100%;
 }
 
-.stretch{
+.stretch {
     align-items: strech;
-    
+
 }
 
 .questionInput {
@@ -43,7 +43,7 @@
     color: white;
 }
 
-.circle{
+.circle {
     margin-left: -1rem;
     border-radius: 1rem;
     display: flex;
@@ -65,7 +65,7 @@
     top: -0.6rem;
 }
 
-.answerCorrect{
+.answerCorrect {
     background-color: red;
     font-size: 0.8rem;
     padding: 0 0.5rem;
@@ -74,7 +74,7 @@
     color: white;
 }
 
-.correct{
+.correct {
     background-color: green;
 }
 
@@ -88,7 +88,7 @@
 
 }
 
-.buttonWrapper{
+.buttonWrapper {
     margin-top: 2rem;
     display: flex;
     justify-content: center;
@@ -99,7 +99,7 @@
     background-color: lightgreen;
 }
 
-.cancel{
+.cancel {
     background-color: lightcoral;
 }
 

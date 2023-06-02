@@ -12,9 +12,7 @@
     padding: 0px 12px;
 }
 
-.level {
-    
-}
+.level {}
 
 .divider {
     height: 100%;
@@ -23,8 +21,4 @@
     margin: 6px;
 }
 
-.scoreCounter {
-}
-
-
-
+.scoreCounter {}

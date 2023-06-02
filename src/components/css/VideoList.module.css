@@ -1,5 +1,4 @@
-
-.videoListWrapper{
+.videoListWrapper {
     max-width: 100%;
     color: var(--color);
     padding: 20px;
@@ -44,7 +43,7 @@
     object-fit: cover;
 }
 
-.questions{
+.questions {
     grid-area: questions;
 }
 

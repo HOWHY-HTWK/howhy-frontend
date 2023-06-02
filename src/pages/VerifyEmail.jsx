@@ -5,7 +5,7 @@ import axiosClient from '../../axios-client'
 
 export default function VerifyEmail() {
     const { user, setUser, updateUserData } = useStateContext()
-    
+
     function resendLink() {
         axiosClient.post('/email/verification-notification').then(response => {
             alert('Ein neuer Link wurde gesendet')

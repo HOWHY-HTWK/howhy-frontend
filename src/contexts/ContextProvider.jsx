@@ -13,9 +13,9 @@ export const ContextProvider = ({ children }) => {
 
     function updateUserData() {
         refreshUser().then(response => {
-			setUser(response.data)
-		}).catch(error => {
-            if(error.response.data.message == "Unauthenticated.") {
+            setUser(response.data)
+        }).catch(error => {
+            if (error.response.data.message == "Unauthenticated.") {
                 setUser(null)
             }
         })
