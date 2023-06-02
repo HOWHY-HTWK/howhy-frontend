@@ -1,20 +1,19 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import EditorVideoList from './EditorVideoList';
+import { getHowhyChannelVideos } from '../mediaserverApi';
 
 export default function ChannelVideoList({ title }) {
     const [videoList, setvideoList] = useState(null);
 
     useEffect(() => {
-        getHowhyChannelVideos()
+        getChannelVideos()
     }, [])
 
-    function getHowhyChannelVideos() {
-        axios.get('https://mediaserver.htwk-leipzig.de/api/v2/channels/content/?parent_oid=c12663da47978macepj9&content=v')
-            .then(function (response) {
-                // handle success
-                setvideoList(response.data.videos)
-            })
+    function getChannelVideos() {
+        getHowhyChannelVideos().then(response => {
+            setvideoList(response.data.videos)
+        })
     }
 
     return (

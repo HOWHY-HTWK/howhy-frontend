@@ -1,17 +1,18 @@
-import React, { useEffect } from 'react'
-import { Navigate, Outlet, useNavigate } from 'react-router-dom'
-import LogIn from '../components/LogIn'
+import React, { useEffect, useLayoutEffect } from 'react'
+import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useStateContext } from '../contexts/ContextProvider'
 import Header from '../components/Header'
-import axiosClient from '../../axios-client'
 import Footer from '../components/Footer'
 import DropDown from '../components/DropDown'
-import axios from 'axios'
 import styles from './css/Editor.module.css'
 import VerifyEmail from './VerifyEmail'
 
 export default function Editor() {
     const { user, setUser, updateUserData } = useStateContext()
+    const currentPath = useLocation().pathname;
+
+
+    console.log(user)
 
     useEffect(() => {
 		updateUserData()
@@ -29,16 +30,19 @@ export default function Editor() {
         )
     }
 
-    return user ?
+    return (
+        user ?
         (user && user.role == 'creator' || user.role == 'admin') ?
             user.email_verified_at != null ?
                 content()
-                : <VerifyEmail></VerifyEmail>
+                : 
+                <VerifyEmail></VerifyEmail>
             :
             (() => {
                 alert('Sie dürfen leider nicht auf diese seite zugreifen')
-                return <Navigate to="/login" />
+                return <Navigate to="/login" state={{backPath: currentPath}} />
             })()
         :
-        <Navigate to="/login" />
+        <Navigate to="/login" state={{backPath: currentPath}}/>
+    )
 }

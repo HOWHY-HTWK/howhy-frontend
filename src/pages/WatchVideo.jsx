@@ -13,25 +13,29 @@ import Loader from '../components/Loader'
 
 function WatchVideo() {
 	const videoId = useParams().videoId;
-	const location = useLocation();
-	const videoData = location.state?.videoData;
 
 	const { user, setUser, updateUserData } = useStateContext()
 
 	const [questionTimecodes, setQuestionTimecodes] = useState([])
 	const [currentQuestionId, setCurrentQuestionId] = useState(null)
 	const [duration, setDuration] = useState(null)
-	const [isFullscreen, setIsFullscreen] = useState(false);
-	const [sources, setSources] = useState(null);
-
+	const [isFullscreen, setIsFullscreen] = useState(false)
+	const [videoData, setVideoData] = useState(null)
+	// const [sources, setSources] = useState(null)
+	
 	const fullScreenWrapper = useRef(null);
 	const oldTimeRef = useRef(null);
 	const timecodesRef = useRef(questionTimecodes);
 	const videoRef = useRef(null)
 
 	useEffect(() => {
-		getRecources(videoId).then(response => {
-			setSources(response.data)
+		// getRecources(videoId).then(response => {
+		// 	setSources(response.data)
+		// })
+		getVideoInfoFromMediaserver(videoId).then(response => {
+			console.log(response)
+			setVideoData(response)
+		}).catch(error => {
 		})
 	}, [])
 
@@ -129,7 +133,7 @@ function WatchVideo() {
 					ref={videoRef}
 				/>
 				<div className={[styles.fsButton].join(' ')} onClick={fullscreen}></div>
-				<div className={[styles.title].join(' ')} >{videoData.title}</div>
+				<div className={[styles.title].join(' ')} >{videoData?.title}</div>
 			</div>
 			{videoRef.current ? displayQuestion() : null}
 			{questionTimecodes && duration ?

@@ -9,6 +9,7 @@ import { getTimeInReadable } from '../utils'
 
 
 export default function QuestionEditor({ existingQuestion, duration, time, videoId, setEditedQuestion, singleChoice }) {
+  console.log(videoId+' '+existingQuestion)
   const basequestion = existingQuestion ? existingQuestion : {
     'videoId': videoId,
     'questionText': '',
@@ -64,7 +65,6 @@ export default function QuestionEditor({ existingQuestion, duration, time, video
   }
 
   function saveQuestionAndReset() {
-    localStorage.setItem('question', null);
     console.log(question)
     storeQuestion(question).then(response => {
       setEditedQuestion(null)
@@ -74,7 +74,6 @@ export default function QuestionEditor({ existingQuestion, duration, time, video
   }
 
   function cancelAndReset() {
-    localStorage.setItem('question', null);
     setEditedQuestion(null)
   }
 

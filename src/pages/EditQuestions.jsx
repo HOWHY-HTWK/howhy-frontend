@@ -7,19 +7,27 @@ import QuestionList from '../components/QuestionList'
 import * as api from '../api'
 import { useLocation, useParams } from 'react-router-dom'
 import HlsPlayer from '../components/HlsPlayer'
+import { getVideoInfoFromMediaserver } from '../mediaserverApi'
 
 export default function EditQuestions() {
 	const videoId = useParams().videoId;
-	const location = useLocation();
-	const videoData = location.state?.videoData;
 
 	const [editedQuestion, setEditedQuestion] = useState(JSON.parse(localStorage.getItem('question')) != null ? 'multipleChoice' : null)
+	const [videoData, setVideoData] = useState(null)
 	const [questionType, setquestionType] = useState('multipleChoice')
 	const [questions, setQuestions] = useState(null)
 	const [duration, setDuration] = useState(null)
 	const [time, setTime] = useState(null)
 
 	const videoRef = useRef(null)
+
+	useEffect(() => {
+		getVideoInfoFromMediaserver(videoId).then(response => {
+			console.log(response)
+			setVideoData(response)
+		}).catch(error => {
+		})
+	}, [])
 
 	useEffect(() => {
 		if (!editedQuestion) {
@@ -32,7 +40,6 @@ export default function EditQuestions() {
 			.then((response) => {
 				setQuestions(response.data)
 			}).catch((error) => {
-
 			})
 	}
 
@@ -101,7 +108,7 @@ export default function EditQuestions() {
 
 	return (
 		<div className={['centerVertical', styles.wrapper].join(' ')} >
-			<div className={[styles.title].join(' ')} >{videoData.title}</div>
+			<div className={[styles.title].join(' ')} >{videoData?.title}</div>
 			<div className={[styles.player].join(' ')} >
 				<HlsPlayer
 					className={[styles.player].join(' ')}

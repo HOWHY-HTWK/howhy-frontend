@@ -4,8 +4,13 @@ const apiClient = axios.create({
     baseURL: `${import.meta.env.VITE_API_BASE_URL}/api`,
     withCredentials: true,
 })
+
 export function getVideos(){
     return apiClient.get('/videos')
+}
+
+export function getVideo(videoId){
+    return apiClient.get(`/video/${videoId}`)
 }
 
 export function getQuestionTimecodes(videoId){
