@@ -7,7 +7,7 @@ import profil from '../assets/icons/Profil.svg'
 import { useStateContext } from '../contexts/ContextProvider'
 import Score from './Score'
 import back from '../assets/icons/back.svg'
-import lupe from '../assets/icons/lupe.svg'
+import lupe from '../assets/icons/Lupe.svg'
 
 export default function UserHeader({ children, setPage }) {
     const { user, setUser } = useStateContext()
