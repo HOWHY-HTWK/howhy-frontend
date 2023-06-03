@@ -15,7 +15,7 @@ export default function EditorVideoList({ title, videoList }) {
                 <img className={[videoListStyles.Thumb].join(' ')} src={video.thumb}></img>
                 <div className={[videoListStyles.buttonWrap].join(' ')} >
                     <Link className={['button'].join(' ')} to={`/editor/edit/${video.oid}`} state={{ videoData: video }}>Bearbeiten</Link>
-                    <Link className={['button'].join(' ')} target="_blank" to={`/watch?id=${video.oid}`}>Ansehen</Link>
+                    <Link className={['button'].join(' ')} target="_blank" to={`/watch/${video.oid}`}>Ansehen</Link>
                 </div>
             </div>
         )
