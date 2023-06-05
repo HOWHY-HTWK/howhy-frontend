@@ -10,7 +10,7 @@ body {
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    margin-top: 2em;
+    margin-top: 5em;
     gap: 1em;
 }
 
