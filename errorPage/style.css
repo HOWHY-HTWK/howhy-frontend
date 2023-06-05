@@ -1,19 +1,30 @@
+body {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
 .frame {
     margin: auto;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    margin-top: 10em;
-    gap: 2em;
+    margin-top: 2em;
+    gap: 1em;
 }
 
 .text {
+    padding: 20px;
+    text-align: center;
+}
 
+.logo {
+    width: 100px;
 }
 
 .icon {
-    width: 100px;
+    width: 70px;
 }
 
 .visibility {
