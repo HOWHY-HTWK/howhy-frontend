@@ -20,6 +20,8 @@ import Help from './pages/Help';
 import Feedback from './pages/Feedback';
 import LogIn from './components/LogIn';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 const UserLogin = React.lazy(() => import('./components/UserLogin'));
 
 const router = createBrowserRouter(
@@ -105,6 +107,14 @@ const router = createBrowserRouter(
         {
             path: "/qr/:code",
             element: <QrCheck></QrCheck>,
+        },
+        {
+            path: "/forgot-password",
+            element: <ForgotPassword></ForgotPassword>,
+        },
+        {
+            path: "/reset-password",
+            element: <ResetPassword></ResetPassword>,
         }
     ],
     {

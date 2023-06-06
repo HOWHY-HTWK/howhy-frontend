@@ -83,6 +83,10 @@ export default function UserLogIn({ showEditorOption = false }) {
                             placeholder='Passwort'
                             autoComplete='current-password' />
                     </div>
+                    <div className={[styles.forgot].join(' ')}
+                        onClick={() => navigate('/forgot-password')}>
+                        Passwort vergessen?
+                    </div>
                     {message != '' ?
                         <div className={[styles.message].join(' ')} >{message} </div>
                         :

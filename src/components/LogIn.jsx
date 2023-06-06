@@ -75,6 +75,10 @@ export default function LogIn({ returnSuccess = (success) => success, showEditor
                     </label>
                     <button className={['button'].join(' ')} type="submit">LogIn</button>
                 </form>
+                <div className={[styles.forgot].join(' ')}
+                    onClick={() => navigate('/forgot-password')}>
+                    Passwort vergessen?
+                </div>
                 <div className={[styles.register].join(' ')} onClick={toggleSignUp}> Registrieren</div>
             </div>
         )
