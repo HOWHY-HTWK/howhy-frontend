@@ -1,3 +1,7 @@
+.wrap {
+    overflow: visible;
+}
+
 .question {
     background-color: transparent;
     margin: 1rem;
@@ -70,4 +74,39 @@
 .feedback {
     margin: 1rem;
     font-size: 2em;
+}
+
+/* -------- animation -------- */
+
+.bulb {
+    width: 20px;
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    z-index: 100;
+    visibility: hidden;
+    --translate-x: 5vw;
+    --translate-y: -5vh;
+}
+
+.winningAnimation {
+    animation-name: flyToScore;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes flyToScore {
+    0% {
+        visibility: visible;
+        transform: translate(0, 0) scale(0.1);
+    }
+
+    60% {
+        transform: translate(var(--translate-x), var(--translate-y)) scale(1);
+    }
+
+    100% {
+        visibility: visible;
+        transform: translate(35vw, -45vh) scale(1);
+    }
 }

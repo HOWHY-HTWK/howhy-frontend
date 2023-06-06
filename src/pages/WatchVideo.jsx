@@ -136,6 +136,7 @@ function WatchVideo() {
                 <div className={[styles.title].join(' ')} >{videoData?.title}</div>
             </div>
             {videoRef.current ? displayQuestion() : null}
+
             {questionTimecodes && duration ?
                 <div className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}  >
                     <QuestionsTimeline
