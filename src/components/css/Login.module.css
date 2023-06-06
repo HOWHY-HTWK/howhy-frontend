@@ -68,6 +68,11 @@
     color: red;
 }
 
+.forgot {
+    font-size: small;
+    cursor: pointer;
+}
+
 /* signup */
 
 .background {

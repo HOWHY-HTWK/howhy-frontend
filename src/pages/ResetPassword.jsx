@@ -3,25 +3,27 @@ import axiosClient from '../../axios-client.jsx'
 import { useStateContext } from '../contexts/ContextProvider.jsx';
 import styles from './css/ForgotPassword.module.css'
 import { useLocation, useNavigate } from 'react-router-dom';
+import { csfrCookie, resetPassword } from '../api.js';
 
 export default function ResetPassword() {
     const navigate = useNavigate();
+    const queryParameters = new URLSearchParams(window.location.search)
+    const email = queryParameters.get("email")
+    const token = queryParameters.get('token')
 
     const passwordRef = createRef()
     const repeatPasswordRef = createRef()
 
     function handleSetNewPassword(e) {
         e.preventDefault();
-        setNewPassword(passwordRef.current.value, repeatPasswordRef.value)
+        setNewPassword(passwordRef.current.value, repeatPasswordRef.current.value)
     }
 
     function setNewPassword(password, repeatPassword) {
-        axiosClient.get('/sanctum/csrf-cookie')
+        csfrCookie()
             .then(response => {
-                axiosClient.post('/reset-password', {
-                    password: password,
-                    password_confirmation: repeatPassword
-                }).then(response => {
+                console.log(email + '|' + password + '|' + repeatPassword + '|' + token)
+                resetPassword(email, password, repeatPassword, token).then(response => {
                     console.log(response)
                     navigate('/login')
                 }).catch((error) => {
@@ -41,7 +43,7 @@ export default function ResetPassword() {
                     type="password"
                     name="password"
                     placeholder='Passwort'
-                    autoComplete='current-password' />
+                    autoComplete='new-password' />
                 <input
                     className={[styles.input].join(' ')}
                     ref={repeatPasswordRef}

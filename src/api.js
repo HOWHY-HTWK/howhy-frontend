@@ -1,5 +1,10 @@
 import axios from "axios";
 
+const backendClient = axios.create({
+    baseURL: `${import.meta.env.VITE_API_BASE_URL}`,
+    withCredentials: true,
+})
+
 const apiClient = axios.create({
     baseURL: `${import.meta.env.VITE_API_BASE_URL}/api`,
     withCredentials: true,
@@ -39,7 +44,7 @@ export function score() {
     return apiClient.get(`/score/`)
 }
 
-//email allowlist
+// ---------- email allowlist
 export function getEmails() {
     return apiClient.get('/allowed-email')
 }
@@ -52,7 +57,7 @@ export function deleteEmail(id) {
     return apiClient.delete(`/allowed-email/${id}`)
 }
 
-// bearbeiten Rechte geben
+// ---------- bearbeiten Rechte geben
 
 export function getUsers() {
     return apiClient.get(`/users/`)
@@ -62,7 +67,7 @@ export function giveEditorRights(id) {
     return apiClient.post(`/makeEditor/${id}`)
 }
 
-//user 
+// ---------- user 
 
 export function refreshUser() {
     return apiClient.get(`/user/`)
@@ -74,4 +79,24 @@ export function saveUsername(request) {
 
 export function ranking() {
     return apiClient.get(`/ranking/`)
+}
+
+// ----------  authetification
+
+export function csfrCookie() {
+    return backendClient.get('/sanctum/csrf-cookie')
+}
+
+export function forgotPassword(email) {
+    return backendClient.post('/forgot-password', {
+        email: email,
+    })
+}
+export function resetPassword(email, password, repeatPassword, token) {
+    return backendClient.post('/reset-password', {
+        email: email,
+        password: password,
+        password_confirmation: repeatPassword,
+        token: token,
+    })
 }

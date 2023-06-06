@@ -3,6 +3,7 @@ import axiosClient from '../../axios-client.jsx'
 import { useStateContext } from '../contexts/ContextProvider.jsx';
 import styles from './css/ForgotPassword.module.css'
 import { useLocation, useNavigate } from 'react-router-dom';
+import { csfrCookie, forgotPassword, resetPassword } from '../api.js';
 
 export default function ForgotPassword() {
     const navigate = useNavigate();
@@ -10,8 +11,6 @@ export default function ForgotPassword() {
     const backPath = location.state ? location.state.backPath : '/editor';
 
     const emailRef = createRef()
-    const passwordRef = createRef()
-    const [remember, setRemember] = useState(false)
 
     function handleReset(e) {
         e.preventDefault();
@@ -19,17 +18,14 @@ export default function ForgotPassword() {
     }
 
     function sendResetLink(email, password, remember) {
-        axiosClient.get('/sanctum/csrf-cookie')
-            .then(response => {
-                axiosClient.post('/reset-password', {
-                    email: email,
-                }).then(response => {
-                    console.log(response)
-                    alert('link wurde gesendet')
-                }).catch((error) => {
-                    console.log(error.response)
-                });
-            })
+        csfrCookie().then(() => {
+            forgotPassword(email).then(response => {
+                console.log(response)
+                alert('link wurde gesendet')
+            }).catch((error) => {
+                console.log(error.response)
+            });
+        })
     }
 
     return (

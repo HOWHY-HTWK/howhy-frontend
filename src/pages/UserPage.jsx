@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { logout } from '../utils'
 import { MdOutlineSave } from "react-icons/md";
 
-
 import user_image_icon from '../assets/user_image_icon.svg'
 import pencil from '../assets/icons/pencil.svg'
 import logout_icon from '../assets/icons/logout.svg'

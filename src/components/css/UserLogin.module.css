@@ -94,6 +94,10 @@
     box-shadow: 0px 2px 10px 0px rgba(135, 135, 135, 0.25);
 }
 
+.forgot {
+    margin: -10px;
+}
+
 .loginButton {
     margin-top: 7px;
     min-width: 190px;
