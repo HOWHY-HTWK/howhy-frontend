@@ -18,3 +18,7 @@ export function getRecources(videoId) {
 export function getHowhyChannelVideos() {
     return apiClient.get('/v2/channels/content/?parent_oid=c12663da47978macepj9&content=v')
 }
+
+export function getModes(videoId) {
+    return apiClient.get(`v2/medias/modes/?oid=${videoId}&html5=mp4_m4a_mp3_m3u8&yt=yt`)
+}

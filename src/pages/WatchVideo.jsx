@@ -29,6 +29,7 @@ function WatchVideo() {
     const timecodesRef = useRef(questionTimecodes);
     const videoRef = useRef(null)
     const playerRef = useRef(null);
+    const iframe = useRef(null);
 
     const handlePlayerReady = (player) => {
         playerRef.current = player;
@@ -140,14 +141,14 @@ function WatchVideo() {
             <div
                 ref={fullScreenWrapper}
                 className={[styles.videoWrapper, isFullscreen ? styles.videoWrapperFS : ''].join(' ')}>
-                {/* <HlsPlayer
+                <HlsPlayer
                     className={[styles.player, isFullscreen ? styles.playerFS : ''].join(' ')}
-                    url={`https://mediaserver.htwk-leipzig.de/api/v2/medias/playlist/?oid=${videoId}&?all`}
+                    videoId={videoId}
                     timeUpdate={handleTimeUpdate}
                     setDuration={setDuration}
                     ref={videoRef}
-                /> */}
-                <VideoJS
+                />
+                {/* <VideoJS
                     options={{
                         playsInline: true,
                         autoplay: true,
@@ -158,7 +159,10 @@ function WatchVideo() {
                             src: `https://mediaserver.htwk-leipzig.de/api/v2/medias/playlist/?oid=${videoId}&?all`,
                             type: "application/x-mpegURL"
                         }]
-                    }}></VideoJS>
+                    }}></VideoJS> */}
+                {/* <iframe ref={iframe}
+                    className={[styles.iframe, isFullscreen ? styles.iframeFS : ''].join(' ')}
+                    src={`https://mediaserver.htwk-leipzig.de/permalink/${videoId}/iframe`}></iframe> */}
                 <div className={[styles.fsButton].join(' ')} onClick={fullscreen}></div>
                 <div className={[styles.title].join(' ')} >{videoData?.title}</div>
             </div>
