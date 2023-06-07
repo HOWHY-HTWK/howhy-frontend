@@ -94,7 +94,7 @@ export default function Question({ questionId, setQuestionId, refreshData }) {
             <div className={[styles.wrap].join()} >
                 {answerCorrect != null ?
                     <>
-                        {winningAnimation()}
+                        {answerCorrect ? winningAnimation() : null}
                         < div className={[styles.question, 'center'].join(' ')} >
                             <div className={[styles.feedback].join(' ')} >
                                 {answerCorrect ? "Richtig!" : "Leider Falsch"}
