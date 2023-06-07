@@ -10,6 +10,7 @@ import { useLocation, useParams } from 'react-router-dom'
 import { getRecources, getVideoInfoFromMediaserver } from '../mediaserverApi'
 import HlsPlayer from '../components/HlsPlayer'
 import Loader from '../components/Loader'
+import VideoJS from '../components/VideoJs'
 
 function WatchVideo() {
     const videoId = useParams().videoId;
@@ -27,6 +28,20 @@ function WatchVideo() {
     const oldTimeRef = useRef(null);
     const timecodesRef = useRef(questionTimecodes);
     const videoRef = useRef(null)
+    const playerRef = useRef(null);
+
+    const handlePlayerReady = (player) => {
+        playerRef.current = player;
+
+        // You can handle player events here, for example:
+        player.on('waiting', () => {
+            videojs.log('player is waiting');
+        });
+
+        player.on('dispose', () => {
+            videojs.log('player will dispose');
+        });
+    };
 
     useEffect(() => {
         // getRecources(videoId).then(response => {
@@ -72,25 +87,25 @@ function WatchVideo() {
         setIsFullscreen(!isFullscreen);
     }
 
-    function displayQuestion() {
-        if (currentQuestionId && videoRef.current) {
-            videoRef.current.pause()
-            return (
-                <div className={[styles.questionWrapper, isFullscreen ? styles.questionWrapperFS : ''].join(' ')} >
-                    <Question
-                        questionId={currentQuestionId}
-                        setQuestionId={setCurrentQuestionId}
-                        videoId={videoId}
-                        refreshData={refreshData}
-                    />
-                </div>
-            )
-        }
-        else {
-            videoRef.current.play()
-            return null;
-        }
-    }
+    // function displayQuestion() {
+    //     if (currentQuestionId && videoRef.current) {
+    //         videoRef.current.pause()
+    //         return (
+    //             <div className={[styles.questionWrapper, isFullscreen ? styles.questionWrapperFS : ''].join(' ')} >
+    //                 <Question
+    //                     questionId={currentQuestionId}
+    //                     setQuestionId={setCurrentQuestionId}
+    //                     videoId={videoId}
+    //                     refreshData={refreshData}
+    //                 />
+    //             </div>
+    //         )
+    //     }
+    //     else {
+    //         videoRef.current.play()
+    //         return null;
+    //     }
+    // }
 
     function handleTimeUpdate(time) {
         let questionId = findQuestionId(time);
@@ -125,17 +140,29 @@ function WatchVideo() {
             <div
                 ref={fullScreenWrapper}
                 className={[styles.videoWrapper, isFullscreen ? styles.videoWrapperFS : ''].join(' ')}>
-                <HlsPlayer
+                {/* <HlsPlayer
                     className={[styles.player, isFullscreen ? styles.playerFS : ''].join(' ')}
                     url={`https://mediaserver.htwk-leipzig.de/api/v2/medias/playlist/?oid=${videoId}&?all`}
                     timeUpdate={handleTimeUpdate}
                     setDuration={setDuration}
                     ref={videoRef}
-                />
+                /> */}
+                <VideoJS
+                    options={{
+                        playsInline: true,
+                        autoplay: true,
+                        controls: true,
+                        responsive: true,
+                        fluid: true,
+                        sources: [{
+                            src: `https://mediaserver.htwk-leipzig.de/api/v2/medias/playlist/?oid=${videoId}&?all`,
+                            type: "application/x-mpegURL"
+                        }]
+                    }}></VideoJS>
                 <div className={[styles.fsButton].join(' ')} onClick={fullscreen}></div>
                 <div className={[styles.title].join(' ')} >{videoData?.title}</div>
             </div>
-            {videoRef.current ? displayQuestion() : null}
+            {/* {videoRef.current ? displayQuestion() : null} */}
 
             {questionTimecodes && duration ?
                 <div className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}  >
