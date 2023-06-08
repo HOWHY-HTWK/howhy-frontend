@@ -22,6 +22,7 @@ import LogIn from './components/LogIn';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import EmailVerification from './pages/EmailVerification';
 const UserLogin = React.lazy(() => import('./components/UserLogin'));
 
 const router = createBrowserRouter(
@@ -115,6 +116,10 @@ const router = createBrowserRouter(
         {
             path: "/reset-password",
             element: <ResetPassword></ResetPassword>,
+        },
+        {
+            path: "/email/verify/:id/:hash",
+            element: <EmailVerification></EmailVerification>
         }
     ],
     {

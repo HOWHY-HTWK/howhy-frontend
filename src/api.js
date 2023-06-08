@@ -100,3 +100,7 @@ export function resetPassword(email, password, repeatPassword, token) {
         token: token,
     })
 }
+
+export function verifyEmail(id, hash, expires, signature) {
+    return backendClient.get(`/email/verify/${id}/${hash}?expires=${expires}&signature=${signature}`)
+}
