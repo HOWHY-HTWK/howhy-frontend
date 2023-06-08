@@ -7,9 +7,16 @@ const HlsPlayer = forwardRef(function HlsPlayer({ url, timeUpdate, setDuration }
     const hls = new Hls();
 
     useEffect(() => {
-        hls.loadSource(url);
-        hls.attachMedia(videoRef.current);
-        hls.on(Hls.Events.MANIFEST_PARSED, function () { video.play(); });
+        if (url) {
+            if (videoRef.current.canPlayType("application/x-mpegURL")) {
+                videoRef.current.src = url;
+            }
+            else if (Hls.isSupported()) {
+                hls.loadSource(url);
+                hls.attachMedia(videoRef.current);
+                hls.on(Hls.Events.MANIFEST_PARSED, function () { video.play(); });
+            }
+        }
         setDuration(videoRef.current.duration)
         videoRef.current.ontimeupdate = e => timeUpdate(e.target.currentTime)
         videoRef.current.ondurationchange = e => setDuration(e.target.duration)
@@ -21,6 +28,7 @@ const HlsPlayer = forwardRef(function HlsPlayer({ url, timeUpdate, setDuration }
             ref={videoRef}
             autoPlay={true}
             controls
+            playsInline
         />
     )
 })
