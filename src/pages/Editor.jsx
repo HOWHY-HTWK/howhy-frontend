@@ -11,9 +11,6 @@ export default function Editor() {
     const { user, setUser, updateUserData } = useStateContext()
     const currentPath = useLocation().pathname;
 
-
-    console.log(user)
-
     useEffect(() => {
         updateUserData()
     }, [])

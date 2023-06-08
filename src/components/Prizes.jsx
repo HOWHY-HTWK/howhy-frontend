@@ -61,20 +61,30 @@ export default function Prizes() {
         return (
             <div key={key} className={['center', styles.listItem, !prize.valid ? styles.used : null].join(' ')} >
                 {prize.valid ?
-                    <img className={[styles.img].join(' ')} src={qrCode} onClick={() => setQrOverlay(prize.code)} />
+                    <img
+                        className={[styles.img].join(' ')}
+                        src={qrCode}
+                        onClick={() => setQrOverlay(prize.code)} />
                     :
-                    <img className={[styles.img, styles.filter].join(' ')} src={qr_used} />
+                    <img
+                        className={[styles.img, styles.filter].join(' ')}
+                        src={qr_used} />
                 }
                 <div className={['centerVertical', styles.rightWrap].join(' ')} >
-                    <div className={[styles.name].join(' ')} >{prize.name}</div>
-                    <div className={[styles.info].join(' ')} >
-                        <img src={prize.valid ? calendar : calendar_white}></img> {prize.date}
+                    <div className={[styles.name].join(' ')} >
+                        {prize.name}
                     </div>
                     <div className={[styles.info].join(' ')} >
-                        <img src={prize.valid ? location : location_white}></img> {prize.location}
+                        <img src={prize.valid ? calendar : calendar_white}></img>
+                        {prize.date}
                     </div>
                     <div className={[styles.info].join(' ')} >
-                        <img src={prize.valid ? clock : clock_white}></img> {prize.time}
+                        <img src={prize.valid ? location : location_white}></img>
+                        {prize.location}
+                    </div>
+                    <div className={[styles.info].join(' ')} >
+                        <img src={prize.valid ? clock : clock_white}></img>
+                        {prize.time}
                     </div>
                 </div>
             </div>
