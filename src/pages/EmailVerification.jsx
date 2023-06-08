@@ -20,7 +20,7 @@ export default function EmailVerification() {
 
     useEffect(() => {
         tryVerification()
-    }, [])
+    }, [user])
 
     function tryVerification() {
         console.log('try')
@@ -38,7 +38,7 @@ export default function EmailVerification() {
             :
             <div className={['centerVertical'].join(' ')} >
                 <p className={[styles.text].join(' ')} >Bitte Loggen sie sich ein um ihre Email Adresse zu verifizieren.</p>
-                <LogInComponent successCallback={tryVerification()}></LogInComponent>
+                <LogInComponent></LogInComponent>
             </div>
     )
 }
