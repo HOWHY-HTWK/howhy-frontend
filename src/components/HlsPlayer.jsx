@@ -8,13 +8,14 @@ const HlsPlayer = forwardRef(function HlsPlayer({ url, timeUpdate, setDuration }
 
     useEffect(() => {
         if (url) {
-            if (videoRef.current.canPlayType("application/x-mpegURL")) {
-                videoRef.current.src = url;
-            }
-            else if (Hls.isSupported()) {
+
+            if (Hls.isSupported()) {
                 hls.loadSource(url);
                 hls.attachMedia(videoRef.current);
                 hls.on(Hls.Events.MANIFEST_PARSED, function () { video.play(); });
+            }
+            else if (videoRef.current.canPlayType("application/x-mpegURL")) {
+                videoRef.current.src = url;
             }
         }
         setDuration(videoRef.current.duration)
