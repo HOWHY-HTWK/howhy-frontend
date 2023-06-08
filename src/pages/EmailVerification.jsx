@@ -28,7 +28,7 @@ export default function EmailVerification() {
             setMessage("Email erfolgreich verifiziert! Sie Können diese Seite jetzt schließen.")
         }).catch(error => {
             console.log(error)
-            setMessage(error.response.message)
+            setMessage(error.response.data.message)
         })
     }
 
