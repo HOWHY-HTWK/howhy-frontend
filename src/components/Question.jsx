@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react'
 import styles from './css/Question.module.css'
 import * as api from '../api'
 import Loader from './Loader';
-import bulb from '../assets/howhy_solid.svg'
-
 
 export default function Question({ questionId, setQuestionId, refreshData }) {
 
@@ -62,45 +60,22 @@ export default function Question({ questionId, setQuestionId, refreshData }) {
                     setTimeout(function () {
                         setAnswerCorrect(null)
                         setQuestionId(null)
-                    }, 4000);
+                    }, 3000);
                 }).catch((error) => {
                     alert(JSON.stringify(error.response.data))
                 })
         }
     }
 
-    function winningAnimation() {
-        let array = Array.from({ length: 10 })
-        let bulbs = array.map((element, index) => {
-            return (
-                <img
-                    key={index}
-                    style={{
-                        animationDelay: (index / 10) + 's',
-                        "--translate-x": ((Math.random() * 15) - 7.5) + 'vw',
-                        "--translate-y": ((Math.random() * 15) - 7.5) + 'vh',
-                    }}
-                    className={[styles.bulb, styles.winningAnimation].join(' ')}
-                    src={bulb} >
-
-                </img >
-            )
-        })
-        return bulbs
-    }
-
     return (
         questionData.data ?
             <div className={[styles.wrap].join()} >
                 {answerCorrect != null ?
-                    <>
-                        {answerCorrect ? winningAnimation() : null}
-                        < div className={[styles.question, 'center'].join(' ')} >
-                            <div className={[styles.feedback].join(' ')} >
-                                {answerCorrect ? "Richtig!" : "Leider Falsch"}
-                            </div>
+                    < div className={[styles.question, 'center'].join(' ')} >
+                        <div className={[styles.feedback].join(' ')} >
+                            {answerCorrect ? "Richtig!" : "Leider Falsch"}
                         </div>
-                    </>
+                    </div>
                     :
                     <div className={[styles.question].join(' ')} >
                         <div className={[styles.questionElement, styles.questionText].join(' ')}>

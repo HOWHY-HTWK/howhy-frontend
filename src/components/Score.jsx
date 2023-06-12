@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import styles from './css/Score.module.css'
 import { ReactComponent as Logo } from '../assets/howhy_solid.svg'
 import { useStateContext } from '../contexts/ContextProvider'
+import WinningAnimation from './WinningAnimation'
 
 
 export default function Score({ }) {
@@ -10,17 +11,12 @@ export default function Score({ }) {
     const oldScoreRef = useRef(0)
     const loggedInBefore = useRef(false)
     const [score, setscore] = useState(0)
-
-    useEffect(() => {
-        if (user) {
-            oldScoreRef.current = user.score
-        }
-    }, [])
+    const [animation, setAnimation] = useState(false)
 
     useEffect(() => {
         if (user) {
             if (loggedInBefore.current) {
-                countup(oldScoreRef.current, user.score)
+                showAnimation(oldScoreRef.current, user.score);
             } else {
                 setscore(user.score)
             }
@@ -37,14 +33,27 @@ export default function Score({ }) {
             setscore(oldscore)
             setTimeout(() => {
                 countup(oldscore, newscore)
-            }, (newscore - oldscore) / 20);
+            }, (newscore - oldscore) / 10);
         } else {
             return;
         }
     }
 
+    function showAnimation(oldscore, newscore) {
+        if (newscore - oldscore != 0) {
+            setAnimation(true);
+            setTimeout(() => {
+                countup(oldscore, newscore)
+            }, 1000);
+            setTimeout(() => {
+                setAnimation(false)
+            }, 3000);
+        }
+    }
+
     return (
         <div className={[styles.scoreWrap].join(' ')} >
+            {animation ? <WinningAnimation></WinningAnimation> : null}
             <div className={[styles.level].join(' ')} >LV 2</div>
             <div className={[styles.divider].join(' ')} ></div>
             <div className={[styles.scoreCounter].join(' ')} >{score} Pt.</div>
