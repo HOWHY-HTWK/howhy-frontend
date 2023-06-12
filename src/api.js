@@ -104,3 +104,17 @@ export function resetPassword(email, password, repeatPassword, token) {
 export function verifyEmail(id, hash, expires, signature) {
     return backendClient.get(`/email/verify/${id}/${hash}?expires=${expires}&signature=${signature}`)
 }
+
+// ---------- prizes
+
+export function getPrizes() {
+    return apiClient.get(`/prizes/`)
+}
+
+export function getCode(id) {
+    return apiClient.get(`/code/${id}`)
+}
+
+export function checkCode(code) {
+    return apiClient.get(`/checkCode/${code}`)
+}

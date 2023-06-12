@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './css/Prizes.module.css'
 
 import qrCode from '../assets/QR-Code.svg'
@@ -12,50 +12,54 @@ import clock_white from '../assets/icons/clock_white.svg'
 import close from '../assets/icons/close.svg'
 import { QRCodeSVG } from 'qrcode.react'
 import { useStateContext } from '../contexts/ContextProvider'
+import { getCode, getPrizes } from '../api'
+import Loader from './Loader'
 
 export default function Prizes() {
     const { user, setUser } = useStateContext()
 
     const [qrOverlay, setQrOverlay] = useState()
+    const [prizesData, setPrizesData] = useState([])
 
-    const prizesData = [
-        {
-            name: 'Kitkat',
-            date: '13. - 17. Juli',
-            location: 'Li 210',
-            time: '12:00 - 14:00',
-            code: '239487808972135098162098734',
-            valid: true
-        },
-        {
-            name: 'Mars',
-            date: '13. - 17. Juli',
-            location: 'Li 210',
-            time: '12:00 - 14:00',
-            code: '239487808972135098162098734',
-            valid: true
-        },
-        {
-            name: 'M&M',
-            date: '13. - 17. Juli',
-            location: 'Li 210',
-            time: '12:00 - 14:00',
-            code: '239487808972135098162098734',
-            valid: false
-        },
-        {
-            name: 'Kitkat',
-            date: '13. - 17. Juli',
-            location: 'Li 210',
-            time: '12:00 - 14:00',
-            code: '239487808972135098162098734',
-            valid: false
-        }
-    ]
+    const valid = getItemsList(
+        prizesData.filter(prize => {
+            return (
+                prize.valid
+            )
+        }))
+    const notYet = getItemsList(
+        prizesData.filter(prize => {
+            return (
+                !(prize.valid)
+            )
+        }))
 
-    const prizes = prizesData.map((prize, index) => {
-        return getPrizeListItem(prize, index)
-    })
+    const redeemed = getItemsList(
+        prizesData.filter(prize => {
+            return (
+                prize.redeemed
+            )
+        }))
+
+    useEffect(() => {
+        getPrizes().then(response => {
+            setPrizesData(response.data)
+        })
+    }, [])
+
+    function getItemsList(list) {
+        return list.map((prize, index) => {
+            return getPrizeListItem(prize, index)
+        })
+
+    }
+
+    function showQrCode(id) {
+        getCode(id).then(response => {
+            setQrOverlay({ code: response.data.code, id: id })
+        })
+        setQrOverlay("loading")
+    }
 
     function getPrizeListItem(prize, key) {
         return (
@@ -64,7 +68,7 @@ export default function Prizes() {
                     <img
                         className={[styles.img].join(' ')}
                         src={qrCode}
-                        onClick={() => setQrOverlay(prize.code)} />
+                        onClick={() => showQrCode(prize.id)} />
                     :
                     <img
                         className={[styles.img, styles.filter].join(' ')}
@@ -72,7 +76,7 @@ export default function Prizes() {
                 }
                 <div className={['centerVertical', styles.rightWrap].join(' ')} >
                     <div className={[styles.name].join(' ')} >
-                        {prize.name}
+                        {prize.title}
                     </div>
                     <div className={[styles.info].join(' ')} >
                         <img src={prize.valid ? calendar : calendar_white}></img>
@@ -80,11 +84,11 @@ export default function Prizes() {
                     </div>
                     <div className={[styles.info].join(' ')} >
                         <img src={prize.valid ? location : location_white}></img>
-                        {prize.location}
+                        {prize.place}
                     </div>
                     <div className={[styles.info].join(' ')} >
                         <img src={prize.valid ? clock : clock_white}></img>
-                        {prize.time}
+                        {prize.timeframe}
                     </div>
                 </div>
             </div>
@@ -99,23 +103,31 @@ export default function Prizes() {
                         className={[styles.close].join(' ')}
                         src={close}
                         onClick={() => setQrOverlay(null)} />
-                    <QRCodeSVG
-                        className={[styles.qrCode].join(' ')}
-                        value={makeQrCheckUrl(qrOverlay)} />
+                    {qrOverlay == "loading" ?
+                        <Loader></Loader>
+                        :
+                        <QRCodeSVG
+                            className={[styles.qrCode].join(' ')}
+                            value={makeQrCheckUrl(qrOverlay.code, qrOverlay.id)} />
+                    }
                 </div>
             </div>
         )
     }
 
-    function makeQrCheckUrl(code) {
-        return 'http://192.168.0.164:5173/qr/' + code
+    function makeQrCheckUrl(code, id) {
+        return 'http://192.168.2.113:5173/qr/' + code
     }
 
     return (
         <div className={['centerVertical', styles.wrap].join(' ')} >
             {user ?
                 <>
-                    {prizes}
+                    {valid}
+                    <p>Noch nicht erreicht:</p>
+                    {notYet}
+                    <p>Bereits einglöst:</p>
+                    {redeemed}
                     {qrOverlay ? getQrOverlay() : null}
                 </>
                 :
