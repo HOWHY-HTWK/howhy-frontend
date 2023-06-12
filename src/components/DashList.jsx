@@ -12,7 +12,7 @@ export default function DashList({ searchterm = '', random = false }) {
     const [videoList, setvideoList] = useState([]);
 
     const filteredList = filterList(videoList);
-    const list = videoList ? filteredList.map(video => getListItem(video)) : null
+    const list = filteredList.map(video => getListItem(video))
     const videos = shuffleList(list)
 
     useEffect(() => {
