@@ -103,7 +103,7 @@ export default function UserLogIn({ showEditorOption = false }) {
         <div className={[styles.wrap].join(' ')}
             style={{ backgroundImage: `url(${background})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }} >
             <img className={[styles.logo].join(' ')} src={howhyLogo} ></img>
-            {!signUp ? <img className={[styles.infoGraphic].join(' ')} src={info} ></img> : null}
+            {/* {!signUp ? <img className={[styles.infoGraphic].join(' ')} src={info} ></img> : null} */}
             {!signUp ? getLoginForm() : <UserSignUp showEditorOption={showEditorOption}
                 toggleSignUp={toggleSignUp}
                 logIn={logIn} />}
