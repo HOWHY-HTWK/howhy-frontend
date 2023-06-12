@@ -73,7 +73,7 @@ export default function Score({ }) {
     }
 
     return (
-        <div className={[styles.scoreWrap].join(' ')} >
+        <div className={[styles.scoreWrap, user ? null : styles.filter].join(' ')} >
             {animation ? <WinningAnimation></WinningAnimation> : null}
             <div className={[styles.level].join(' ')} >LV {getLevel()}</div>
             <div className={[styles.divider].join(' ')} ></div>

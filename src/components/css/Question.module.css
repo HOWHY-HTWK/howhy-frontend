@@ -74,4 +74,12 @@
 .feedback {
     margin: 1rem;
     font-size: 2em;
+    justify-content: center;
+    gap: 0px;
+}
+
+.logInPrompt {
+    font-size: small;
+    color: red;
+    text-align: center;
 }

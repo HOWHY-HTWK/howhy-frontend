@@ -12,6 +12,10 @@
     padding: 0px 12px;
 }
 
+.filter {
+    filter: opacity(40%) contrast(90%) grayscale(100%);
+}
+
 .level {}
 
 .divider {

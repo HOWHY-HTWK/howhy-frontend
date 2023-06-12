@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react'
 import styles from './css/Question.module.css'
 import * as api from '../api'
 import Loader from './Loader';
+import { useStateContext } from '../contexts/ContextProvider';
 
 export default function Question({ questionId, setQuestionId, refreshData }) {
+    const { user, setUser } = useStateContext()
 
     const [questionData, setQuestionData] = useState({ data: null, selected: [] });
     const [answerCorrect, setAnswerCorrect] = useState(null);
@@ -72,8 +74,11 @@ export default function Question({ questionId, setQuestionId, refreshData }) {
             <div className={[styles.wrap].join()} >
                 {answerCorrect != null ?
                     < div className={[styles.question, 'center'].join(' ')} >
-                        <div className={[styles.feedback].join(' ')} >
+                        <div className={['centerVertical', styles.feedback].join(' ')} >
                             {answerCorrect ? "Richtig!" : "Leider Falsch"}
+                            <div className={[styles.logInPrompt].join(' ')} >
+                                {!user && answerCorrect ? "Bitte Einloggen um den Fortschritt zu speichern." : null}
+                            </div>
                         </div>
                     </div>
                     :
