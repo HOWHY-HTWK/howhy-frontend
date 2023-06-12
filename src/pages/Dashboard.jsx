@@ -27,7 +27,7 @@ export default function Dashboard() {
                 <Home></Home>
             </div>
             <div className={[styles.page, page == 1 ? styles.active : null].join(' ')}>
-                <DashList searchterm={searchterm}></DashList>
+                <DashList random={true}></DashList>
             </div>
             <div className={[styles.page, page == 2 ? styles.active : null].join(' ')}>
                 <Prizes></Prizes>

@@ -8,14 +8,17 @@ import viewsIcon from '../assets/icons/views.svg'
 import starIcon from '../assets/icons/star.svg'
 import Loader from './Loader'
 
-export default function DashList({ searchterm = '' }) {
+export default function DashList({ searchterm = '', random = false }) {
     const [videoList, setvideoList] = useState([]);
 
     const filteredList = filterList(videoList);
-    const videos = videoList ? filteredList.map(video => getListItem(video)) : null
+    const list = videoList ? filteredList.map(video => getListItem(video)) : null
+    const videos = shuffleList(list)
 
     useEffect(() => {
-        getVideos()
+        if (videoList.length == 0) {
+            getVideos()
+        }
     }, [])
 
     function filterList(list) {
@@ -62,6 +65,16 @@ export default function DashList({ searchterm = '' }) {
                 </div>
             </Link>
         )
+    }
+
+    function shuffleList(list) {
+        return list ?
+            list
+                .map(value => ({ value, sort: Math.random() }))
+                .sort((a, b) => a.sort - b.sort)
+                .map(({ value }) => value)
+            :
+            null
     }
 
     function getBackground(success) {
