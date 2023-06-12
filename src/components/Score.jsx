@@ -7,20 +7,27 @@ import { useStateContext } from '../contexts/ContextProvider'
 export default function Score({ }) {
     const { user, setUser } = useStateContext()
 
-    const scoreRef = useRef(0)
+    const oldScoreRef = useRef(0)
+    const loggedInBefore = useRef(false)
     const [score, setscore] = useState(0)
 
     useEffect(() => {
         if (user) {
-            scoreRef.current = user.score
-            setscore(user.score)
+            oldScoreRef.current = user.score
         }
     }, [])
 
     useEffect(() => {
         if (user) {
-            countup(scoreRef.current, user.score)
-            scoreRef.current = user.score
+            if (loggedInBefore.current) {
+                countup(oldScoreRef.current, user.score)
+            } else {
+                setscore(user.score)
+            }
+            loggedInBefore.current = true
+            oldScoreRef.current = user.score
+        } else {
+            loggedInBefore.current = false
         }
     }, [user])
 
