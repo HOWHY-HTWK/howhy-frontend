@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import Html5QrcodePlugin from '../components/html5QrcodeScannerPlugin';
+import Html5QrcodePlugin from '../components/Html5QrcodeScannerPlugin';
 import styles from './css/QrCheck.module.css'
 import { checkCode } from '../api';
 
