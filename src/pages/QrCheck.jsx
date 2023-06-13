@@ -10,7 +10,12 @@ export default function QrCheck() {
     const [prize, setPrize] = useState(null);
 
     function onNewScanResult(decodedText, decodedResult) {
-        checkCodeFromQr(decodedText)
+        console.log('newscan')
+        if (prize) {
+            // nothing
+        } else {
+            checkCodeFromQr(decodedText)
+        }
     }
 
     function getCodeFromUrl(url) {
@@ -20,7 +25,8 @@ export default function QrCheck() {
 
     function checkCodeFromQr(code) {
         checkCode(getCodeFromUrl(code)).then(response => {
-            setPrize(response.data)
+            console.log(response.data.prize)
+            setPrize(response.data.prize)
         }).catch(error => {
             console.log(error.response.data)
         })
@@ -35,7 +41,7 @@ export default function QrCheck() {
                     <Html5QrcodePlugin
                         fps={10}
                         qrbox={250}
-                        disableFlip={false}
+                        disableFlip={true}
                         qrCodeSuccessCallback={onNewScanResult}
                         aspectRatio={1.0}
                     />

@@ -46,6 +46,14 @@ const Html5QrcodePlugin = (props) => {
         };
     }, []);
 
+    function onNewScanResult(decodedText, decodedResult) {
+        html5QrcodeScanner.current.stop()
+        html5QrcodeScanner.current.clear()
+
+        let callback = props.qrCodeSuccessCallback
+        callback(decodedText, decodedResult)
+    }
+
     return (
         <div id={qrcodeRegionId} />
     );
