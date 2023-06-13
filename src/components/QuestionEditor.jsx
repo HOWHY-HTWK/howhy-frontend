@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import questionStyles from './css/Question.module.css'
 import styles from './css/QuestionEditor.module.css'
 import { MdClose, MdAdd } from "react-icons/md"
@@ -9,12 +9,20 @@ import { getTimeInReadable } from '../utils'
 
 
 export default function QuestionEditor({ existingQuestion, duration, time, videoId, setEditedQuestion, singleChoice }) {
-    console.log(videoId + ' ' + existingQuestion)
+    const singleChoiceRef = useRef(
+        existingQuestion ?
+            existingQuestion.type == 'singlechoice' ?
+                true
+                :
+                false
+            :
+            singleChoice)
+
     const basequestion = existingQuestion ? existingQuestion : {
         'videoId': videoId,
         'questionText': '',
         'timecode': time,
-        'type': singleChoice ? 'singlechoice' : 'multiplechoice',
+        'type': singleChoiceRef.current ? 'singlechoice' : 'multiplechoice',
         'correctAnswers': [{ 'id': 0, 'correct': false }],
         'answers': [{ "id": 0, "text": '', }],
     }
@@ -26,7 +34,7 @@ export default function QuestionEditor({ existingQuestion, duration, time, video
     }
 
     function toggleCorrect(id) {
-        if (singleChoice) {
+        if (singleChoiceRef.current) {
             const newCorrectAnswers = question.correctAnswers.map(e =>
                 e.id == id ? { ...e, correct: !e.correct } : { ...e, correct: false })
             setQuestion({ ...question, correctAnswers: newCorrectAnswers });
@@ -64,13 +72,31 @@ export default function QuestionEditor({ existingQuestion, duration, time, video
         setQuestion({ ...question, answers: newAnswer });
     }
 
+    function checkSingleChoiceAnswers() {
+        if (question.type == "singlechoice") {
+            let correctCount = 0;
+            question.correctAnswers.map(e => {
+                if (e.correct) { correctCount += 1 }
+                return e
+            })
+            if (correctCount == 1) {
+                return true
+            } else {
+                alert("Bei einer Single-Choice Frage muss genau eine Antwort richtig sein!")
+            }
+        } else {
+            return true
+        }
+    }
+
     function saveQuestionAndReset() {
-        console.log(question)
-        storeQuestion(question).then(response => {
-            setEditedQuestion(null)
-        }).catch(error => {
-            alert(error.response.data.message)
-        })
+        if (checkSingleChoiceAnswers()) {
+            storeQuestion(question).then(response => {
+                setEditedQuestion(null)
+            }).catch(error => {
+                alert(error.response.data.message)
+            })
+        }
     }
 
     function cancelAndReset() {
@@ -124,6 +150,16 @@ export default function QuestionEditor({ existingQuestion, duration, time, video
                     Aktuellen Zeitpunkt des Videos übernehemen.
                 </div>
             </div>
+            <select
+                className={['selector', styles.selector].join(' ')}
+                value={question.type}
+                onChange={e => {
+                    setQuestion({ ...question, type: e.target.value })
+                    singleChoiceRef.current = e.target.value == "singlechoice" ? true : false
+                }}  >
+                <option value="multiplechoice">Multiple-Choice</option>
+                <option value="singlechoice">Single-Choice</option>
+            </select>
             <div className={[questionStyles.question, styles.stretch].join(' ')} >
                 <div className={[questionStyles.questionElement, questionStyles.questionText].join(' ')} >
                     <TextareaAutosize
