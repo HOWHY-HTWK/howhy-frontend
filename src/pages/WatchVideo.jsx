@@ -2,8 +2,6 @@ import { useState, useEffect, useRef } from 'react'
 import styles from './css/WatchVideo.module.css'
 import Question from '../components/Question'
 import QuestionsTimeline from '../components/QuestionsTimeline'
-import * as utils from '../utils.js'
-import Score from '../components/Score'
 import * as api from '../api'
 import { useStateContext } from '../contexts/ContextProvider'
 import { useLocation, useParams } from 'react-router-dom'
@@ -29,14 +27,12 @@ function WatchVideo() {
     const videoRef = useRef(null)
 
     useEffect(() => {
-        // getRecources(videoId).then(response => {
-        // 	setSources(response.data)
-        // })
         getVideoInfoFromMediaserver(videoId).then(response => {
             console.log(response)
             setVideoData(response)
         }).catch(error => {
         })
+        getTimecodes()
     }, [])
 
     useEffect(() => {
@@ -44,8 +40,14 @@ function WatchVideo() {
     }, [questionTimecodes]);
 
     useEffect(() => {
-        refreshData()
-    }, [])
+        if (currentQuestionId && videoRef.current) {
+            videoRef.current.pause()
+            closeFullscreen()
+        }
+        else {
+            videoRef.current.play()
+        }
+    }, [currentQuestionId])
 
     function refreshData() {
         getTimecodes()
@@ -58,38 +60,44 @@ function WatchVideo() {
         })
     }
 
-    function fullscreen() {
-        if (!isFullscreen) {
-            fullScreenWrapper.current.requestFullscreen();
-            screen.orientation.lock("landscape")
-            document.body.style.height = "100vh";
-            document.body.style.overflow = "clip";
-        } else {
+    // function fullscreen() {
+    //     if (!isFullscreen) {
+    //         fullScreenWrapper.current.requestFullscreen();
+    //         screen.orientation.lock("landscape")
+    //         document.body.style.height = "100vh";
+    //         document.body.style.overflow = "clip";
+    //     } else {
+    //         document.exitFullscreen();
+    //         document.body.style.height = "unset";
+    //         document.body.style.overflow = "unset";
+    //     }
+    //     setIsFullscreen(!isFullscreen);
+    // }
+
+    function closeFullscreen() {
+        if (document.exitFullscreen) {
             document.exitFullscreen();
-            document.body.style.height = "unset";
-            document.body.style.overflow = "unset";
+        } else if (document.webkitExitFullscreen) { /* Safari */
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { /* IE11 */
+            document.msExitFullscreen();
+        } else {
+            alert('Beantworte die Frage!')
         }
-        setIsFullscreen(!isFullscreen);
     }
 
     function displayQuestion() {
-        if (currentQuestionId && videoRef.current) {
-            videoRef.current.pause()
-            return (
-                <div className={[styles.questionWrapper, isFullscreen ? styles.questionWrapperFS : ''].join(' ')} >
-                    <Question
-                        questionId={currentQuestionId}
-                        setQuestionId={setCurrentQuestionId}
-                        videoId={videoId}
-                        refreshData={refreshData}
-                    />
-                </div>
-            )
-        }
-        else {
-            videoRef.current.play()
-            return null;
-        }
+        return (currentQuestionId && videoRef.current) ?
+            <div className={[styles.questionWrapper, isFullscreen ? styles.questionWrapperFS : ''].join(' ')} >
+                <Question
+                    questionId={currentQuestionId}
+                    setQuestionId={setCurrentQuestionId}
+                    videoId={videoId}
+                    refreshData={refreshData}
+                />
+            </div>
+            :
+            null
     }
 
     function handleTimeUpdate(time) {
@@ -132,11 +140,10 @@ function WatchVideo() {
                     setDuration={setDuration}
                     ref={videoRef}
                 />
-                <div className={[styles.fsButton].join(' ')} onClick={fullscreen}></div>
+                {/* <div className={[styles.fsButton].join(' ')} onClick={fullscreen}></div> */}
                 <div className={[styles.title].join(' ')} >{videoData?.title}</div>
             </div>
-            {videoRef.current ? displayQuestion() : null}
-
+            {displayQuestion()}
             {questionTimecodes && duration ?
                 <div className={[styles.timeline, isFullscreen ? styles.timelineFS : ''].join(' ')}  >
                     <QuestionsTimeline

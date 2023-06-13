@@ -1,15 +1,10 @@
 import React, { createRef, useEffect, useState } from 'react'
-import axiosClient from '../../axios-client.jsx'
-import { useStateContext } from '../contexts/ContextProvider.jsx';
 import styles from './css/ForgotPassword.module.css'
-import { useLocation, useNavigate } from 'react-router-dom';
 import { csfrCookie, forgotPassword, resetPassword } from '../api.js';
+import BackButton from '../components/BackButton.jsx';
+
 
 export default function ForgotPassword() {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const backPath = location.state ? location.state.backPath : '/editor';
-
     const emailRef = createRef()
 
     function handleReset(e) {
@@ -30,6 +25,7 @@ export default function ForgotPassword() {
 
     return (
         <div className={[styles.formwrapper].join(' ')} >
+            <BackButton></BackButton>
             <form method="post" className={[styles.vertical].join(' ')} onSubmit={handleReset}>
                 <span>Passwort zurücksetzen</span>
                 <input
