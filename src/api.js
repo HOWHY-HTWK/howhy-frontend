@@ -118,3 +118,7 @@ export function getCode(id) {
 export function checkCode(code) {
     return apiClient.get(`/checkCode/${code}`)
 }
+
+export function postPrize(request) {
+    return apiClient.post('/prize', request)
+}

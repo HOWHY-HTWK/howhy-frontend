@@ -23,6 +23,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import EmailVerification from './pages/EmailVerification';
+import AddPrizes from './pages/AddPrizes';
 const UserLogin = React.lazy(() => import('./components/UserLogin'));
 
 const router = createBrowserRouter(
@@ -90,6 +91,10 @@ const router = createBrowserRouter(
                 {
                     path: "/editor/settings",
                     element: <Settings />
+                },
+                {
+                    path: "/editor/prizes",
+                    element: <AddPrizes />
                 }
             ]
         },

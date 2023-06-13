@@ -51,7 +51,6 @@ export default function Prizes() {
         return list.map((prize, index) => {
             return getPrizeListItem(prize, index)
         })
-
     }
 
     function showQrCode(id) {
