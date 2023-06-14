@@ -37,7 +37,7 @@ export default function Prizes() {
     const redeemed = getItemsList(
         prizesData.filter(prize => {
             return (
-                prize.redeemed
+                prize.redeemed == true
             )
         }))
 

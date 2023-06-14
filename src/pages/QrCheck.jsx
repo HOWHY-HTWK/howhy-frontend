@@ -1,20 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Html5QrcodePlugin from '../components/Html5QrcodeScannerPlugin';
 import styles from './css/QrCheck.module.css'
-import { checkCode } from '../api';
+import { checkCode, redeem } from '../api';
 
 export default function QrCheck() {
-    const code = useParams().code;
 
-    const [prize, setPrize] = useState(null);
+    const [prizeData, setPrize] = useState(null);
 
     function onNewScanResult(decodedText, decodedResult) {
         console.log('newscan')
-        if (prize) {
+        if (prizeData != null) {
             // nothing
         } else {
-            checkCodeFromQr(decodedText)
+            checkCodeFromQr(getCodeFromUrl(decodedText))
         }
     }
 
@@ -24,29 +23,50 @@ export default function QrCheck() {
     }
 
     function checkCodeFromQr(code) {
-        checkCode(getCodeFromUrl(code)).then(response => {
+        checkCode(code).then(response => {
             console.log(response.data.prize)
-            setPrize(response.data.prize)
+            setPrize({ prize: response.data.prize, code: code, redeemed: response.data.redeemed })
         }).catch(error => {
             console.log(error.response.data)
         })
     }
 
+    function redeemPrize() {
+        redeem(prizeData.code).then(response => {
+            setPrize({ prize: response.data.prize, code: code, redeemed: response.data.redeemed })
+        }).catch(error =>
+            console.log(error.response.data)
+        )
+    }
+
+    function getPrize() {
+        return (
+            <div className={['center', styles.wrap].join(' ')} >
+                <div className={['listElement', 'centerVertical'].join(' ')} >
+                    {prizeData.prize.title}
+                    {prizeData.redeemed ?
+                        <p>Code wurde bereits eingelöst</p>
+                        :
+                        <button className={['button'].join(' ')} onClick={redeemPrize} >Einlösen</button>
+                    }
+                    <button className={['button'].join(' ')} onClick={() => setPrize(null)} >Neuen Code Scannen</button>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div>
-            {prize ?
-                prize.title
-                :
-                <div className={[styles.scanner].join(' ')} >
-                    <Html5QrcodePlugin
-                        fps={10}
-                        qrbox={250}
-                        disableFlip={true}
-                        qrCodeSuccessCallback={onNewScanResult}
-                        aspectRatio={1.0}
-                    />
-                </div>
-            }
+            {prizeData ? getPrize() : null}
+            <div className={[styles.scanner, prizeData ? styles.hidden : null].join(' ')} >
+                <Html5QrcodePlugin
+                    fps={10}
+                    qrbox={250}
+                    disableFlip={true}
+                    qrCodeSuccessCallback={onNewScanResult}
+                    aspectRatio={1.0}
+                />
+            </div>
 
         </div>
     )
