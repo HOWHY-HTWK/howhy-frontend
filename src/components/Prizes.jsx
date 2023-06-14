@@ -21,12 +21,23 @@ export default function Prizes() {
     const [qrOverlay, setQrOverlay] = useState()
     const [prizesData, setPrizesData] = useState([])
 
+    useEffect(() => {
+        loadPrizes()
+    }, [])
+
+    function loadPrizes() {
+        getPrizes().then(response => {
+            setPrizesData(response.data)
+        })
+    }
+
     const valid = getItemsList(
         prizesData.filter(prize => {
             return (
                 prize.valid
             )
         }))
+
     const notYet = getItemsList(
         prizesData.filter(prize => {
             return (
@@ -41,11 +52,6 @@ export default function Prizes() {
             )
         }))
 
-    useEffect(() => {
-        getPrizes().then(response => {
-            setPrizesData(response.data)
-        })
-    }, [])
 
     function getItemsList(list) {
         return list.map((prize, index) => {
@@ -94,6 +100,12 @@ export default function Prizes() {
         )
     }
 
+    function closeOverlay() {
+        setQrOverlay(null)
+        loadPrizes()
+
+    }
+
     function getQrOverlay() {
         return (
             <div className={['center', styles.overlay].join(' ')} >
@@ -101,7 +113,7 @@ export default function Prizes() {
                     <img
                         className={[styles.close].join(' ')}
                         src={close}
-                        onClick={() => setQrOverlay(null)} />
+                        onClick={closeOverlay} />
                     {qrOverlay == "loading" ?
                         <Loader></Loader>
                         :
@@ -115,7 +127,7 @@ export default function Prizes() {
     }
 
     function makeQrCheckUrl(code, id) {
-        return 'http://192.168.2.113:5173/qr/' + code
+        return window.location.hostname + '/qr/'
     }
 
     return (

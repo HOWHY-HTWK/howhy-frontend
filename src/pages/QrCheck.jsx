@@ -5,11 +5,9 @@ import styles from './css/QrCheck.module.css'
 import { checkCode, redeem } from '../api';
 
 export default function QrCheck() {
-
     const [prizeData, setPrize] = useState(null);
 
     function onNewScanResult(decodedText, decodedResult) {
-        console.log('newscan')
         if (prizeData != null) {
             // nothing
         } else {
@@ -24,19 +22,21 @@ export default function QrCheck() {
 
     function checkCodeFromQr(code) {
         checkCode(code).then(response => {
-            console.log(response.data.prize)
+            console.log(response.prize)
             setPrize({ prize: response.data.prize, code: code, redeemed: response.data.redeemed })
         }).catch(error => {
-            console.log(error.response.data)
+            console.log(error)
         })
     }
 
     function redeemPrize() {
         redeem(prizeData.code).then(response => {
-            setPrize({ prize: response.data.prize, code: code, redeemed: response.data.redeemed })
-        }).catch(error =>
-            console.log(error.response.data)
-        )
+            console.log('succsesful redeem')
+            console.log(response)
+            setPrize({ prize: response.data.prize, redeemed: response.data.redeemed })
+        }).catch(error => {
+            console.log(error.response)
+        })
     }
 
     function getPrize() {
@@ -67,7 +67,6 @@ export default function QrCheck() {
                     aspectRatio={1.0}
                 />
             </div>
-
         </div>
     )
 }
