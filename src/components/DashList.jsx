@@ -12,8 +12,9 @@ export default function DashList({ searchterm = '', random = false }) {
     const [videoList, setvideoList] = useState([]);
 
     const filteredList = filterList(videoList);
+    const sortetList = sortListAlphabetically(filteredList)
     const list = filteredList.map(video => getListItem(video))
-    const videos = shuffleList(list)
+    const videos = list
 
     useEffect(() => {
         if (videoList.length == 0) {
@@ -37,6 +38,10 @@ export default function DashList({ searchterm = '', random = false }) {
         })
     }
 
+    function getThumb(url) {
+        return url.replace("_catalog", "")
+    }
+
     function getListItem(video) {
         return (
             <Link
@@ -46,7 +51,7 @@ export default function DashList({ searchterm = '', random = false }) {
                 state={{ videoData: video }}>
                 <img
                     className={[styles.img].join(' ')}
-                    src={video.thumb}>
+                    src={getThumb(video.thumb)}>
                 </img>
                 <div className={[styles.title, styles.item].join(' ')} >
                     {video.title}
@@ -75,6 +80,18 @@ export default function DashList({ searchterm = '', random = false }) {
                 .map(({ value }) => value)
             :
             null
+    }
+
+    function sortListAlphabetically(list) {
+        console.log(list)
+        return list.sort((a, b) => {
+            if (a.title < b.title) {
+                return -1; // a should come before b in the sorted order
+            } else if (a.title > b.title) {
+                return 1; // b should come before a in the sorted order
+            }
+            return 0; // names are equal, maintain the original order
+        })
     }
 
     function getBackground(success) {

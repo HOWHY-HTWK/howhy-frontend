@@ -37,7 +37,6 @@ const Html5QrcodePlugin = (props) => {
         // console.log(html5QrcodeScanner.current.getState())
 
         html5QrcodeScanner.current.render(props.qrCodeSuccessCallback, props.qrCodeErrorCallback);
-
         // cleanup function when component will unmount
         return () => {
             html5QrcodeScanner.current.clear().catch(error => {
@@ -47,7 +46,6 @@ const Html5QrcodePlugin = (props) => {
     }, []);
 
     function onNewScanResult(decodedText, decodedResult) {
-        html5QrcodeScanner.current.stop()
         html5QrcodeScanner.current.clear()
 
         let callback = props.qrCodeSuccessCallback

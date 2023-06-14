@@ -122,3 +122,8 @@ export function checkCode(code) {
 export function postPrize(request) {
     return apiClient.post('/prize', request)
 }
+
+export function redeem(code) {
+    return apiClient.get(`/redeemCode/${code}`)
+}
+

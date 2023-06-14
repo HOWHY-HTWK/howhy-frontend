@@ -30,6 +30,7 @@
     position: absolute;
     top: 21px;
     left: 18px;
+    z-index: 4;
 }
 
 .username {
