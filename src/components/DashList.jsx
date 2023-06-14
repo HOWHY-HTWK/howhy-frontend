@@ -37,6 +37,10 @@ export default function DashList({ searchterm = '', random = false }) {
         })
     }
 
+    function getThumb(url) {
+        return url.replace("_catalog", "")
+    }
+
     function getListItem(video) {
         return (
             <Link
@@ -46,7 +50,7 @@ export default function DashList({ searchterm = '', random = false }) {
                 state={{ videoData: video }}>
                 <img
                     className={[styles.img].join(' ')}
-                    src={video.thumb}>
+                    src={getThumb(video.thumb)}>
                 </img>
                 <div className={[styles.title, styles.item].join(' ')} >
                     {video.title}
