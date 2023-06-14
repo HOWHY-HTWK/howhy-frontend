@@ -34,7 +34,7 @@ export default function Prizes() {
     const valid = getItemsList(
         prizesData.filter(prize => {
             return (
-                prize.valid
+                prize.valid && !(prize.redeemed)
             )
         }))
 
