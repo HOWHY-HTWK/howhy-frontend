@@ -90,3 +90,11 @@
     gap: 7px;
     white-space: nowrap;
 }
+
+.messageWrap {
+    width: 100%;
+}
+
+.messageInput {
+    /* width: 300px; */
+}

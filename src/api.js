@@ -131,3 +131,10 @@ export function redeem(code) {
     return apiClient.get(`/redeemCode/${code}`)
 }
 
+export function postMessage(request) {
+    return apiClient.post('/prizes/message', request)
+}
+
+export function getMessage() {
+    return apiClient.get('/prizes/message')
+}

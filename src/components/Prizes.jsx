@@ -12,7 +12,7 @@ import clock_white from '../assets/icons/clock_white.svg'
 import close from '../assets/icons/close.svg'
 import { QRCodeSVG } from 'qrcode.react'
 import { useStateContext } from '../contexts/ContextProvider'
-import { getCode, getPrizes } from '../api'
+import { getCode, getMessage, getPrizes } from '../api'
 import Loader from './Loader'
 
 export default function Prizes() {
@@ -20,9 +20,18 @@ export default function Prizes() {
 
     const [qrOverlay, setQrOverlay] = useState()
     const [prizesData, setPrizesData] = useState([])
+    const [message, setMessage] = useState('')
 
     useEffect(() => {
         loadPrizes()
+    }, [])
+
+    useEffect(() => {
+        getMessage().then(response => {
+            setMessage(response.data.text)
+        }).catch(error => {
+            console.log(error)
+        })
     }, [])
 
     function loadPrizes() {
@@ -158,19 +167,22 @@ export default function Prizes() {
     }
 
     return (
-        <div className={['centerVertical', styles.wrap].join(' ')} >
-            {user ?
-                <>
-                    {getValid()}
-                    <p>Noch nicht erreicht:</p>
-                    {getNotYet()}
-                    <p>Bereits einglöst:</p>
-                    {getRedeemed()}
-                    {qrOverlay ? getQrOverlay() : null}
-                </>
-                :
-                <>Bitte melden Sie sich an um Preise zu sammeln</>
-            }
-        </div>
+        <div>
+            <div className={[styles.banner].join(' ')} >{message}</div>
+            <div className={['centerVertical', styles.wrap].join(' ')} >
+                {user ?
+                    <>
+                        {getValid()}
+                        <p>Noch nicht erreicht:</p>
+                        {getNotYet()}
+                        <p>Bereits einglöst:</p>
+                        {getRedeemed()}
+                        {qrOverlay ? getQrOverlay() : null}
+                    </>
+                    :
+                    <>Bitte melden Sie sich an um Preise zu sammeln</>
+                }
+            </div>
+        </div >
     )
 }

@@ -96,3 +96,11 @@
     width: 100%;
     height: 100%;
 }
+
+.banner {
+    box-sizing: border-box;
+    padding: 12px 19px;
+    color: var(--color-inverted);
+    background-color: var(--user-accent-color);
+    width: 100%;
+}
