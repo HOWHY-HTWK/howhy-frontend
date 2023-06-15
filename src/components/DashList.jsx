@@ -83,7 +83,6 @@ export default function DashList({ searchterm = '', random = false }) {
     }
 
     function sortListAlphabetically(list) {
-        console.log(list)
         return list.sort((a, b) => {
             if (a.title < b.title) {
                 return -1; // a should come before b in the sorted order

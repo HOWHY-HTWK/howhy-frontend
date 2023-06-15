@@ -31,26 +31,32 @@ export default function Prizes() {
         })
     }
 
-    const valid = getItemsList(
-        prizesData.filter(prize => {
-            return (
-                prize.valid && !(prize.redeemed)
-            )
-        }))
+    function getValid() {
+        return getItemsList(
+            prizesData.filter(prize => {
+                return (
+                    prize.valid && !(prize.redeemed)
+                )
+            }))
+    }
 
-    const notYet = getItemsList(
-        prizesData.filter(prize => {
-            return (
-                !(prize.valid)
-            )
-        }))
+    function getNotYet() {
+        return getItemsList(
+            prizesData.filter(prize => {
+                return (
+                    !(prize.valid)
+                )
+            }))
+    }
 
-    const redeemed = getItemsList(
-        prizesData.filter(prize => {
-            return (
-                prize.redeemed == true
-            )
-        }))
+    function getRedeemed() {
+        return getItemsList(
+            prizesData.filter(prize => {
+                return (
+                    prize.redeemed == true
+                )
+            }))
+    }
 
 
     function getItemsList(list) {
@@ -155,11 +161,11 @@ export default function Prizes() {
         <div className={['centerVertical', styles.wrap].join(' ')} >
             {user ?
                 <>
-                    {valid}
+                    {getValid()}
                     <p>Noch nicht erreicht:</p>
-                    {notYet}
+                    {getNotYet()}
                     <p>Bereits einglöst:</p>
-                    {redeemed}
+                    {getRedeemed()}
                     {qrOverlay ? getQrOverlay() : null}
                 </>
                 :

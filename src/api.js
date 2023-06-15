@@ -81,6 +81,10 @@ export function ranking() {
     return apiClient.get(`/ranking/`)
 }
 
+export function deleteUser() {
+    return apiClient.get(`/deleteUser/`)
+}
+
 // ----------  authetification
 
 export function csfrCookie() {

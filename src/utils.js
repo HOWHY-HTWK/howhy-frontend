@@ -54,12 +54,12 @@ export function logout(setUser) {
         .then(response => {
             axiosClient.post('/logout').then(response => {
                 if (response.status === 204) {
-                    console.log(response)
+                    console.log('logout' + response)
                     setUser(null);
                     window.location.reload();
                 }
             }).catch(error => {
-                console.log(error.response.data)
+                console.log(error)
             })
         })
 }
