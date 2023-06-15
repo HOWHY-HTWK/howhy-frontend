@@ -67,37 +67,58 @@ export default function Prizes() {
     }
 
     function getPrizeListItem(prize, key) {
-        return (
-            <div key={key} className={['center', styles.listItem, !prize.valid ? styles.used : null].join(' ')} >
-                {prize.valid ?
+        return prize.redeemed ?
+            <div key={key} className={['center', styles.listItemWrap].join(' ')} >
+                <div className={['center', styles.listItem, styles.used].join(' ')} >
+                    <img
+                        className={[styles.img].join(' ')}
+                        src={qr_used} />
+                    <div className={['centerVertical', styles.rightWrap].join(' ')} >
+                        <div className={[styles.name].join(' ')} >
+                            {prize.title}
+                        </div>
+                        <div className={[styles.info].join(' ')} >
+                            <img src={calendar_white}></img>
+                            {prize.date}
+                        </div>
+                        <div className={[styles.info].join(' ')} >
+                            <img src={location_white}></img>
+                            {prize.place}
+                        </div>
+                        <div className={[styles.info].join(' ')} >
+                            <img src={clock_white}></img>
+                            {prize.timeframe}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            :
+            <div key={key} className={['center', styles.listItemWrap].join(' ')} >
+                <div className={['center', styles.listItem, prize.valid ? null : styles.filter].join(' ')} >
                     <img
                         className={[styles.img].join(' ')}
                         src={qrCode}
                         onClick={() => showQrCode(prize.id)} />
-                    :
-                    <img
-                        className={[styles.img, styles.filter].join(' ')}
-                        src={qr_used} />
-                }
-                <div className={['centerVertical', styles.rightWrap].join(' ')} >
-                    <div className={[styles.name].join(' ')} >
-                        {prize.title}
-                    </div>
-                    <div className={[styles.info].join(' ')} >
-                        <img src={prize.valid ? calendar : calendar_white}></img>
-                        {prize.date}
-                    </div>
-                    <div className={[styles.info].join(' ')} >
-                        <img src={prize.valid ? location : location_white}></img>
-                        {prize.place}
-                    </div>
-                    <div className={[styles.info].join(' ')} >
-                        <img src={prize.valid ? clock : clock_white}></img>
-                        {prize.timeframe}
+                    <div className={['centerVertical', styles.rightWrap].join(' ')} >
+                        <div className={[styles.name].join(' ')} >
+                            {prize.title}
+                        </div>
+                        <div className={[styles.info].join(' ')} >
+                            <img src={prize.redeemed ? calendar_white : calendar}></img>
+                            {prize.date}
+                        </div>
+                        <div className={[styles.info].join(' ')} >
+                            <img src={prize.redeemed ? location_white : location}></img>
+                            {prize.place}
+                        </div>
+                        <div className={[styles.info].join(' ')} >
+                            <img src={prize.redeemed ? clock : clock_white}></img>
+                            {prize.timeframe}
+                        </div>
                     </div>
                 </div>
+                {prize.valid ? null : <div className={[styles.progress].join(' ')} >sammle noch {prize.points - user.score} Pt.</div>}
             </div>
-        )
     }
 
     function closeOverlay() {

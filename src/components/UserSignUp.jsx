@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import axiosClient from '../../axios-client.jsx'
 import styles from './css/UserLogin.module.css'
 import { useStateContext } from '../contexts/ContextProvider.jsx'
+import { Link } from 'react-router-dom'
 
 export default function UserSignUp({ toggleSignUp, logIn }) {
     const { user, setUser } = useStateContext()
@@ -10,12 +11,14 @@ export default function UserSignUp({ toggleSignUp, logIn }) {
 
     const [info, setInfo] = useState(false)
     const infoRef = useRef()
+    const privacyRef = useRef(false)
 
     const [signUpData, setsignUpData] = useState({
         name: '',
         email: '', password: '',
         repeatPassword: '',
-        editorRights: false
+        editorRights: false,
+        accept: false
     })
 
     useEffect(() => {
@@ -35,25 +38,30 @@ export default function UserSignUp({ toggleSignUp, logIn }) {
 
     function handleSignup(e) {
         e.preventDefault();
-        axiosClient.get('/sanctum/csrf-cookie')
-            .then(response => {
-                let requestObject = {
-                    name: signUpData.name,
-                    email: signUpData.email,
-                    password: signUpData.password,
-                    password_confirmation: signUpData.repeatPassword,
-                    editor: signUpData.editorRights
-                }
-                axiosClient.post('/register', requestObject)
-                    .then(response => {
-                        console.log(response)
-                        // alert('Registrierung erfolgreich!')
-                        logIn(signUpData.email, signUpData.password, true)
-                    }).catch((error) => {
-                        // debugger
-                        setMessage(<span style={{ color: 'red' }}>{error.response.data.message}</span>)
-                    });
-            })
+        if (signUpData.accept) {
+            axiosClient.get('/sanctum/csrf-cookie')
+                .then(response => {
+                    let requestObject = {
+                        name: signUpData.name,
+                        email: signUpData.email,
+                        password: signUpData.password,
+                        password_confirmation: signUpData.repeatPassword,
+                        editor: signUpData.editorRights
+                    }
+                    axiosClient.post('/register', requestObject)
+                        .then(response => {
+                            console.log(response)
+                            // alert('Registrierung erfolgreich!')
+                            logIn(signUpData.email, signUpData.password, true)
+                        }).catch((error) => {
+                            // debugger
+                            setMessage(<span style={{ color: 'red' }}>{error.response.data.message}</span>)
+                        });
+                })
+        } else {
+            setMessage("Sie müssen den Datenschutzbestimmungen zustimmen.")
+
+        }
     }
 
     function makeUserName(length) {
@@ -126,6 +134,13 @@ export default function UserSignUp({ toggleSignUp, logIn }) {
                         placeholder='Passwort wiederholen'
                         autoComplete='new-password' />
                     <div className={[styles.message, signUpData.password == signUpData.repeatPassword ? styles.hidden : null].join(' ')} >Keine übereinstimmung</div>
+                    <div className={['center', styles.privacy].join(' ')} >
+                        <input
+                            type="checkbox"
+                            checked={signUpData.accept}
+                            onChange={e => setsignUpData({ ...signUpData, accept: e.target.checked })} />
+                        <div>Ich habe die <Link to="/user/privacy">Datenschutzbestimmung</Link> gelesen erkläre mich damit einverstanden.</div>
+                    </div>
                     {message != '' ?
                         <div className={[styles.message].join(' ')} >{message} </div>
                         :

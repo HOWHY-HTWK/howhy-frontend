@@ -149,3 +149,10 @@
 .invisible {
     visibility: hidden;
 }
+
+.privacy {
+    /* text-align: center; */
+    gap: 15px;
+    /* hyphens: auto; */
+    font-size: small;
+}
