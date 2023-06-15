@@ -57,7 +57,8 @@ export default function UserPage() {
             <div className={[styles.buttonwrapper, 'centerVertical'].join(' ')} >
                 <Link to={'/user/settings'} className={['button', styles.button].join(' ')} >Einstellungen</Link>
                 <Link to={'/user/help'} className={['button', styles.button].join(' ')} >FAQ/Hilfe</Link>
-                <Link to={'/user/feedback'} className={['button', styles.button].join(' ')} >Feedback</Link>
+                {/* <Link to={'/user/feedback'} className={['button', styles.button].join(' ')} >Feedback</Link> */}
+                <a className={['button', styles.button].join(' ')} href="mailto:howhy@htwk-leipzig.de">Feedback</a>
                 <div className={['button', 'center', styles.button, styles.logout].join(' ')}
                     onClick={logoutAndGoToHome} >
                     <img src={logout_icon}></img>
