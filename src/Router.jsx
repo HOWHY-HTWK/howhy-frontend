@@ -125,6 +125,10 @@ const router = createBrowserRouter(
         {
             path: "/email/verify/:id/:hash",
             element: <EmailVerification></EmailVerification>
+        },
+        {
+            path: "/comingsoon",
+            element: <EmailVerification></EmailVerification>
         }
     ],
     {
