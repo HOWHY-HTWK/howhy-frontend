@@ -111,7 +111,7 @@ const router = createBrowserRouter(
             element: <Redirect></Redirect>
         },
         {
-            path: "/qr/:id?/:code?",
+            path: "/qr/:code?",
             element: <QrCheck></QrCheck>,
         },
         {
