@@ -148,7 +148,7 @@ export default function Prizes() {
     }
 
     function makeQrCheckUrl(code, id) {
-        return window.location.hostname + '/qr/' + code
+        return window.location.protocol + '//' + window.location.hostname + '/qr/' + code
     }
 
     return (
