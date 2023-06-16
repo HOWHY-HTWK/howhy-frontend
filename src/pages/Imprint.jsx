@@ -9,9 +9,7 @@ export default function Imprint() {
     return (
         <>
             <div className={[styles.bar].join(' ')} ></div>
-            <iframe className={[styles.iframe].join(' ')} src="https://www.htwk-leipzig.de/hochschule/kontakt/impressum"></iframe>
-
+            <iframe className={[styles.iframe].join(' ')} src="https://howhy.htwk-leipzig.de/info/impressum.html"></iframe>
         </>
-
     )
 }
