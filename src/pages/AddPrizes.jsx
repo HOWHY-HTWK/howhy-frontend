@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styles from './css/AddPrizes.module.css'
-import { getPrizes, postPrize } from '../api';
+import { getMessage, getPrizes, postMessage, postPrize } from '../api';
 
 import qrCode from '../assets/QR-Code.svg'
 import qr_used from '../assets/icons/qr_used.svg'
@@ -15,10 +15,25 @@ import close from '../assets/icons/close.svg'
 export default function AddPrizes() {
 
     const [prizeList, setPrizeList] = useState([])
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
         loadPrizes()
     }, [])
+
+    useEffect(() => {
+        getMessage().then(response => {
+            setMessage(response.data.text)
+        }).catch(error => {
+            console.log(error)
+        })
+    }, [])
+
+    function saveMessage() {
+        postMessage({ text: message }).then(response => {
+            alert('nachricht gespeichert!')
+        })
+    }
 
     function loadPrizes() {
         getPrizes().then(response => {
@@ -77,7 +92,7 @@ export default function AddPrizes() {
     }
 
     return (
-        <div>
+        <div className={['centerVertical'].join(' ')} >
             <div className={[styles.formwrapper].join(' ')} >
                 <form method="post" className={[styles.vertical].join(' ')} onSubmit={handleSave}>
                     <span>Preis Hinzufügen</span>
@@ -138,6 +153,18 @@ export default function AddPrizes() {
             </div >
             <div className={['centerVertical', styles.wrap].join(' ')} >{
                 list}
+            </div>
+            <div className={['centerVertical', styles.messageWrap].join(' ')} >
+                <textarea
+                    cols={"40"}
+                    rows={"5"}
+                    className={[styles.input, styles.messageInput].join(' ')}
+                    value={message}
+                    onChange={e => setMessage(e.target.value)}
+                    type="text"
+                    placeholder='Nachricht'
+                />
+                <div className={['button'].join(' ')} onClick={saveMessage}>Nachricht Speichern</div>
             </div>
         </div>
     )

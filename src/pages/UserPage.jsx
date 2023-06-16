@@ -34,10 +34,14 @@ export default function UserPage() {
         })
     }
 
+    function comingSoon() {
+        alert("Dieses Feature kommt bald.")
+    }
+
     return (
         <div className={[styles.wrap].join(' ')} >
             <div className={['centerVertical', styles.top].join(' ')} >
-                <img src={user_image_icon}></img>
+                <img src={user_image_icon} onClick={comingSoon}></img>
                 <div className={[styles.username].join(' ')} >
                     <input className={[styles.nameInput].join(' ')} value={name} onInput={e => setName(e.target.value)} />
                     {name == user.name ?

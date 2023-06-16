@@ -81,6 +81,10 @@ export function ranking() {
     return apiClient.get(`/ranking/`)
 }
 
+export function deleteUser() {
+    return apiClient.get(`/deleteUser/`)
+}
+
 // ----------  authetification
 
 export function csfrCookie() {
@@ -127,3 +131,10 @@ export function redeem(code) {
     return apiClient.get(`/redeemCode/${code}`)
 }
 
+export function postMessage(request) {
+    return apiClient.post('/prizes/message', request)
+}
+
+export function getMessage() {
+    return apiClient.get('/prizes/message')
+}

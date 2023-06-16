@@ -1,0 +1,9 @@
+.wrap {
+    height: 100%;
+    justify-content: center;
+}
+
+.deleteButton {
+    color: red;
+    background-color: var(--item-color);
+}

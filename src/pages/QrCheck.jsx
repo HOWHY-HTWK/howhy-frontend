@@ -45,7 +45,7 @@ export default function QrCheck() {
                 <div className={['listElement', 'centerVertical'].join(' ')} >
                     {prizeData.prize.title}
                     {prizeData.redeemed ?
-                        <p>Code wurde bereits eingelöst</p>
+                        <p>Der Preis wurde erfolgreich eingelöst!</p>
                         :
                         <button className={['button'].join(' ')} onClick={redeemPrize} >Einlösen</button>
                     }
