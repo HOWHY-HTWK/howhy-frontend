@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styles from './css/AddPrizes.module.css'
-import { getMessage, getPrizes, postMessage, postPrize } from '../api';
+import { deletePrize, getMessage, getPrizes, postMessage, postPrize, updatePrize } from '../api';
 
 import qrCode from '../assets/QR-Code.svg'
 import qr_used from '../assets/icons/qr_used.svg'
@@ -15,13 +15,17 @@ import close from '../assets/icons/close.svg'
 export default function AddPrizes() {
 
     const [prizeList, setPrizeList] = useState([])
-    const [message, setMessage] = useState('');
+    const list = getItemsList(prizeList)
+
+    const [message, setMessage] = useState('')
+
+    const [prizeData, setPrizeData] = useState({
+        title: '',
+        points: '',
+    })
 
     useEffect(() => {
         loadPrizes()
-    }, [])
-
-    useEffect(() => {
         getMessage().then(response => {
             setMessage(response.data.text)
         }).catch(error => {
@@ -29,15 +33,15 @@ export default function AddPrizes() {
         })
     }, [])
 
-    function saveMessage() {
-        postMessage({ text: message }).then(response => {
-            alert('nachricht gespeichert!')
-        })
-    }
-
     function loadPrizes() {
         getPrizes().then(response => {
             setPrizeList(response.data)
+        })
+    }
+
+    function saveMessage() {
+        postMessage({ text: message }).then(response => {
+            alert('nachricht gespeichert!')
         })
     }
 
@@ -47,15 +51,6 @@ export default function AddPrizes() {
         })
     }
 
-    const list = getItemsList(prizeList)
-
-    const [prizeData, setPrizeData] = useState({
-        title: '',
-        date: '',
-        place: '',
-        timeframe: '',
-        points: '',
-    })
 
     function handleSave(e) {
         e.preventDefault();
@@ -64,29 +59,53 @@ export default function AddPrizes() {
             loadPrizes()
             alert('erfolgreich gespeichert')
             console.log(response)
+        }).catch(error => {
+            console.log(error.response.data.message)
+        })
+    }
+
+    function removePrize(id) {
+        if (confirm('Diese Preis wirklich löschen?')) {
+            deletePrize(id).then(response => {
+                loadPrizes()
+            })
+        }
+    }
+
+    function handleUpdate(e, id) {
+        e.preventDefault();
+        let request = {
+            title: e.target.title.value,
+            points: e.target.points.value,
+        }
+        updatePrize(id, request).then(response => {
+            alert('erfolgreich gespeichert')
+            loadPrizes()
         })
     }
 
     function getPrizeListItem(prize, key) {
         return (
-            <div key={key} className={['center', styles.listItem, !prize.valid ? styles.used : null].join(' ')} >
-                <div className={[styles.name].join(' ')} >
-                    {prize.title}
-                </div>
-                <div className={['centerVertical', styles.rightWrap].join(' ')} >
-                    <div className={[styles.info].join(' ')} >
-                        <img src={calendar}></img>
-                        {prize.date}
-                    </div>
-                    <div className={[styles.info].join(' ')} >
-                        <img src={location}></img>
-                        {prize.place}
-                    </div>
-                    <div className={[styles.info].join(' ')} >
-                        <img src={clock}></img>
-                        {prize.timeframe}
-                    </div>
-                </div>
+            <div key={key} >
+                <form method="post" className={['center', styles.listItem].join(' ')} onSubmit={e => handleUpdate(e, prize.id)}>
+                    <input
+                        name='title'
+                        className={[styles.input, styles.name].join(' ')}
+                        defaultValue={prize.title}
+                        type="text"
+                        placeholder='Title'
+                    />
+                    <input
+                        name='points'
+                        className={[styles.input].join(' ')}
+                        defaultValue={prize.points}
+                        type="text"
+                        placeholder='Points'
+                    />
+                    <div className={[styles.delete].join(' ')}
+                        onClick={() => removePrize(prize.id)}> X</div>
+                    <button className={[styles.save].join(' ')} type="submit">✓</button>
+                </form >
             </div >
         )
     }
@@ -100,42 +119,11 @@ export default function AddPrizes() {
                         <div>Title
                         </div>
                         <input
-                            id="username"
                             className={[styles.input].join(' ')}
                             value={prizeData.title}
                             onInput={e => setPrizeData({ ...prizeData, title: e.target.value })}
                             type="text"
                             placeholder='Title'
-                        />
-                    </div>
-                    <div className={[styles.label].join(' ')} >
-                        <div className={[prizeData.date == '' ? styles.hidden : null].join(' ')} >Zeitraum</div>
-                        <input
-                            className={[styles.input].join(' ')}
-                            value={prizeData.date}
-                            onInput={e => setPrizeData({ ...prizeData, date: e.target.value })}
-                            type="text"
-                            placeholder='Zeitraum'
-                        />
-                    </div>
-                    <div className={[styles.label].join(' ')} >
-                        <div className={[prizeData.password == '' ? styles.hidden : null].join(' ')}>Ort</div>
-                        <input
-                            className={[styles.input].join(' ')}
-                            value={prizeData.place}
-                            onInput={e => setPrizeData({ ...prizeData, place: e.target.value })}
-                            type="text"
-                            placeholder='Ort'
-                        />
-                    </div>
-                    <div className={[styles.label].join(' ')} >
-                        <div className={[prizeData.timeframe == '' ? styles.hidden : null].join(' ')} >Zeitraum</div>
-                        <input
-                            className={[styles.input].join(' ')}
-                            value={prizeData.timeframe}
-                            onInput={e => setPrizeData({ ...prizeData, timeframe: e.target.value })}
-                            type="text"
-                            placeholder='Zeitraum'
                         />
                     </div>
                     <div className={[styles.label].join(' ')} >

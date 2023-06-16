@@ -127,6 +127,14 @@ export function postPrize(request) {
     return apiClient.post('/prize', request)
 }
 
+export function updatePrize(id, request) {
+    return apiClient.post(`/prize/${id}`, request)
+}
+
+export function deletePrize(id) {
+    return apiClient.delete(`/prize/${id}`)
+}
+
 export function redeem(code) {
     return apiClient.get(`/redeemCode/${code}`)
 }
