@@ -13,7 +13,7 @@ export default function AddVideo(props) {
                 <div>Bitte Video-ID eingeben:</div>
                 <input value={input} onInput={e => setInput(e.target.value)} />
             </div>
-            <Link className='button' to={`/edit/?id=${input}`}>Open Video</Link>
+            <Link className='button' to={`/editor/edit/${input}`}>Open Video</Link>
         </div>
     )
 }
