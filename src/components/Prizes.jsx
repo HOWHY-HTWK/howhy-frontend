@@ -86,23 +86,11 @@ export default function Prizes() {
             <div key={key} className={['center', styles.listItemWrap].join(' ')} >
                 <div className={['center', styles.listItem, styles.used].join(' ')} >
                     <img
-                        className={[styles.img].join(' ')}
+                        className={[styles.qrImg].join(' ')}
                         src={qr_used} />
                     <div className={['centerVertical', styles.rightWrap].join(' ')} >
                         <div className={[styles.name].join(' ')} >
                             {prize.title}
-                        </div>
-                        <div className={[styles.info].join(' ')} >
-                            <img src={calendar_white}></img>
-                            {prize.date}
-                        </div>
-                        <div className={[styles.info].join(' ')} >
-                            <img src={location_white}></img>
-                            {prize.place}
-                        </div>
-                        <div className={[styles.info].join(' ')} >
-                            <img src={clock_white}></img>
-                            {prize.timeframe}
                         </div>
                     </div>
                 </div>
@@ -111,28 +99,16 @@ export default function Prizes() {
             <div key={key} className={['center', styles.listItemWrap].join(' ')} >
                 <div className={['center', styles.listItem, prize.valid ? null : styles.filter].join(' ')} >
                     <img
-                        className={[styles.img].join(' ')}
+                        className={[styles.qrImg].join(' ')}
                         src={qrCode}
                         onClick={prize.valid ? () => showQrCode(prize.id) : null} />
                     <div className={['centerVertical', styles.rightWrap].join(' ')} >
                         <div className={[styles.name].join(' ')} >
                             {prize.title}
                         </div>
-                        <div className={[styles.info].join(' ')} >
-                            <img src={prize.redeemed ? calendar_white : calendar}></img>
-                            {prize.date}
-                        </div>
-                        <div className={[styles.info].join(' ')} >
-                            <img src={prize.redeemed ? location_white : location}></img>
-                            {prize.place}
-                        </div>
-                        <div className={[styles.info].join(' ')} >
-                            <img src={prize.redeemed ? clock : clock_white}></img>
-                            {prize.timeframe}
-                        </div>
                     </div>
                 </div>
-                {prize.valid ? null : <div className={[styles.progress].join(' ')} >sammle noch {prize.points - user.score} Pt.</div>}
+                {prize.valid ? null : <div className={[styles.progress].join(' ')} >noch {prize.points - user.score} Punkte</div>}
             </div>
     }
 
@@ -173,9 +149,8 @@ export default function Prizes() {
                 {user ?
                     <>
                         {getValid()}
-                        <p>Noch nicht erreicht:</p>
                         {getNotYet()}
-                        <p>Bereits einglöst:</p>
+                        <div className={[styles.redeemedLabel].join(' ')} >Bereits einglöst:</div>
                         {getRedeemed()}
                         {qrOverlay ? getQrOverlay() : null}
                     </>
