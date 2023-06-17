@@ -17,7 +17,7 @@
     width: 100%;
     background-color: var(--background-color);
     border-radius: 1000px;
-    gap: 30px;
+    gap: 20px;
     padding: 7px 36px;
     align-items: stretch;
     justify-content: start;
@@ -61,7 +61,7 @@
 }
 
 .name {
-    font-size: 35px;
+    font-size: 30px;
     line-height: 1.2;
 }
 
