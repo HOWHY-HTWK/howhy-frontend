@@ -63,3 +63,26 @@ export function logout(setUser) {
             })
         })
 }
+
+export const levels = [500, 1000, 2500, 4000, 6000]
+
+export function getLevel(score) {
+    if (score < levels[0]) {
+        return "1";
+    }
+    if (score < levels[1]) {
+        return "2";
+    }
+    if (score < levels[2]) {
+        return "3";
+    }
+    if (score < levels[3]) {
+        return "4";
+    }
+    if (score < levels[4]) {
+        return "5";
+    }
+    if (score > levels[4] - 1) {
+        return "6";
+    }
+}
