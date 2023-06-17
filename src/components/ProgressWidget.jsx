@@ -9,8 +9,8 @@ import { getLevel, levels } from '../utils'
 export default function ProgressWidget() {
     const { user, setUser } = useStateContext()
 
-    // const level = parseInt(getLevel(user.score));
-    const level = 1
+    const level = parseInt(getLevel(user.score));
+    // const level = 1
 
     function nextLevelComponent(level, points, margin, scale) {
         return (
