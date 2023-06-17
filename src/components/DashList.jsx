@@ -23,6 +23,7 @@ export default function DashList({ searchterm = '', random = false }) {
     }, [])
 
     function filterList(list) {
+        console.log(list)
         return list.filter(item => {
             return (
                 item
@@ -32,6 +33,10 @@ export default function DashList({ searchterm = '', random = false }) {
                     .includes(searchterm.toLowerCase()) ||
                 item
                     .speaker
+                    .toLowerCase()
+                    .includes(searchterm.toLowerCase()) ||
+                item
+                    .keywords
                     .toLowerCase()
                     .includes(searchterm.toLowerCase())
             );
