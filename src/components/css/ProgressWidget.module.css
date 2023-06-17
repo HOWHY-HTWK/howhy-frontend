@@ -60,6 +60,14 @@
     color: var(--background-blue);
 }
 
+.maxLevel {
+    color: var(--background-blue);
+    font-weight: 500;
+    max-width: 175px;
+    padding-top: 40px;
+    text-align: center;
+}
+
 .rightGraphic {
     position: absolute;
     top: 14px;

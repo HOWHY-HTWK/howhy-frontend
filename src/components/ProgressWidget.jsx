@@ -10,7 +10,7 @@ export default function ProgressWidget() {
     const { user, setUser } = useStateContext()
 
     const level = parseInt(getLevel(user.score));
-    // const level = 1
+    // const level = 5
 
     function nextLevelComponent(level, points, margin, scale) {
         return (
@@ -35,6 +35,14 @@ export default function ProgressWidget() {
             if (getPoints(level + offset)) {
                 nextLevels.push(nextLevelComponent(level + offset, getPoints(level + offset), i * 20, 1 / ((i + 1) ** 0.5)))
             }
+        }
+
+        if (nextLevels.length == 0) {
+            return (
+                <div className={[styles.nextLevels].join(' ')} >
+                    <div className={[styles.maxLevel].join(' ')} >Du hast das maximale Level erreicht!</div>
+                </div>
+            )
         }
 
         return (
