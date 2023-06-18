@@ -1,0 +1,75 @@
+.background {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: var(--dark-accent);
+    border-radius: 16px;
+    max-width: 400px;
+    padding-bottom: 15px;
+    min-height: 220px;
+}
+
+.bigBulb {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.level {
+    position: absolute;
+    left: 34px;
+    top: 14px;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 60px;
+    color: var(--dark-accent);
+}
+
+.nextLevels {
+    position: relative;
+    margin-top: 78px;
+    margin-left: 143px;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 7px
+}
+
+.nextLevelWrap {
+    gap: 8px;
+    justify-content: start;
+}
+
+.nextLevel {
+    width: 42px;
+    height: 42px;
+    border-radius: 30px;
+    display: flex;
+    flex-flow: column nowrap;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 40px;
+    align-items: center;
+    text-align: center;
+    background-color: var(--background-blue);
+}
+
+.nextLevelPoints {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--background-blue);
+}
+
+.maxLevel {
+    color: var(--background-blue);
+    font-weight: 500;
+    max-width: 175px;
+    padding-top: 40px;
+    text-align: center;
+}
+
+.rightGraphic {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+}

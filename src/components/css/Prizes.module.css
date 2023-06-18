@@ -9,18 +9,25 @@
     position: relative;
     box-sizing: border-box;
     width: 100%;
+    max-width: 400px;
+
 }
 
 .listItem {
     width: 100%;
     background-color: var(--background-color);
-    border-radius: 41px;
-    gap: 33px;
-    padding: 13px 34px;
+    border-radius: 1000px;
+    gap: 20px;
+    padding: 7px 36px;
     align-items: stretch;
-    max-width: 400px;
+    justify-content: start;
     overflow: clip;
     box-shadow: 0px 2px 10px rgba(135, 135, 135, 0.25);
+}
+
+.qrImg {
+    width: 80px;
+    height: 80px;
 }
 
 .used {
@@ -29,15 +36,17 @@
 }
 
 .filter {
-    filter: blur(0.5px) contrast(50%);
+    filter: contrast(70%);
 }
 
 .progress {
     /* box-shadow: 0 0 10px 10px white; */
+    font-size: 12px;
     padding: 5px 10px;
     background-color: white;
     border-radius: 15px;
     position: absolute;
+    left: 16px;
     filter: none;
 }
 
@@ -52,7 +61,7 @@
 }
 
 .name {
-    font-size: 35px;
+    font-size: 30px;
     line-height: 1.2;
 }
 
@@ -62,6 +71,14 @@
     flex-flow: row nowrap;
     gap: 7px;
     white-space: nowrap;
+}
+
+.redeemedLabel {
+    padding-left: 60px;
+    margin-bottom: -10px;
+    width: 100%;
+    max-width: 400px;
+    text-align: start;
 }
 
 .overlay {

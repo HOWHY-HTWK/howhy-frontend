@@ -28,11 +28,9 @@ export default function Ranking() {
     }
 
     return (
-        <div className={[styles.wrap].join(' ')} >
-            <div className={[styles.list].join(' ')} >
-                <div className={[styles.title].join(' ')} >Top 5 HOWHY Users:</div>
-                {items}
-            </div>
+        <div className={[styles.list].join(' ')} >
+            <div className={[styles.title].join(' ')} >Top 5 HOWHY Users:</div>
+            {items}
         </div>
     )
 }

@@ -23,6 +23,7 @@ export default function DashList({ searchterm = '', random = false }) {
     }, [])
 
     function filterList(list) {
+        console.log(list)
         return list.filter(item => {
             return (
                 item
@@ -32,6 +33,10 @@ export default function DashList({ searchterm = '', random = false }) {
                     .includes(searchterm.toLowerCase()) ||
                 item
                     .speaker
+                    .toLowerCase()
+                    .includes(searchterm.toLowerCase()) ||
+                item
+                    .keywords
                     .toLowerCase()
                     .includes(searchterm.toLowerCase())
             );
@@ -56,9 +61,9 @@ export default function DashList({ searchterm = '', random = false }) {
                 <div className={[styles.title, styles.item].join(' ')} >
                     {video.title}
                 </div>
-                <div className={[styles.star, styles.item].join(' ')} >
+                {/* <div className={[styles.star, styles.item].join(' ')} >
                     <img src={starIcon}></img>
-                </div>
+                </div> */}
                 <div className={[styles.statsWrap, styles.item].join(' ')} >
                     <div className={[styles.stats, getBackground(video.success)].join(' ')} >
                         {video.success.correctCount + ' / ' + video.success.questionCount}

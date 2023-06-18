@@ -1,18 +1,17 @@
-.wrap {
-    padding: 15px;
-}
-
-.title {
-    font-weight: 700;
-}
-
 .list {
+    box-sizing: border-box;
     background-color: var(--background-color);
     padding: 15px 30px;
     border-radius: 16px;
     display: flex;
     flex-flow: column nowrap;
     gap: 10px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.title {
+    font-weight: 700;
 }
 
 .listItem {

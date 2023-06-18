@@ -3,6 +3,7 @@ import styles from './css/Score.module.css'
 import { ReactComponent as Logo } from '../assets/howhy_solid.svg'
 import { useStateContext } from '../contexts/ContextProvider'
 import WinningAnimation from './WinningAnimation'
+import { getLevel } from '../utils'
 
 
 export default function Score({ }) {
@@ -51,31 +52,10 @@ export default function Score({ }) {
         }
     }
 
-    function getLevel() {
-        if (score < 500) {
-            return "1";
-        }
-        if (score < 1000) {
-            return "2";
-        }
-        if (score < 2500) {
-            return "3";
-        }
-        if (score < 4000) {
-            return "4";
-        }
-        if (score < 6000) {
-            return "5";
-        }
-        if (score > 5999) {
-            return "6";
-        }
-    }
-
     return (
         <div className={[styles.scoreWrap, user ? null : styles.filter].join(' ')} >
             {animation ? <WinningAnimation></WinningAnimation> : null}
-            <div className={[styles.level].join(' ')} >LV {getLevel()}</div>
+            <div className={[styles.level].join(' ')} >LV {getLevel(score)}</div>
             <div className={[styles.divider].join(' ')} ></div>
             <div className={[styles.scoreCounter].join(' ')} >{score} Pt.</div>
         </div>

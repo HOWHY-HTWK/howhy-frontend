@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from './css/SearchBar.module.css'
+import close from '../assets/icons/close.svg'
+
 
 import lupe from '../assets/icons/Lupe.svg'
 import filter from '../assets/icons/Filter.svg'
@@ -22,7 +24,13 @@ export default function SearchBar({ setSearchTerm }) {
                         onChange={e => setTerm(e.target.value)}
                         placeholder='Videos suchen'
                         className={[styles.input].join(' ')} ></input>
-                    <img src={filter}></img>
+                    {/* <img src={filter}></img> */}
+                    {term != '' ?
+                        <img
+                            className={[styles.delete].join(' ')}
+                            src={close}
+                            onClick={() => setTerm('')} />
+                        : null}
                 </div>
             </div>
         </div>
