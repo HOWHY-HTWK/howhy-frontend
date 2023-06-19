@@ -78,15 +78,15 @@ export default function DashList({ searchterm = '', random = false }) {
         )
     }
 
-    function shuffleList(list) {
-        return list ?
-            list
-                .map(value => ({ value, sort: Math.random() }))
-                .sort((a, b) => a.sort - b.sort)
-                .map(({ value }) => value)
-            :
-            null
-    }
+    // function shuffleList(list) {
+    //     return list ?
+    //         list
+    //             .map(value => ({ value, sort: Math.random() }))
+    //             .sort((a, b) => a.sort - b.sort)
+    //             .map(({ value }) => value)
+    //         :
+    //         null
+    // }
 
     function sortListAlphabetically(list) {
         return list.sort((a, b) => {
@@ -119,11 +119,12 @@ export default function DashList({ searchterm = '', random = false }) {
         let videoList = await Promise.all(
             videos.map(async video => {
                 let videoWithData = await mediaserverApi.getVideoInfoFromMediaserver(video.videoId)
-                videoWithData.success = video.success;
+                videoWithData ? videoWithData.success = video.success : null;
                 return videoWithData;
             })
         )
-        setvideoList(videoList)
+        let listWithoutNull = videoList.filter(item => item !== null)
+        setvideoList(listWithoutNull)
     }
     return (
         <div className={[styles.wrap, 'center'].join(' ')} >
