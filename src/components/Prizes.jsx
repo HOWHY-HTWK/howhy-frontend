@@ -144,7 +144,7 @@ export default function Prizes() {
 
     return (
         <div>
-            <div className={[styles.banner].join(' ')} >{message}</div>
+            {user ? <div className={[styles.banner].join(' ')} >{message}</div> : null}
             <div className={['centerVertical', styles.wrap].join(' ')} >
                 {user ?
                     <>
