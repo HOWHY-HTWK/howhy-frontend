@@ -96,12 +96,14 @@ export default function Prizes() {
                 </div>
             </div>
             :
-            <div key={key} className={['center', styles.listItemWrap].join(' ')} >
+            <div key={key}
+                className={['center', styles.listItemWrap].join(' ')}
+                onClick={prize.valid ? () => showQrCode(prize.id) : null} >
                 <div className={['center', styles.listItem, prize.valid ? null : styles.filter].join(' ')} >
                     <img
                         className={[styles.qrImg].join(' ')}
                         src={qrCode}
-                        onClick={prize.valid ? () => showQrCode(prize.id) : null} />
+                    />
                     <div className={['centerVertical', styles.rightWrap].join(' ')} >
                         <div className={[styles.name].join(' ')} >
                             {prize.title}
