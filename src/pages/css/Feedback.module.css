@@ -1,5 +1,28 @@
 .wrap {
-    margin: 30px 15px;
+    box-sizing: border-box;
+    height: 100%;
+    background-color: var(--background-blue);
+}
+
+.title {
+    box-sizing: border-box;
+    font-weight: 400;
+    font-size: 20px;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.contentWrap {
+    padding: 15px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.content {
     text-align: center;
     hyphens: auto;
+    color: var(--dark-accent);
 }
