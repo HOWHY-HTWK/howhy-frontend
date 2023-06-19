@@ -61,31 +61,32 @@ export default function DashList({ searchterm = '', random = false }) {
                 <div className={[styles.title, styles.item].join(' ')} >
                     {video.title}
                 </div>
+                <div className={[styles.statsWrap, styles.item].join(' ')} >
+                    <div className={[styles.stats, getBackground(video.success)].join(' ')} >
+                        {video.success.correctCount * 100 + ' / ' + video.success.questionCount * 100 + ' Pt.'}
+                    </div>
+                </div>
+                <div className={[styles.duration].join(' ')} >{video.duration}</div>
                 {/* <div className={[styles.star, styles.item].join(' ')} >
                     <img src={starIcon}></img>
                 </div> */}
-                <div className={[styles.statsWrap, styles.item].join(' ')} >
-                    <div className={[styles.stats, getBackground(video.success)].join(' ')} >
-                        {video.success.correctCount + ' / ' + video.success.questionCount}
-                    </div>
-                </div>
-                <div className={[styles.views, styles.item].join(' ')} >
+                {/* <div className={[styles.views, styles.item].join(' ')} >
                     {video.views}&nbsp;
                     <img src={viewsIcon}></img>
-                </div>
+                </div> */}
             </Link>
         )
     }
 
-    function shuffleList(list) {
-        return list ?
-            list
-                .map(value => ({ value, sort: Math.random() }))
-                .sort((a, b) => a.sort - b.sort)
-                .map(({ value }) => value)
-            :
-            null
-    }
+    // function shuffleList(list) {
+    //     return list ?
+    //         list
+    //             .map(value => ({ value, sort: Math.random() }))
+    //             .sort((a, b) => a.sort - b.sort)
+    //             .map(({ value }) => value)
+    //         :
+    //         null
+    // }
 
     function sortListAlphabetically(list) {
         return list.sort((a, b) => {
@@ -118,11 +119,12 @@ export default function DashList({ searchterm = '', random = false }) {
         let videoList = await Promise.all(
             videos.map(async video => {
                 let videoWithData = await mediaserverApi.getVideoInfoFromMediaserver(video.videoId)
-                videoWithData.success = video.success;
+                videoWithData ? videoWithData.success = video.success : null;
                 return videoWithData;
             })
         )
-        setvideoList(videoList)
+        let listWithoutNull = videoList.filter(item => item !== null)
+        setvideoList(listWithoutNull)
     }
     return (
         <div className={[styles.wrap, 'center'].join(' ')} >

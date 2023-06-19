@@ -8,6 +8,9 @@ export async function getVideoInfoFromMediaserver(videoId) {
     return apiClient.get('/v2/medias/get/', { params: { oid: videoId } })
         .then(function (response) {
             return response.data.info
+        }).catch(error => {
+            console.log(error)
+            return null
         })
 }
 

@@ -16,6 +16,7 @@
 }
 
 .title {
+    box-sizing: border-box;
     font-weight: 500;
     font-size: medium;
     width: 100%;
