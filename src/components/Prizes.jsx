@@ -141,20 +141,19 @@ export default function Prizes() {
     return (
         <>
             {user ?
-                user.email_verified_at ?
-                    <>
-                        <div className={[styles.banner].join(' ')} >{message}</div>
+                <>
+                    <div className={[styles.banner].join(' ')} >{message}</div>
+                    {user.email_verified_at ?
                         <div className={['centerVertical', styles.wrap].join(' ')} >
                             {getValid()}
                             {getNotYet()}
                             <div className={[styles.redeemedLabel].join(' ')} >Bereits einglöst:</div>
                             {getRedeemed()}
                             {qrOverlay ? getQrOverlay() : null}
-
                         </div>
-                    </>
-                    :
-                    <div className={[styles.errorMessage].join(' ')} >Bitte verifiziere deine E-Mail um Preise einzulösen</div>
+                        :
+                        <div className={[styles.errorMessage].join(' ')} >Bitte verifiziere deine E-Mail um Preise einzulösen</div>}
+                </>
                 :
                 <div className={[styles.errorMessage].join(' ')} >Bitte melde dich an um Preise zu sammeln.</div>
             }
