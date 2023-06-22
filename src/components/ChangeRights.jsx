@@ -17,6 +17,7 @@ export default function ChangeRights() {
                 <td>{element.name}</td>
                 <td>{element.score}</td>
                 <td>{element.role}</td>
+                <td>{element.email_verified_at ? 'yes' : 'no'}</td>
                 <td>
                     {user.role == 'admin' ?
                         <button className={[emailStyles.smallButton, emailStyles.makeAdmin].join(' ')}
@@ -63,6 +64,7 @@ export default function ChangeRights() {
                     <th>Name</th>
                     <th>Score</th>
                     <th>Role</th>
+                    <th>verifiziert</th>
                     <th>Change Rights</th>
                 </tr>
                 {userList}
