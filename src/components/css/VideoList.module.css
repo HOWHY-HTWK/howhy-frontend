@@ -16,6 +16,7 @@
 
 .videoInList {
     display: grid;
+    width: 550px;
     grid-template-rows: auto auto;
     grid-template-columns: 35% 1fr;
     grid-template-areas:

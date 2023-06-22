@@ -121,3 +121,10 @@
     background-color: var(--user-accent-color);
     width: 100%;
 }
+
+.errorMessage {
+    box-sizing: border-box;
+    width: 100%;
+    text-align: center;
+    padding: 30px 15px;
+}

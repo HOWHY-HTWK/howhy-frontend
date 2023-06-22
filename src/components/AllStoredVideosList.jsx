@@ -19,12 +19,14 @@ export default function AllStoredVideosList({ title }) {
     }
 
     async function makeVideoList(videoIds) {
-        let responses = await Promise.all(
+        let videoList = await Promise.all(
             videoIds.map(async id => {
-                return await mediaserverApi.getVideoInfoFromMediaserver(id)
+                let videoWithData = await mediaserverApi.getVideoInfoFromMediaserver(id)
+                return videoWithData;
             })
         )
-        setvideoList(responses)
+        let listWithoutNull = videoList.filter(item => item !== null)
+        setvideoList(listWithoutNull)
     }
 
     return (

@@ -3,12 +3,6 @@ import styles from './css/Prizes.module.css'
 
 import qrCode from '../assets/QR-Code.svg'
 import qr_used from '../assets/icons/qr_used.svg'
-import calendar from '../assets/icons/calendar.svg'
-import location from '../assets/icons/location.svg'
-import clock from '../assets/icons/clock.svg'
-import calendar_white from '../assets/icons/calendar_white.svg'
-import location_white from '../assets/icons/location_white.svg'
-import clock_white from '../assets/icons/clock_white.svg'
 import close from '../assets/icons/close.svg'
 import { QRCodeSVG } from 'qrcode.react'
 import { useStateContext } from '../contexts/ContextProvider'
@@ -145,21 +139,24 @@ export default function Prizes() {
     }
 
     return (
-        <div>
-            {user ? <div className={[styles.banner].join(' ')} >{message}</div> : null}
-            <div className={['centerVertical', styles.wrap].join(' ')} >
-                {user ?
-                    <>
-                        {getValid()}
-                        {getNotYet()}
-                        <div className={[styles.redeemedLabel].join(' ')} >Bereits einglöst:</div>
-                        {getRedeemed()}
-                        {qrOverlay ? getQrOverlay() : null}
-                    </>
-                    :
-                    <>Bitte melden Sie sich an um Preise zu sammeln</>
-                }
-            </div>
-        </div >
+        <>
+            {user ?
+                <>
+                    <div className={[styles.banner].join(' ')} >{message}</div>
+                    {user.email_verified_at ?
+                        <div className={['centerVertical', styles.wrap].join(' ')} >
+                            {getValid()}
+                            {getNotYet()}
+                            <div className={[styles.redeemedLabel].join(' ')} >Bereits einglöst:</div>
+                            {getRedeemed()}
+                            {qrOverlay ? getQrOverlay() : null}
+                        </div>
+                        :
+                        <div className={[styles.errorMessage].join(' ')} >Bitte verifiziere deine E-Mail um Preise einzulösen.</div>}
+                </>
+                :
+                <div className={[styles.errorMessage].join(' ')} >Bitte melde dich an um Preise zu sammeln.</div>
+            }
+        </>
     )
 }

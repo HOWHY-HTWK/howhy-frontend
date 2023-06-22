@@ -1,3 +1,7 @@
 .wrap {
     padding: 15px;
 }
+
+.errorMessage {
+    text-align: center;
+}

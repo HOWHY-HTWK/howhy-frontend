@@ -16,7 +16,7 @@ export default function Home() {
                     < Ranking ></Ranking >
                 </>
                 :
-                <>Bitte melden Sie sich an um diesen Inhalt zu sehen.</>
+                <div className={[styles.errorMessage].join(' ')} >Bitte melde dich an um diesen Inhalt zu sehen.</div>
             }
         </div>
     )

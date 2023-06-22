@@ -8,8 +8,27 @@ import { useStateContext } from '../contexts/ContextProvider';
 
 export default function ChangeRights() {
     const { user, setUser } = useStateContext()
-
     const [users, setUsers] = useState([])
+
+    const userList = users.map(element => {
+        return (
+            <tr key={element.id} className={[styles.tableRow].join(' ')} >
+                <td className={[].join(' ')} >{element.email}</td>
+                <td>{element.name}</td>
+                <td>{element.score}</td>
+                <td>{element.role}</td>
+                <td>{element.email_verified_at ? 'yes' : 'no'}</td>
+                <td>
+                    {user.role == 'admin' ?
+                        <button className={[emailStyles.smallButton, emailStyles.makeAdmin].join(' ')}
+                            onClick={() => giveEditorRights(element.id)}>Bearbeiten Rechte geben</button>
+                        :
+                        null}
+                </td>
+
+            </tr>
+        )
+    })
 
     useEffect(() => {
         getUsers()
@@ -38,18 +57,18 @@ export default function ChangeRights() {
 
     return (
         <div className={[emailStyles.wrap, styles.wrap].join(' ')} >
-            <h4 className={emailStyles.title}>Alle Nutzer</h4>
-            <div className={[styles.listItem].join(' ')} >
-                {users.map(element => {
-                    return (
-                        <div key={element.id} className={emailStyles.email}>
-                            <div className={[styles.email].join(' ')} >{element.email}</div>
-                            <div>{element.role}</div>
-                            {user.role == 'admin' ? <button className={[emailStyles.smallButton, emailStyles.makeAdmin].join(' ')} onClick={() => giveEditorRights(element.id)}>Bearbeiten Rechte geben</button> : null}
-                        </div>
-                    )
-                })}
-            </div>
+            <h4 className={emailStyles.title}>Alle Nutzer ({users.length})</h4>
+            <table className={[styles.listItem].join(' ')} >
+                <tr>
+                    <th>E-Mail</th>
+                    <th>Name</th>
+                    <th>Score</th>
+                    <th>Role</th>
+                    <th>verifiziert</th>
+                    <th>Change Rights</th>
+                </tr>
+                {userList}
+            </table>
             {user.role == 'admin' ?
                 <div className={[emailStyles.inputWrapper].join(' ')} >
 
