@@ -116,10 +116,11 @@
 
 .banner {
     box-sizing: border-box;
-    padding: 12px 19px;
+    padding: 5px 19px;
     color: var(--color-inverted);
     background-color: var(--user-accent-color);
     width: 100%;
+    text-align: center;
 }
 
 .errorMessage {
@@ -127,4 +128,8 @@
     width: 100%;
     text-align: center;
     padding: 30px 15px;
+}
+
+.markdown>p {
+    margin: 0;
 }

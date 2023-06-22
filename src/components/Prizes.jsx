@@ -8,6 +8,7 @@ import { QRCodeSVG } from 'qrcode.react'
 import { useStateContext } from '../contexts/ContextProvider'
 import { getCode, getMessage, getPrizes } from '../api'
 import Loader from './Loader'
+import ReactMarkdown from 'react-markdown'
 
 export default function Prizes() {
     const { user, setUser } = useStateContext()
@@ -60,7 +61,6 @@ export default function Prizes() {
                 )
             }))
     }
-
 
     function getItemsList(list) {
         return list.map((prize, index) => {
@@ -142,7 +142,9 @@ export default function Prizes() {
         <>
             {user ?
                 <>
-                    <div className={[styles.banner].join(' ')} >{message}</div>
+                    <div className={[styles.banner].join(' ')} >
+                        <ReactMarkdown className={[styles.markdown].join(' ')} children={message}></ReactMarkdown>
+                    </div>
                     {user.email_verified_at ?
                         <div className={['centerVertical', styles.wrap].join(' ')} >
                             {getValid()}
