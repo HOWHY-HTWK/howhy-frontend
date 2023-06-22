@@ -152,7 +152,7 @@ export default function Prizes() {
                             {qrOverlay ? getQrOverlay() : null}
                         </div>
                         :
-                        <div className={[styles.errorMessage].join(' ')} >Bitte verifiziere deine E-Mail um Preise einzulösen</div>}
+                        <div className={[styles.errorMessage].join(' ')} >Bitte verifiziere deine E-Mail um Preise einzulösen.</div>}
                 </>
                 :
                 <div className={[styles.errorMessage].join(' ')} >Bitte melde dich an um Preise zu sammeln.</div>
