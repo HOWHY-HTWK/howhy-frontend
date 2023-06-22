@@ -17,8 +17,8 @@ export default function Settings() {
             <h3>Einstellungen</h3>
             {user.role == 'admin' ?
                 <div className={styles.contentWrap}>
-                    <AddEmail></AddEmail>
                     <ChangeRights></ChangeRights>
+                    <AddEmail></AddEmail>
                 </div>
                 : null}
         </div>

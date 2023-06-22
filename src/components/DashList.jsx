@@ -34,11 +34,12 @@ export default function DashList({ searchterm = '', random = false }) {
                 item
                     .speaker
                     .toLowerCase()
-                    .includes(searchterm.toLowerCase()) ||
-                item
-                    .keywords
-                    .toLowerCase()
                     .includes(searchterm.toLowerCase())
+                //     ||
+                // item
+                //     .keywords
+                //     .toLowerCase()
+                //     .includes(searchterm.toLowerCase())
             );
         })
     }
