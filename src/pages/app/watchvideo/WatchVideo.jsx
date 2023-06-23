@@ -4,8 +4,8 @@ import Question from 'src/pages/app/watchvideo/Question'
 import QuestionsTimeline from 'src/pages/app/watchvideo/QuestionsTimeline'
 import * as api from 'src/utils/api/api'
 import { useStateContext } from 'src/contexts/ContextProvider'
-import { useLocation, useParams } from 'react-router-dom'
-import { getRecources, getVideoInfoFromMediaserver } from 'src/utils/api/mediaserverApi'
+import { useParams } from 'react-router-dom'
+import { getVideoInfoFromMediaserver } from 'src/utils/api/mediaserverApi'
 import HlsPlayer from 'src/sharedComponents/HlsPlayer'
 import Loader from 'src/sharedComponents/Loader'
 
@@ -19,7 +19,6 @@ function WatchVideo() {
     const [duration, setDuration] = useState(null)
     const [isFullscreen, setIsFullscreen] = useState(false)
     const [videoData, setVideoData] = useState(null)
-    // const [sources, setSources] = useState(null)
 
     const fullScreenWrapper = useRef(null);
     const oldTimeRef = useRef(null);

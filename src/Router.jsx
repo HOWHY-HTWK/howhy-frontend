@@ -4,7 +4,6 @@ import Dashboard from './pages/app/Dashboard';
 import EditorDash from './pages/editor/EditorDash';
 import WatchVideo from './pages/app/watchvideo/WatchVideo';
 import Settings from './pages/editor/settings/Settings';
-import Redirect from './pages/sharedPages/Redirect';
 import UserPage from './pages/app/user/UserPage';
 import UserSettings from './pages/app/user/subpages/UserSettings';
 import User from './pages/app/user/User';
@@ -105,10 +104,6 @@ const router = createBrowserRouter(
         {
             path: "/userlogin",
             element: <Suspense fallback={<Loader />}><UserLogin /></Suspense>
-        },
-        {
-            path: "/redirect",
-            element: <Redirect></Redirect>
         },
         {
             path: "/qr/:code?",

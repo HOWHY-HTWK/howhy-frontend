@@ -11,12 +11,8 @@ export default function EmailVerification() {
     const expires = queryParameters.get('expires');
     const signature = queryParameters.get('signature');
 
-    const currentPath = useLocation().pathname;
-
     const { user, setUser } = useStateContext()
     const [message, setMessage] = useState();
-
-    const navigate = useNavigate();
 
     useEffect(() => {
         tryVerification()

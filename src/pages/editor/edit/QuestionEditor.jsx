@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import questionStyles from 'src/pages/app/watchvideo/Question.module.css'
+import questionStyles from '../../../pages/app/watchvideo/Question.module.css'
 import styles from './QuestionEditor.module.css'
 import { MdClose, MdAdd } from "react-icons/md"
 import TimeCodePicker from './TimeCodePicker'

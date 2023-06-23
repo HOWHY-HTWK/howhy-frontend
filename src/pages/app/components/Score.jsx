@@ -4,7 +4,6 @@ import { useStateContext } from 'src/contexts/ContextProvider'
 import WinningAnimation from './WinningAnimation'
 import { getLevel } from 'src/utils/utils'
 
-
 export default function Score({ }) {
     const { user, setUser } = useStateContext()
 
