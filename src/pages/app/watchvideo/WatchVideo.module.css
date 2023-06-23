@@ -95,3 +95,7 @@
     overflow: scroll;
 
 }
+
+.loader {
+    grid-area: timeline;
+}

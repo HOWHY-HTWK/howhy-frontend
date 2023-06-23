@@ -150,7 +150,7 @@ function WatchVideo() {
                         questionTimecodes={questionTimecodes}
                         duration={duration}
                         jumpToQuestion={jumpToQuestion} />
-                </div> : <Loader></Loader>}
+                </div> : <div className={[styles.loader].join(' ')} ><Loader></Loader></div>}
         </div >
     )
 }
