@@ -116,11 +116,12 @@
 
 .banner {
     box-sizing: border-box;
-    padding: 5px 19px;
+    padding: 5px 10px;
     color: var(--color-inverted);
     background-color: var(--user-accent-color);
     width: 100%;
     text-align: center;
+    hyphens: auto;
 }
 
 .errorMessage {
