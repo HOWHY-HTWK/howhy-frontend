@@ -1,30 +1,30 @@
 import React, { Suspense } from 'react'
 
-import Dashboard from './pages/Dashboard';
-import EditorDash from './pages/EditorDash';
-import WatchVideo from './pages/WatchVideo';
-import Settings from './pages/Settings';
-import Redirect from './pages/Redirect';
-import UserPage from './pages/UserPage';
-import UserSettings from './pages/UserSettings';
-import User from './pages/User';
-import Privacy from './pages/Privacy';
-import Imprint from './pages/Imprint';
-import Search from './pages/Search';
-import QrCheck from './pages/QrCheck';
-import Loader from './components/Loader';
-import App from './App'
-import EditQuestions from './pages/EditQuestions';
-import Editor from './pages/Editor';
-import Help from './pages/Help';
-import Feedback from './pages/Feedback';
-import LogIn from './components/LogIn';
+import Dashboard from './pages/app/Dashboard';
+import EditorDash from './pages/editor/EditorDash';
+import WatchVideo from './pages/app/watchvideo/WatchVideo';
+import Settings from './pages/editor/settings/Settings';
+import Redirect from './pages/sharedPages/Redirect';
+import UserPage from './pages/app/user/UserPage';
+import UserSettings from './pages/app/user/subpages/UserSettings';
+import User from './pages/app/user/User';
+import Privacy from './pages/sharedPages/Privacy';
+import Imprint from './pages/sharedPages/Imprint';
+import Search from './pages/app/search/Search';
+import QrCheck from './pages/sharedPages/QrCheck';
+import Loader from './sharedComponents/Loader';
+import App from './pages/app/App'
+import EditQuestions from './pages/editor/edit/EditQuestions';
+import Editor from './pages/editor/Editor';
+import Help from './pages/app/user/subpages/Help';
+import Feedback from './pages/app/user/subpages/Feedback';
+import LogIn from './pages/editor/login/LogIn';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import ForgotPassword from './pages/ForgotPassword';
-import ResetPassword from './pages/ResetPassword';
-import EmailVerification from './pages/EmailVerification';
-import AddPrizes from './pages/AddPrizes';
-const UserLogin = React.lazy(() => import('./components/UserLogin'));
+import ForgotPassword from './pages/sharedPages/ForgotPassword';
+import ResetPassword from './pages/sharedPages/ResetPassword';
+import EmailVerification from './pages/sharedPages/EmailVerification';
+import AddPrizes from './pages/editor/settings/AddPrizes';
+const UserLogin = React.lazy(() => import('./pages/app/login/UserLogin'));
 
 const router = createBrowserRouter(
     [

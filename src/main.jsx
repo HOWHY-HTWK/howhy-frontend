@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 
 import { ContextProvider } from './contexts/ContextProvider';
-import Loader from './components/Loader';
+import Loader from './sharedComponents/Loader';
 const Router = React.lazy(() => import('./Router.jsx'));
 
 ReactDOM.createRoot(document.getElementById('root')).render(
