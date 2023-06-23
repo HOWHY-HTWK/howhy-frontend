@@ -1,9 +1,9 @@
 import React, { useEffect, useLayoutEffect } from 'react'
 import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useStateContext } from 'src/contexts/ContextProvider'
-import Header from './Header'
+import Header from './components/Header'
 import Footer from 'src/sharedComponents/Footer'
-import DropDown from './DropDown'
+import DropDown from './components/DropDown'
 import styles from './Editor.module.css'
 import VerifyEmail from 'src/pages/sharedPages/VerifyEmail'
 

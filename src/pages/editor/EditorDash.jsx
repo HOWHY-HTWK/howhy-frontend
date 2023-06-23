@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import ChannelVideoList from './ChannelVideoList'
-import AllStoredVideosList from './AllStoredVideosList'
-import AddVideo from './AddVideo'
+import ChannelVideoList from './components/ChannelVideoList'
+import AllStoredVideosList from './components/AllStoredVideosList'
+import AddVideo from './components/AddVideo'
 import styles from './EditorDash.module.css'
 
 export default function EditorDash() {
