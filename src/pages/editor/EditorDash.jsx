@@ -4,6 +4,10 @@ import AllStoredVideosList from './components/AllStoredVideosList'
 import AddVideo from './components/AddVideo'
 import styles from './EditorDash.module.css'
 
+/**
+ * The Start Page for the Editor.
+ * @returns 
+ */
 export default function EditorDash() {
 
     useEffect(() => {

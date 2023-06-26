@@ -3,6 +3,13 @@ import EditorVideoList from './EditorVideoList.jsx';
 import * as api from 'src/utils/api/api.js'
 import * as mediaserverApi from 'src/utils/api/mediaserverApi.js'
 
+/**
+ * Shows a List of all Videos on the Platform. It loads the videolist from the api and passes it to the EditorVideoList 
+ * Component which renders the List.
+ * 
+ * @param {string} title 
+ * @returns 
+ */
 export default function AllStoredVideosList({ title }) {
     const [videoList, setvideoList] = useState([]);
 

@@ -5,6 +5,10 @@ import back from 'src/assets/icons/back.svg'
 import { useNavigate } from 'react-router-dom'
 import DashList from 'src/pages/app/videolist/DashList';
 
+/**
+ * Displays the same Videolist as the videos tab but the list gets filtered for the searchterm. 
+ * @returns 
+ */
 export default function Search() {
     const navigate = useNavigate()
 

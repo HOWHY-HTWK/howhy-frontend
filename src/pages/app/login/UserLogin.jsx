@@ -8,6 +8,12 @@ import howhyLogo from 'src/assets/login_logo.svg'
 import background from 'src/assets/Muster.svg'
 import UserSignUp from './UserSignUp.jsx';
 
+
+/**
+ * Login Page for the User Frontend. It can switch to be the Signup Page. 
+ * @param {*} showEditorOption 
+ * @returns 
+ */
 export default function UserLogIn({ showEditorOption = false }) {
     const navigate = useNavigate();
 

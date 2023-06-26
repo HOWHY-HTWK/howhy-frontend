@@ -2,6 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import styles from 'src/sharedComponents/VideoList.module.css'
 
+/**
+ * Displays a list of Videos with buttons to watch or edit the videos.
+ * 
+ * @param {string} title 
+ * @param {list} videoList 
+ * @returns 
+ */
 export default function EditorVideoList({ title, videoList }) {
 
     const videos = videoList ? videoList.map(video => getListItem(video)) : null

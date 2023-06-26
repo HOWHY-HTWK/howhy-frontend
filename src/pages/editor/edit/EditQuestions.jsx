@@ -8,6 +8,10 @@ import { useLocation, useParams } from 'react-router-dom'
 import HlsPlayer from 'src/sharedComponents/HlsPlayer'
 import { getVideoInfoFromMediaserver } from 'src/utils/api/mediaserverApi'
 
+/**
+ * On this Page a Video is displayed and Question of the Video can be edited and added.
+ * @returns 
+ */
 export default function EditQuestions() {
     const videoId = useParams().videoId;
 

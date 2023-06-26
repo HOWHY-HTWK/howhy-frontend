@@ -4,6 +4,13 @@ import { useStateContext } from 'src/contexts/ContextProvider'
 import WinningAnimation from './WinningAnimation'
 import { getLevel } from 'src/utils/utils'
 
+/**
+ * This Component detects when the Score of the User changes and displays an 
+ * Animation of flying lightbulbs and a counting up Score.
+ * 
+ * @returns ScoreHtml
+ */
+
 export default function Score({ }) {
     const { user, setUser } = useStateContext()
 

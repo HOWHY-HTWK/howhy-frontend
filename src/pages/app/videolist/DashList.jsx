@@ -6,6 +6,11 @@ import * as mediaserverApi from 'src/utils/api/mediaserverApi.js'
 
 import Loader from 'src/sharedComponents/Loader'
 
+/**
+ * The List of videos that is displayed in the "Videos Tab"
+ * @param {*} param0 
+ * @returns 
+ */
 export default function DashList({ searchterm = '', random = false }) {
     const [videoList, setvideoList] = useState([]);
 

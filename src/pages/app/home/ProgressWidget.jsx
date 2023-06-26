@@ -5,11 +5,13 @@ import rightGraphic from 'src/assets/rightGraphic.svg'
 import { useStateContext } from 'src/contexts/ContextProvider'
 import { getLevel, levels } from 'src/utils/utils'
 
+/**
+ * Shows the current Level and the upcoming ones in i stylized way
+ */
 export default function ProgressWidget() {
     const { user, setUser } = useStateContext()
 
     const level = parseInt(getLevel(user.score));
-    // const level = 5
 
     function nextLevelComponent(level, points, margin, scale) {
         return (

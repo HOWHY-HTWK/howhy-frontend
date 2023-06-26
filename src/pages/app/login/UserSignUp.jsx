@@ -4,6 +4,11 @@ import styles from './UserLogin.module.css'
 import { useStateContext } from 'src/contexts/ContextProvider.jsx'
 import { Link } from 'react-router-dom'
 
+/**
+ * Signup Page for the User Frontend. It is Displayed on the userlogin Page
+ * @param {*} param0 
+ * @returns 
+ */
 export default function UserSignUp({ toggleSignUp, logIn }) {
     const { user, setUser } = useStateContext()
 

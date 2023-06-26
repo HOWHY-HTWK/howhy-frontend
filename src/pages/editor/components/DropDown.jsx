@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './DropDown.module.css'
-import axiosClient from 'src/utils/api/axios-client'
 import { useStateContext } from 'src/contexts/ContextProvider'
 import { Link } from 'react-router-dom'
 import { MdArrowDropDown } from "react-icons/md";
 import * as utils from 'src/utils/utils'
 
-
+/**
+ * Return the Dropdown Menu in the Header. Event Listeners are added to close the menu on every 
+ * click outsite of the menue.
+ * @returns 
+ */
 export default function DropDown() {
     const { user, authenticated, setUser } = useStateContext()
     const [isOpen, setIsOpen] = useState(false);

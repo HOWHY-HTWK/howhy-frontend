@@ -6,6 +6,12 @@ import { useStateContext } from 'src/contexts/ContextProvider'
 import VerifyEmailBanner from './components/VerifyEmailBanner'
 import UserHeader from './components/UserHeader'
 
+/**
+ * This is the entrypoint for the User Frontend. Here the Header and Footer get displayed.
+ * Also the user data gets updated when the Page loads.
+ * @returns 
+ * 
+ */
 function App() {
     const windowSize = useRef([window.innerWidth, window.innerHeight]);
 

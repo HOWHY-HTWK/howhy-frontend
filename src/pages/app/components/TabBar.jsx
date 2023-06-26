@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import styles from './TabBar.module.css'
 
+/**
+ * The Tabbar stores wich Tab is currently selected and returns the Tabbar Component.
+ * @returns 
+ */
 export default function TabBar({ setPage }) {
     const [selectedTab, setSelectedTab] = useState(1)
 

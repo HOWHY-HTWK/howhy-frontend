@@ -9,6 +9,14 @@ import { getVideoInfoFromMediaserver } from 'src/utils/api/mediaserverApi'
 import HlsPlayer from 'src/sharedComponents/HlsPlayer'
 import Loader from 'src/sharedComponents/Loader'
 
+/**
+ * On this page the use can watch the Video and the questions get displayed. When opening the page 
+ * a list of timecodes for all questions is loaded. On every timeupdate Event from the videoplayer 
+ * the list of timecodes is checked if a question should be displayed. The hls resources file is given to the Player.
+ * The videoId is read from the URL.
+ * 
+ * @returns 
+ */
 function WatchVideo() {
     const videoId = useParams().videoId;
 

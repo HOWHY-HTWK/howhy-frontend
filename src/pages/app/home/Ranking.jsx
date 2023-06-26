@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react'
 import styles from './Ranking.module.css'
 import { ranking } from 'src/utils/api/api'
 
+/**
+ * shows the top 5 users of the platform
+ * @returns html
+ */
 export default function Ranking() {
     const [rankingList, setRankingList] = useState([]);
 

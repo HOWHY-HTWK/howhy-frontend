@@ -3,6 +3,14 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react';
 import styles from './AddVideo.module.css'
 
+/**
+ * Show a Component on wich a VideoId can be entered and Videos can be added to the Database 
+ * with a button Click. The Button links to the Page where Videos are edited with the videoid
+ * in the url.
+ * 
+ * @param {*} props 
+ * @returns 
+ */
 export default function AddVideo(props) {
     const [input, setInput] = useState(props?.value ?? '');
 

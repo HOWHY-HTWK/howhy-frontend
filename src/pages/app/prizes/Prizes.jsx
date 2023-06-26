@@ -10,6 +10,10 @@ import { getCode, getMessage, getPrizes } from 'src/utils/api/api'
 import Loader from 'src/sharedComponents/Loader'
 import ReactMarkdown from 'react-markdown'
 
+/**
+ * Displays all the won Prizes in the Tab View in the User Frontend.
+ * @returns 
+ */
 export default function Prizes() {
     const { user, setUser } = useStateContext()
 

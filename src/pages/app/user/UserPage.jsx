@@ -10,6 +10,10 @@ import pencil from 'src/assets/icons/pencil.svg'
 import logout_icon from 'src/assets/icons/logout.svg'
 import { saveUsername } from 'src/utils/api/api'
 
+/**
+ * Contains the username that can be changed on this Page and some menu Items like settings and feedback.
+ * @returns 
+ */
 export default function UserPage() {
     const { user, setUser } = useStateContext()
     const [name, setName] = useState(user ? user.name : '')

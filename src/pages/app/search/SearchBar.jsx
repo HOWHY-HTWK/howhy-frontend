@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react'
 import styles from './SearchBar.module.css'
 import close from 'src/assets/icons/close.svg'
 
+/**
+ * The Input field for the Search Window.
+ * @param {*} param0 
+ * @returns 
+ */
 export default function SearchBar({ setSearchTerm }) {
     const [term, setTerm] = useState('')
 

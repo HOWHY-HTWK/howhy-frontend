@@ -2,6 +2,16 @@ import React, { useState, useEffect } from 'react'
 import * as utils from 'src/utils/utils.js'
 import styles from './QuestionsTimeline.module.css'
 
+/**
+ * Shows all the questions on a timeline according to their timecodes and the duration of the video.
+ *  When a question is pressed the jumptoQuestion method is called with the timecode of the question. 
+ * 
+ * @param {list} questionTimecodes 
+ * @param {func} jumpToQuestion 
+ * @param {int} duration 
+ * 
+ * @returns 
+ */
 export default function QuestionsTimeline({ questionTimecodes, jumpToQuestion, duration }) {
     const questions = questionTimecodes.map(question => {
         let percent = question.timecode / duration * 100

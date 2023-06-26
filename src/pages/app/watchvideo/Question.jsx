@@ -4,6 +4,16 @@ import * as api from 'src/utils/api/api'
 import Loader from 'src/sharedComponents/Loader';
 import { useStateContext } from 'src/contexts/ContextProvider';
 
+/**
+ * This Component can display a question based on the questionId. It gets the questionData from the
+ * api with the question id and displays it. When the user answers the answers get checked with the 
+ * api again and a feedback is given.
+ * 
+ * @param {int} questionId
+ * @param {func} setQuestionId
+ * @param {func} refreshData
+ * @returns 
+ */
 export default function Question({ questionId, setQuestionId, refreshData }) {
     const { user, setUser } = useStateContext()
 
