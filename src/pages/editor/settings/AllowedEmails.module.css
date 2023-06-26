@@ -10,11 +10,6 @@
     justify-content: left;
 }
 
-.title {
-    padding: 0.5rem 0;
-    margin: 0;
-}
-
 .email {
     position: relative;
     display: flex;
@@ -24,16 +19,20 @@
     gap: 1rem;
 }
 
+.delete {
+    background-color: rgba(255, 0, 0, 0.757);
+}
+
 .smallButton {
     color: white;
     border-radius: 0.5rem;
     border: none;
-    /* position: absolute; */
     right: 0;
 }
 
-.delete {
-    background-color: rgba(255, 0, 0, 0.757);
+.title {
+    padding: 0.5rem 0;
+    margin: 0;
 }
 
 .inputWrapper {
@@ -41,8 +40,4 @@
     flex-flow: column nowrap;
     gap: 1rem;
     padding-top: 1rem;
-}
-
-.makeAdmin {
-    background-color: green;
 }

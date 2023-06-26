@@ -5,6 +5,10 @@ import styles from './Login.module.css'
 import SignUp from './SignUp.jsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+/**
+ * The Login and Signup Page for the Editor Frontend. 
+ * @returns 
+ */
 export default function LogIn() {
     const navigate = useNavigate();
     const location = useLocation();

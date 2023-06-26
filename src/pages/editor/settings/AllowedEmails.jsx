@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import styles from './AddEmail.module.css'
+import styles from './AllowedEmails.module.css'
 import * as api from 'src/utils/api/api';
 import { useStateContext } from 'src/contexts/ContextProvider';
 
-export default function AddEmail() {
+export default function AllowedEmails() {
     const { user, setUser } = useStateContext()
 
     const [allowedEmails, setallowedEmails] = useState([])

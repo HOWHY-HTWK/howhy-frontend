@@ -2,6 +2,12 @@ import React, { useEffect, useRef, useState } from 'react'
 import axiosClient from 'src/utils/api/axios-client.jsx'
 import styles from './Login.module.css'
 
+/**
+ * The SignUp Component for the Editor Frontend.
+ * @param {Boolean} toggleSignUp 
+ * @param {Function} logIn 
+ * @returns 
+ */
 export default function SignUp({ toggleSignUp, logIn }) {
     const [info, setInfo] = useState(false)
     const infoRef = useRef()

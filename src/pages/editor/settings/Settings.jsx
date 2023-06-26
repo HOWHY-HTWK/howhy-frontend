@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import styles from './Settings.module.css'
-import AddEmail from 'src/pages/editor/settings/AddEmail';
 import ChangeRights from 'src/pages/editor/settings/ChangeRights';
 import { useStateContext } from 'src/contexts/ContextProvider';
+import AllowedEmails from './AllowedEmails';
 
 export default function Settings() {
     const { user, setUser } = useStateContext()
@@ -17,7 +17,7 @@ export default function Settings() {
             {user.role == 'admin' ?
                 <div className={styles.contentWrap}>
                     <ChangeRights></ChangeRights>
-                    <AddEmail></AddEmail>
+                    <AllowedEmails></AllowedEmails>
                 </div>
                 : null}
         </div>
