@@ -7,6 +7,14 @@ import DropDown from './components/DropDown'
 import styles from './Editor.module.css'
 import VerifyEmail from 'src/pages/sharedPages/VerifyEmail'
 
+/**
+ * Wrapper for the Editor Part of the Application. In the Editor the Questions for the Videos,
+ * the Prizes and User Rights can be changed. Here Header and Footer for the whole Editor are rendered.
+ * When the user is not logged or doesnt have editor or admin rights the User gets 
+ * redirected to the login page. If the users Email is not verified an error message is displayed.
+ * 
+ * @returns 
+ */
 export default function Editor() {
     const { user, setUser, updateUserData } = useStateContext()
     const currentPath = useLocation().pathname;
@@ -18,7 +26,7 @@ export default function Editor() {
     function content() {
         return (
             <div className={['pageWrap'].join(' ')} >
-                <Header editorMode={true}>
+                <Header>
                     <DropDown></DropDown>
                 </Header>
                 <Outlet />

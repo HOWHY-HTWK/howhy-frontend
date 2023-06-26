@@ -1,27 +1,21 @@
-import React, { useEffect, useReducer, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import DashList from 'src/pages/app/videolist/DashList';
-import * as api from 'src/utils/api/api';
 import styles from './Dashboard.module.css';
 import TabBar from 'src/pages/app/components/TabBar';
 import Prizes from 'src/pages/app/prizes/Prizes';
 import Home from 'src/pages/app/home/Home';
 
+/**
+ * The wrapper for the Tabed View on the Startpage of the User Frontend. All Pages in the Tabs 
+ * are loaded and hidden according to wich Tab is selected to make the changes between Tabs quick.
+ * 
+ * @returns 
+ */
 export default function Dashboard() {
-    const [score, setscore] = useState(null)
     const [page, setPage] = useState()
-
-    const [searchterm, setSearchTerm] = useState()
-
-    useEffect(() => {
-        api.score().then(response => {
-            setscore(response.data.score)
-        })
-    }, [])
 
     return (
         <div className={[styles.wrap].join(' ')} >
-            {/* <SearchBar setSearchTerm={setSearchTerm}></SearchBar> */}
-            {/* <UserHeader ></UserHeader> */}
             <TabBar setPage={setPage}></TabBar>
             <div className={[styles.page, page == 0 ? styles.active : null].join(' ')} >
                 <Home></Home>

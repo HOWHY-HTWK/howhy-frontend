@@ -7,7 +7,12 @@ import Score from 'src/pages/app/components/Score'
 import back from 'src/assets/icons/back.svg'
 import lupe from 'src/assets/icons/Lupe.svg'
 
-export default function UserHeader({ children, setPage }) {
+/**
+ * Returns the Header for the User Frontend. It contains Score Search Link and and the Link to the User Page.
+ * It detects when the User is on a subpage and displays the Back arrow accordingly.
+ * @returns 
+ */
+export default function UserHeader() {
     const { user, setUser } = useStateContext()
     const navigate = useNavigate()
     const location = useLocation()
