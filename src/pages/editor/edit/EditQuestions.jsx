@@ -15,10 +15,9 @@ import { getVideoInfoFromMediaserver } from 'src/utils/api/mediaserverApi'
 export default function EditQuestions() {
     const videoId = useParams().videoId;
 
-    const [editedQuestion, setEditedQuestion] = useState(JSON.parse(localStorage.getItem('question')) != null ? 'multipleChoice' : null)
+    const [editedQuestion, setEditedQuestion] = useState(null)
     const [videoData, setVideoData] = useState(null)
-    const [questionType, setquestionType] = useState('multipleChoice')
-    const [questions, setQuestions] = useState(null)
+    const [questions, setQuestions] = useState([])
     const [duration, setDuration] = useState(null)
     const [time, setTime] = useState(null)
 
@@ -46,55 +45,6 @@ export default function EditQuestions() {
             })
     }
 
-    function displayAddQuestion() {
-        if (editedQuestion == null) {
-            return (
-                <div className={[styles.addWrapper].join(' ')} >
-                    <select className={['selector', styles.selector].join(' ')} value={questionType} onChange={e => setquestionType(e.target.value)}  >
-                        <option value="multipleChoice">Multiple-Choice</option>
-                        <option value="singleChoice">Single-Choice</option>
-                    </select>
-                    <button className="button" onClick={() => setEditedQuestion(questionType)}>{questionType}-Frage zum aktuellen Zeitpunk hinzufügen</button>
-                </div>
-            )
-        }
-    }
-
-    function displayQuestionEditor() {
-        if (editedQuestion == null) {
-            return null
-        } else if (editedQuestion == 'multipleChoice') {
-            return (
-                <QuestionEditor
-                    duration={duration}
-                    time={time}
-                    existingQuestion={null}
-                    videoId={videoId}
-                    setEditedQuestion={setEditedQuestion}
-                    singleChoice={false} />
-            )
-        } else if (editedQuestion == 'singleChoice') {
-            return (
-                <QuestionEditor
-                    duration={duration}
-                    time={time}
-                    existingQuestion={null}
-                    videoId={videoId}
-                    setEditedQuestion={setEditedQuestion}
-                    singleChoice={true} />
-            )
-        } else if (typeof editedQuestion == 'object') {
-            return (
-                <QuestionEditor
-                    duration={duration}
-                    time={time}
-                    existingQuestion={editedQuestion}
-                    videoId={videoId}
-                    setEditedQuestion={setEditedQuestion} />
-            )
-        }
-    }
-
     function deleteQuestion(question) {
         if (confirm('wirklich löschen?')) {
             api.deleteQuestion(question.id).then(response => {
@@ -109,6 +59,18 @@ export default function EditQuestions() {
         setTime(time)
     }
 
+    function addNewQuestion() {
+        let newQuestion = {
+            videoId: videoId,
+            questionText: '',
+            timecode: time,
+            type: 'singlechoice',
+            correctAnswers: [{ 'id': 0, 'correct': false }],
+            answers: [{ "id": 0, "text": '', }],
+        }
+        setEditedQuestion(newQuestion)
+    }
+
     return (
         <div className={['centerVertical', styles.wrapper].join(' ')} >
             <div className={[styles.title].join(' ')} >{videoData?.title}</div>
@@ -121,9 +83,22 @@ export default function EditQuestions() {
                     ref={videoRef}
                 />
             </div>
-            {displayAddQuestion()}
-            {displayQuestionEditor()}
-            {!editedQuestion && questions ? <QuestionList questions={questions} editQuestion={setEditedQuestion} deleteQuestion={deleteQuestion} seteditedQuestion={setEditedQuestion}></QuestionList> : null}
+            {editedQuestion ?
+                <QuestionEditor
+                    duration={duration}
+                    time={time}
+                    editedQuestion={editedQuestion}
+                    setEditedQuestion={setEditedQuestion} />
+                :
+                <>
+                    <button className={['button', styles.addButton].join(' ')} onClick={addNewQuestion}>Neue Frage zum aktuellen Zeitpunk hinzufügen</button>
+                    <QuestionList
+                        questions={questions}
+                        editQuestion={setEditedQuestion}
+                        deleteQuestion={deleteQuestion}
+                        seteditedQuestion={setEditedQuestion}></QuestionList>
+                </>
+            }
         </div>
     )
 }

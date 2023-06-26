@@ -23,3 +23,7 @@
 .selector {
     margin: 0;
 }
+
+.addButton {
+    background-color: var(--item-color);
+}

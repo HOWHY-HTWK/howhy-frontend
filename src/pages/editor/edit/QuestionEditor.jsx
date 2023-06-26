@@ -8,26 +8,10 @@ import { storeQuestion } from 'src/utils/api/api'
 import { getTimeInReadable } from 'src/utils/utils'
 
 
-export default function QuestionEditor({ existingQuestion, duration, time, videoId, setEditedQuestion, singleChoice }) {
-    const singleChoiceRef = useRef(
-        existingQuestion ?
-            existingQuestion.type == 'singlechoice' ?
-                true
-                :
-                false
-            :
-            singleChoice)
+export default function QuestionEditor({ editedQuestion, duration, time, setEditedQuestion }) {
 
-    const basequestion = existingQuestion ? existingQuestion : {
-        'videoId': videoId,
-        'questionText': '',
-        'timecode': time,
-        'type': singleChoiceRef.current ? 'singlechoice' : 'multiplechoice',
-        'correctAnswers': [{ 'id': 0, 'correct': false }],
-        'answers': [{ "id": 0, "text": '', }],
-    }
-
-    const [question, setQuestion] = useState(basequestion);
+    const [question, setQuestion] = useState(editedQuestion);
+    const singleChoiceRef = useRef(question.type == 'singlechoice' ? true : false)
 
     function setNewTimecode(timecode) {
         setQuestion({ ...question, timecode: timecode })
