@@ -1,11 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import axiosClient from 'src/utils/api/axios-client.jsx'
 import styles from './Login.module.css'
-import { useStateContext } from 'src/contexts/ContextProvider.jsx'
 
-export default function SignUp({ toggleSignUp, showEditorOption = false, logIn }) {
-    const { user, setUser } = useStateContext()
-
+export default function SignUp({ toggleSignUp, logIn }) {
     const [info, setInfo] = useState(false)
     const infoRef = useRef()
 
@@ -13,7 +10,7 @@ export default function SignUp({ toggleSignUp, showEditorOption = false, logIn }
         name: '',
         email: '', password: '',
         repeatPassword: '',
-        editorRights: showEditorOption ? true : false
+        editorRights: true
     })
 
     useEffect(() => {
@@ -65,7 +62,10 @@ export default function SignUp({ toggleSignUp, showEditorOption = false, logIn }
 
     function getUserNameInfo() {
         return (
-            <div className={[styles.infoBox, info ? styles.visible : null].join(' ')} >Es wird automatisch ein anonymer Benutzername generiert. Dieser kann allerdings wie gewünscht angepasst werden.</div>
+            <div className={[styles.infoBox, info ? styles.visible : null].join(' ')} >
+                Es wird automatisch ein anonymer Benutzername generiert.
+                Dieser kann allerdings wie gewünscht angepasst werden.
+            </div>
         )
     }
 
@@ -79,7 +79,11 @@ export default function SignUp({ toggleSignUp, showEditorOption = false, logIn }
                 <span>Registrieren</span>
                 <div className={[styles.label].join(' ')} >
                     <div>Benutzername
-                        <span ref={infoRef} className={[styles.info].join(' ')} onClick={handleInfoClick}> &#9432; {getUserNameInfo()}</span>
+                        <span ref={infoRef}
+                            className={[styles.info].join(' ')}
+                            onClick={handleInfoClick}>
+                            &#9432; {getUserNameInfo()}
+                        </span>
                     </div>
                     <input
                         id="username"
@@ -92,7 +96,9 @@ export default function SignUp({ toggleSignUp, showEditorOption = false, logIn }
                         autoComplete='off' />
                 </div>
                 <div className={[styles.label].join(' ')} >
-                    <div className={[signUpData.email == '' ? styles.hidden : null].join(' ')} >E-Mail</div>
+                    <div className={[signUpData.email == '' ? styles.hidden : null].join(' ')} >
+                        E-Mail
+                    </div>
                     <input
                         className={[styles.input].join(' ')}
                         value={signUpData.email}
@@ -103,7 +109,9 @@ export default function SignUp({ toggleSignUp, showEditorOption = false, logIn }
                         autoComplete='email' />
                 </div>
                 <div className={[styles.label].join(' ')} >
-                    <div className={[signUpData.password == '' ? styles.hidden : null].join(' ')}>Passwort</div>
+                    <div className={[signUpData.password == '' ? styles.hidden : null].join(' ')}>
+                        Passwort
+                    </div>
                     <input
                         className={[styles.input].join(' ')}
                         value={signUpData.password}
@@ -114,7 +122,9 @@ export default function SignUp({ toggleSignUp, showEditorOption = false, logIn }
                         autoComplete='new-password' />
                 </div>
                 <div className={[styles.label].join(' ')} >
-                    <div className={[signUpData.repeatPassword == '' ? styles.hidden : null].join(' ')} >Passwort wiederholen</div>
+                    <div className={[signUpData.repeatPassword == '' ? styles.hidden : null].join(' ')} >
+                        Passwort wiederholen
+                    </div>
                     <input
                         className={[styles.input].join(' ')}
                         value={signUpData.repeatPassword}
@@ -129,16 +139,12 @@ export default function SignUp({ toggleSignUp, showEditorOption = false, logIn }
                         <div className={[styles.error].join(' ')} >Keine übereinstimmung</div>
                         : null
                 }
-                {
-                    showEditorOption ?
-                        <label className={[styles.requestRights].join(' ')} >
-                            <input
-                                checked={signUpData.editorRights}
-                                onChange={() => setsignUpData({ ...signUpData, editorRights: !signUpData.editorRights })}
-                                type='checkbox'></input>
-                            Rechte zum Bearbeiten von Videos anfordern</label>
-                        : null
-                }
+                <label className={[styles.requestRights].join(' ')} >
+                    <input
+                        checked={signUpData.editorRights}
+                        onChange={() => setsignUpData({ ...signUpData, editorRights: !signUpData.editorRights })}
+                        type='checkbox'></input>
+                    Rechte zum Bearbeiten von Videos anfordern</label>
                 <button className={['button'].join(' ')} type="submit">Registrieren</button>
             </form >
             <div className={[styles.register].join(' ')} onClick={toggleSignUp}>Einloggen</div>

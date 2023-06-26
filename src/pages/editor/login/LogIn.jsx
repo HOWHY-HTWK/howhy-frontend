@@ -5,7 +5,7 @@ import styles from './Login.module.css'
 import SignUp from './SignUp.jsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export default function LogIn({ returnSuccess = (success) => success, showEditorOption = true }) {
+export default function LogIn() {
     const navigate = useNavigate();
     const location = useLocation();
     const backPath = location.state ? location.state.backPath : '/editor';
@@ -45,8 +45,13 @@ export default function LogIn({ returnSuccess = (success) => success, showEditor
         setSignUp(!signUp)
     }
 
-    function getLogin() {
-        return (
+    return (
+        signUp ?
+            <SignUp
+                toggleSignUp={toggleSignUp}
+                logIn={logIn}>
+            </SignUp>
+            :
             <div className={[styles.formwrapper].join(' ')} >
                 <form method="post" className={[styles.vertical].join(' ')} onSubmit={handleLogin}>
                     <span>Log In</span>
@@ -81,17 +86,5 @@ export default function LogIn({ returnSuccess = (success) => success, showEditor
                 </div>
                 <div className={[styles.register].join(' ')} onClick={toggleSignUp}> Registrieren</div>
             </div>
-        )
-    }
-
-    return (
-        !signUp ?
-            getLogin()
-            :
-            <SignUp
-                showEditorOption={showEditorOption}
-                toggleSignUp={toggleSignUp}
-                logIn={logIn}>
-            </SignUp>
     )
 }
