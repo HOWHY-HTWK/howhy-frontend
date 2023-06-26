@@ -9,7 +9,8 @@ import HlsPlayer from 'src/sharedComponents/HlsPlayer'
 import { getVideoInfoFromMediaserver } from 'src/utils/api/mediaserverApi'
 
 /**
- * On this Page a Video is displayed and Question of the Video can be edited and added.
+ * On this Page a Video is displayed and Question of the Video can be edited and added. 
+ * When a Question is edited or Added, the QuestionEditor is displayed.
  * @returns 
  */
 export default function EditQuestions() {

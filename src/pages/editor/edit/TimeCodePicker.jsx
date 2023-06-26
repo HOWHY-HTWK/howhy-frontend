@@ -2,10 +2,15 @@ import React, { useEffect, useState } from 'react'
 import styles from './TimeCodePicker.module.css'
 import * as utils from 'src/utils/utils.js'
 
+/**
+ * Displays drop-down menus to Pick a Timecode
+ * 
+ * @param {Int} duration 
+ * @param {Int} time 
+ * @param {Functino} setTimeCode 
+ * @returns 
+ */
 export default function TimeCodePicker({ duration, time, setTimeCode }) {
-
-    // const [timecode, setLocalTimeCode] = useState(utils.getHoursMinutesSeconds(time));
-
     const timecode = utils.getHoursMinutesSeconds(time);
 
     function getTotalSeconds(timeObject) {

@@ -7,9 +7,16 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { storeQuestion } from 'src/utils/api/api'
 import { getTimeInReadable } from 'src/utils/utils'
 
-
+/**
+ * Displays a Question where the text, timecode and correct answers can be eited and saved.
+ * 
+ * @param {Object} editedQuestion 
+ * @param {Int} duration 
+ * @param {Int} time 
+ * @param {Function} setEditedQuestion 
+ * @returns 
+ */
 export default function QuestionEditor({ editedQuestion, duration, time, setEditedQuestion }) {
-
     const [question, setQuestion] = useState(editedQuestion);
     const singleChoiceRef = useRef(question.type == 'singlechoice' ? true : false)
 
@@ -128,19 +135,16 @@ export default function QuestionEditor({ editedQuestion, duration, time, setEdit
                         time={question.timecode}
                         setTimeCode={setNewTimecode} />
                 </div>
-                <div
-                    className={['button', styles.setTimecodeButton].join(' ')}
-                    onClick={setCurrentTime}>
-                    Aktuellen Zeitpunkt des Videos übernehemen.
-                </div>
+                <div className={['button', styles.setTimecodeButton].join(' ')}
+                    onClick={setCurrentTime}>Aktuellen Zeitpunkt des Videos übernehemen.</div>
             </div>
-            <select
-                className={['selector', styles.selector].join(' ')}
+            <select className={['selector', styles.selector].join(' ')}
                 value={question.type}
-                onChange={e => {
-                    setQuestion({ ...question, type: e.target.value })
-                    singleChoiceRef.current = e.target.value == "singlechoice" ? true : false
-                }}  >
+                onChange={
+                    e => {
+                        setQuestion({ ...question, type: e.target.value })
+                        singleChoiceRef.current = e.target.value == "singlechoice" ? true : false
+                    }}>
                 <option value="multiplechoice">Multiple-Choice</option>
                 <option value="singlechoice">Single-Choice</option>
             </select>
@@ -156,11 +160,9 @@ export default function QuestionEditor({ editedQuestion, duration, time, setEdit
                 </div>
                 <MdAdd className={[styles.addAnswer].join(' ')} onClick={addAnswer}></MdAdd>
                 <div className={[styles.buttonWrapper].join(' ')} >
-                    <div
-                        className={['button', styles.saveQuestion, styles.cancel].join(' ')}
+                    <div className={['button', styles.saveQuestion, styles.cancel].join(' ')}
                         onClick={cancelAndReset}>Abbrechen</div>
-                    <div
-                        className={['button', styles.saveQuestion].join(' ')}
+                    <div className={['button', styles.saveQuestion].join(' ')}
                         onClick={saveQuestionAndReset}>Frage speichern</div>
                 </div>
             </div>

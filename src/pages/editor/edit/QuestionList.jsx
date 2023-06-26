@@ -2,8 +2,16 @@ import React from 'react'
 import styles from './QuestionList.module.css'
 import * as utils from 'src/utils/utils.js'
 
+/**
+ * Displays a list of all Quesiton for the Video with delete and edit buttons.
+ * The list is oredered according to the timecodes of the questions.
+ * 
+ * @param {List} questions 
+ * @param {Function} editQuestion 
+ * @param {Function} deleteQuestion 
+ * @returns 
+ */
 export default function QuestionList({ questions, editQuestion, deleteQuestion }) {
-
     const orderedQuestions = questions.sort((first, last) => first.timecode - last.timecode)
     const listElements = orderedQuestions.map(question => getListElement(question));
 

@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom'
 import styles from './Header.module.css'
 
 /**
+ * The Header for the Editor Frontend. Takes children that are displayed on the right side.
  * 
- * @param {*} param0 
+ * @param {Array} childen 
  * @returns 
  */
 export default function Header({ children }) {
