@@ -1,6 +1,10 @@
 import React from 'react'
 import styles from './Imprint.module.css'
 
+/**
+ * Displays the Privacy statement.
+ * @returns 
+ */
 export default function Privacy() {
     return (
         <>

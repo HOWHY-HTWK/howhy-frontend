@@ -22,6 +22,13 @@ const createConfig = (props) => {
     return config;
 };
 
+/**
+ * This Component Wraps the hmtl5qrcodescanner wich is a framework agnostic qrcode scanner, and makes
+ * it usable in react. It calls the onnewScanresult when it recognized a qrcode. The UI of the Scanner 
+ * comes with Html5QrcodeScanner Instance.
+ * @param {*} props 
+ * @returns 
+ */
 const Html5QrcodePlugin = (props) => {
     const html5QrcodeScanner = useRef(null)
     useEffect(() => {

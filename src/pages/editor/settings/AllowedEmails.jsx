@@ -3,6 +3,10 @@ import styles from './AllowedEmails.module.css'
 import * as api from 'src/utils/api/api';
 import { useStateContext } from 'src/contexts/ContextProvider';
 
+/**
+ * Interface for adding Emails to the allowedlist to sign up as editor. 
+ * @returns 
+ */
 export default function AllowedEmails() {
     const { user, setUser } = useStateContext()
 

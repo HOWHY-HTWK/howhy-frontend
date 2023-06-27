@@ -5,6 +5,12 @@ import { useStateContext } from 'src/contexts/ContextProvider';
 import LogInComponent from 'src/pages/editor/login/LogInComponent';
 import styles from './EmailVerification.module.css'
 
+/**
+ * This Page is reached when the User clicks the Email verification Link in the E-Mail. 
+ * With the information from the Link a verification Request is made to the backend to verify the 
+ * e-mail adress. When its succesfull a confirmation is displayed. 
+ * @returns 
+ */
 export default function EmailVerification() {
     const { id, hash } = useParams();
     const queryParameters = new URLSearchParams(window.location.search)

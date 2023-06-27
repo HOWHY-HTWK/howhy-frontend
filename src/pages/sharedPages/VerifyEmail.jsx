@@ -3,6 +3,10 @@ import { useStateContext } from 'src/contexts/ContextProvider'
 import styles from './VerifyEmail.module.css'
 import axiosClient from 'src/utils/api/axios-client'
 
+/**
+ * This Page is displayed on Pages where a e-mail verification is mandatory. 
+ * @returns 
+ */
 export default function VerifyEmail() {
     const { user, setUser, updateUserData } = useStateContext()
 

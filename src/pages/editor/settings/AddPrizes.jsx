@@ -2,16 +2,10 @@ import React, { useEffect, useState } from 'react'
 import styles from './AddPrizes.module.css'
 import { deletePrize, getMessage, getPrizes, postMessage, postPrize, updatePrize } from 'src/utils/api/api';
 
-// import qrCode from 'src/assets/QR-Code.svg'
-// import qr_used from 'src/assets/icons/qr_used.svg'
-// import calendar from 'src/assets/icons/calendar.svg'
-// import location from 'src/assets/icons/location.svg'
-// import clock from 'src/assets/icons/clock.svg'
-// import calendar_white from 'src/assets/icons/calendar_white.svg'
-// import location_white from 'src/assets/icons/location_white.svg'
-// import clock_white from 'src/assets/icons/clock_white.svg'
-// import close from 'src/assets/icons/close.svg'
-
+/**
+ * Component where the Prizes that the User can earn can be edited.
+ * @returns 
+ */
 export default function AddPrizes() {
 
     const [prizeList, setPrizeList] = useState([])

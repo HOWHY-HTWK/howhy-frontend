@@ -3,7 +3,12 @@ import styles from './ForgotPassword.module.css'
 import { csfrCookie, forgotPassword, resetPassword } from 'src/utils/api/api.js';
 import BackButton from 'src/sharedComponents/BackButton.jsx';
 
-
+/**
+ * This Page is reached when the User click "forgot password" on the Login Page. The User needs to
+ * enter their e-mail and a request is made to the backend. Then the User recives an email to reset
+ * the password.s
+ * @returns 
+ */
 export default function ForgotPassword() {
     const emailRef = createRef()
 

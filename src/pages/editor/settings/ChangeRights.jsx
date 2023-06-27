@@ -3,6 +3,10 @@ import styles from './ChangeRights.module.css'
 import * as api from 'src/utils/api/api';
 import { useStateContext } from 'src/contexts/ContextProvider';
 
+/**
+ * Displays list of all user where editor right can be given to every individual user.
+ * @returns
+ */
 export default function ChangeRights() {
     const { user, setUser } = useStateContext()
     const [users, setUsers] = useState([])

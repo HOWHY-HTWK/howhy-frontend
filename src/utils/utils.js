@@ -1,5 +1,9 @@
 import axiosClient from "./api/axios-client";
 
+/**
+ * @param {*} questions 
+ * @returns 
+ */
 export function makeTimecodesList(questions) {
     let localtimecodes = [];
     for (let step = 0; step < questions.length; step++) {

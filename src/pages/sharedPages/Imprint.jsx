@@ -2,10 +2,11 @@ import React, { useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import styles from './Imprint.module.css'
 
+/**
+ * Shows the Imprint
+ * @returns 
+ */
 export default function Imprint() {
-
-
-
     return (
         <>
             <div className={[styles.bar].join(' ')} ></div>

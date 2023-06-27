@@ -4,6 +4,10 @@ import ChangeRights from 'src/pages/editor/settings/ChangeRights';
 import { useStateContext } from 'src/contexts/ContextProvider';
 import AllowedEmails from './AllowedEmails';
 
+/**
+ * Wrapper for the User List and allowed-E-Mail List.
+ * @returns 
+ */
 export default function Settings() {
     const { user, setUser } = useStateContext()
 

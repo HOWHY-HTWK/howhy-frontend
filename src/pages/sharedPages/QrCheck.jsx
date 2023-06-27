@@ -4,6 +4,11 @@ import Html5QrcodePlugin from 'src/sharedComponents/Html5QrcodeScannerPlugin';
 import styles from './QrCheck.module.css';
 import { checkCode, redeem } from 'src/utils/api/api';
 
+/**
+ * This Page includes a Qr-Code reader wich can scan codes and check them with the backend. 
+ * Then the the code can be redeemed with a button click wich gets confirmed by the backend. 
+ * @returns 
+ */
 export default function QrCheck() {
     const [prizeData, setPrize] = useState(null);
 

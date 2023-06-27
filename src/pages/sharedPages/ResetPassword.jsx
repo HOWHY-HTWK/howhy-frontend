@@ -5,6 +5,13 @@ import styles from './ForgotPassword.module.css'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { csfrCookie, resetPassword } from 'src/utils/api/api.js';
 
+/**
+ * This Page is reached when the user clicks on the password reset link in the corresponing e-mail.
+ * The User can enter a new password with confirmation and a password reset request is made with 
+ * the Information from the reste link.
+ * @returns 
+ */
+
 export default function ResetPassword() {
     const navigate = useNavigate();
     const queryParameters = new URLSearchParams(window.location.search)
