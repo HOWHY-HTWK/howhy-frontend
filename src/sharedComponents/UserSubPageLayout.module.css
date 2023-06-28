@@ -1,0 +1,22 @@
+.wrap {
+    box-sizing: border-box;
+    height: 100%;
+    background-color: var(--background-blue);
+}
+
+.title {
+    box-sizing: box;
+    font-weight: 400;
+    font-size: 20px;
+    text-align: center;
+    padding-top: 20px;
+}
+
+.contentWrap {
+    padding: 15px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    height: 100%;
+    overflow-y: scroll;
+}

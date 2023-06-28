@@ -4,6 +4,7 @@ import { logout } from 'src/utils/utils'
 import { deleteUser } from 'src/utils/api/api'
 import { useStateContext } from 'src/contexts/ContextProvider'
 import { useNavigate } from 'react-router-dom'
+import UserSubPageLayout from 'src/sharedComponents/UserSubPageLayout'
 
 export default function UserSettings() {
     const navigate = useNavigate()
@@ -19,12 +20,9 @@ export default function UserSettings() {
     }
 
     return (
-        <div className={[styles.wrap].join(' ')} >
-            <div className={[styles.title].join(' ')} >Einstellungen</div>
-            <div className={[styles.contentWrap].join(' ')} >
-                <div className={['button', styles.deleteButton].join(' ')}
-                    onClick={deleteRequest}>Konto Löschen</div>
-            </div>
-        </div>
+        <UserSubPageLayout title={'Einstellungen'}>
+            <div className={['button', styles.deleteButton].join(' ')}
+                onClick={deleteRequest}>Konto Löschen</div>
+        </UserSubPageLayout>
     )
 }
