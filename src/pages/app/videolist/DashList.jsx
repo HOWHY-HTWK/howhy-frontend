@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './Dashlist.module.css'
 import { Link, NavLink } from 'react-router-dom'
 import * as api from 'src/utils/api/api.js'
@@ -13,6 +13,7 @@ import Loader from 'src/sharedComponents/Loader'
  */
 export default function DashList({ searchterm = '', random = false }) {
     const [videoList, setvideoList] = useState([]);
+    const videoDataRef = useRef({});
 
     const filteredList = filterList(videoList);
     sortListAlphabetically(filteredList)
@@ -26,7 +27,6 @@ export default function DashList({ searchterm = '', random = false }) {
     }, [])
 
     function filterList(list) {
-        console.log(list)
         return list.filter(item => {
             return (
                 item
@@ -97,8 +97,17 @@ export default function DashList({ searchterm = '', random = false }) {
     async function makeVideoList(videos) {
         let videoList = await Promise.all(
             videos.map(async video => {
+                console.log(videoDataRef.current)
+                if (videoDataRef.current[video.videoId]) {
+                    return videoDataRef.current[video.videoId]
+                }
                 let videoWithData = await mediaserverApi.getVideoInfoFromMediaserver(video.videoId)
-                videoWithData ? videoWithData.success = video.success : null;
+                if (videoWithData) {
+                    videoWithData.success = video.success
+                    videoDataRef.current[video.videoId] = videoWithData
+                } else {
+                    videoWithData = null;
+                }
                 return videoWithData;
             })
         )
