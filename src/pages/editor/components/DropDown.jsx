@@ -38,6 +38,7 @@ export default function DropDown() {
                 <div className={[styles.wrap, "itemBackground"].join(' ')} >
                     <Link to={'/editor/settings'} className={`${styles.menuListItem}`}>Einstellungen</Link>
                     <Link to={'/editor/prizes'} className={`${styles.menuListItem}`}>Preise</Link>
+                    <Link to={'/editor/stats'} className={`${styles.menuListItem}`}>Statistiken</Link>
                     <div className={styles.menuListItem} onClick={() => utils.logout(setUser)}>Log Out</div>
                 </div>
             </div>

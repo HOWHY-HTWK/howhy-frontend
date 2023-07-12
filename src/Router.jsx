@@ -23,6 +23,7 @@ import ForgotPassword from './pages/sharedPages/ForgotPassword';
 import ResetPassword from './pages/sharedPages/ResetPassword';
 import EmailVerification from './pages/sharedPages/EmailVerification';
 import AddPrizes from './pages/editor/settings/AddPrizes';
+import Statistics from './pages/editor/statistics/Statistics';
 const UserLogin = React.lazy(() => import('./pages/app/login/UserLogin'));
 
 const router = createBrowserRouter(
@@ -94,6 +95,10 @@ const router = createBrowserRouter(
                 {
                     path: "/editor/prizes",
                     element: <AddPrizes />
+                },
+                {
+                    path: "/editor/stats",
+                    element: <Statistics></Statistics>
                 }
             ]
         },
