@@ -90,3 +90,18 @@ export function getLevel(score) {
         return "6";
     }
 }
+
+export function dateTimeToUnixTime(dateTime) {
+    const [datePart, timePart] = dateTime.split('T');
+    const [year, month, day] = datePart.split('-');
+    const [time, junk] = timePart.split('.');
+    const [hours, minutes, seconds] = time.split(':');
+    const jsDate = new Date(year, month - 1, day, hours, minutes, seconds);
+
+    const localJsDate = new Date(jsDate.getTime() - jsDate.getTimezoneOffset() * 60000);
+
+    const unixTimeMs = localJsDate.getTime()
+    return Math.floor(unixTimeMs / 1000);
+
+    // return dateTime
+}

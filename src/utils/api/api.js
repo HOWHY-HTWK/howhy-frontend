@@ -146,3 +146,9 @@ export function postMessage(request) {
 export function getMessage() {
     return apiClient.get('/prizes/message')
 }
+
+// statistics
+
+export function getUsage() {
+    return apiClient.get('/usage/')
+}
