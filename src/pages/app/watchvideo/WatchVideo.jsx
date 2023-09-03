@@ -89,6 +89,7 @@ function WatchVideo() {
         } else if (document.msExitFullscreen) { /* IE11 */
             document.msExitFullscreen();
         } else {
+            // Safari on IOS doesnt support exitFullscreen so an alert has to be dispatched to close fullscreen.
             alert('Beantworte die Frage!')
         }
     }
