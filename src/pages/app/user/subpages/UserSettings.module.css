@@ -1,0 +1,7 @@
+.deleteButton {
+    margin-top: 50px;
+    color: red;
+    background-color: var(--item-color);
+    width: 250px;
+    max-width: 300px;
+}

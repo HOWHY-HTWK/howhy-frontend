@@ -1,0 +1,43 @@
+.wrap {
+    padding: 1rem;
+    background-color: rgba(227, 238, 252, 0.612);
+    border-radius: 1rem;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0.5rem;
+    /* align-items: center; */
+    align-content: left;
+    justify-content: left;
+}
+
+.email {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.delete {
+    background-color: rgba(255, 0, 0, 0.757);
+}
+
+.smallButton {
+    color: white;
+    border-radius: 0.5rem;
+    border: none;
+    right: 0;
+}
+
+.title {
+    padding: 0.5rem 0;
+    margin: 0;
+}
+
+.inputWrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+    padding-top: 1rem;
+}

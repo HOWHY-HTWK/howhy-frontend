@@ -1,0 +1,29 @@
+.wrapper {
+    width: 100%;
+}
+
+.title {
+    font-weight: 600;
+    font-size: large;
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: -10px;
+}
+
+.player {
+    max-width: 500px;
+}
+
+.addWrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.selector {
+    margin: 0;
+}
+
+.addButton {
+    background-color: var(--item-color);
+}

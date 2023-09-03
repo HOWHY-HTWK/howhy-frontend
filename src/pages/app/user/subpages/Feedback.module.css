@@ -1,0 +1,5 @@
+.content {
+    text-align: center;
+    hyphens: auto;
+    color: var(--dark-accent);
+}

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { refreshUser } from "../api";
-import { logout } from "../utils";
+import { refreshUser } from "src/utils/api/api";
+import { logout } from "src/utils/utils";
 
 const StateContext = createContext({
     user: null,
