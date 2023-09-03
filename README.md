@@ -30,3 +30,9 @@ This App can be startet either locally when node is installed or with docker.
 - run `cp .env.example .env` and set the correct api url
 - run `docker compose -f docker-compose-prod.yml up`
 - this commands builds the app and starts an nginx server on port 4173
+
+## misc
+
+### Trademark
+
+"HOWHY" is a registered Trademark in Germany. Please beware of that if you are using this Project.
