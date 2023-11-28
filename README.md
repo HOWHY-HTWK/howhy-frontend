@@ -33,6 +33,10 @@ This App can be startet either locally when node is installed or with docker.
 
 ## misc
 
+Locally the Project only works with axios version 1.5.1 or lower because in later Versions this vulnurability is fixed: <https://github.com/advisories/GHSA-wf5p-g6vw-rhxx>
+
+I suspect it will run fine with a later version of axios on a server because the root domains of frontend and backend are the same. Locally the domains are different because of the port in the frontend domain.
+
 ### Trademark
 
 "HOWHY" is a registered Trademark in Germany. Please beware of that if you are using this Project.
