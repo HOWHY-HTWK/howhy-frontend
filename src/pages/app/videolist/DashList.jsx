@@ -17,8 +17,8 @@ export default function DashList({ searchterm = '', random = false }) {
 
     const filteredList = filterList(videoList);
     sortListAlphabetically(filteredList)
-    const completedAtBottom = completedToTheBottom(filteredList)
-    const videos = completedAtBottom.map(video => getListItem(video))
+    // const completedAtBottom = completedToTheBottom(filteredList)
+    const videos = filteredList.map(video => getListItem(video))
 
     useEffect(() => {
         if (videoList.length == 0) {
@@ -73,38 +73,43 @@ export default function DashList({ searchterm = '', random = false }) {
     }
 
     function completedToTheBottom(list) {
-        let notCompleted = list.filter(video => { return video.success.correctCount != video.success.questionCount })
-        let completed = list.filter(video => { return video.success.correctCount == video.success.questionCount })
+        let notCompleted = list.filter(video => { return video.success.correctCount !== video.success.questionCount })
+        let completed = list.filter(video => { return video.success.correctCount === video.success.questionCount })
         return notCompleted.concat(completed);
     }
 
     function getBackground(success) {
-        if (success.correctCount == success.questionCount) {
+        // if (success.correctCount == success.questionCount) {
             return styles.all
-        }
-        if (success.correctCount > 0) {
-            return styles.partly
-        }
+        // }
+        // if (success.correctCount > 0) {
+        //     return styles.partly
+        // }
     }
 
     function getVideos() {
-        api.getVideos()
+        // api.getVideos()
+        //     .then(response => {
+        //         makeVideoList(response.data)
+        //     })
+        mediaserverApi.getHowhyChannelVideos()
             .then(response => {
-                makeVideoList(response.data)
+                makeVideoList(response.data["videos"])
             })
     }
 
     async function makeVideoList(videos) {
+        console.log(videos)
         let videoList = await Promise.all(
             videos.map(async video => {
-                console.log(videoDataRef.current)
-                if (videoDataRef.current[video.videoId]) {
-                    return videoDataRef.current[video.videoId]
+                if (videoDataRef.current[video.oid]) {
+                    return videoDataRef.current[video.oid]
                 }
-                let videoWithData = await mediaserverApi.getVideoInfoFromMediaserver(video.videoId)
+                let videoWithData = await mediaserverApi.getVideoInfoFromMediaserver(video.oid)
                 if (videoWithData) {
+                    console.log(videoWithData)
                     videoWithData.success = video.success
-                    videoDataRef.current[video.videoId] = videoWithData
+                    videoDataRef.current[video.oid] = videoWithData
                 } else {
                     videoWithData = null;
                 }
@@ -131,7 +136,7 @@ export default function DashList({ searchterm = '', random = false }) {
                 </div>
                 <div className={[styles.statsWrap, styles.item].join(' ')} >
                     <div className={[styles.stats, getBackground(video.success)].join(' ')} >
-                        {video.success.correctCount * 100 + ' / ' + video.success.questionCount * 100 + ' Pt.'}
+                        {(video.success?.correctCount ?? 0)  * 100 + ' / ' + (video.success?.questionCount ?? 0) * 100 + ' Pt.'}
                     </div>
                 </div>
                 <div className={[styles.duration].join(' ')} >{video.duration}</div>
