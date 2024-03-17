@@ -1,18 +1,18 @@
 import React from "react"
 import styles from "./Feedback.module.css"
 import UserSubPageLayout from "../../shared/components/UserSubPageLayout"
+import { FEEDBACK_DESCRIPTION, FEEDBACK_EMAIL_ADRESS } from "../../../constants/strings"
 
 export default function Feedback() {
     return (
-        <UserSubPageLayout title={"Feedback"}>
+        <UserSubPageLayout title={ "Feedback" }>
             <div
-                className={[styles.content].join(" ")}
-                style={{ marginTop: "80px" }}
+                className={ [ styles.content ].join(" ") }
+                style={ { marginTop: "80px", whiteSpace: "pre-line" } }
             >
-                Um Feedback zu hinterlassen kannst du eine E-Mail an die
-                folgende Adresse schicken.<br></br>
-                <a className={[].join(" ")} href="mailto:howhy@htwk-leipzig.de">
-                    howhy@htwk-leipzig.de
+                { FEEDBACK_DESCRIPTION }
+                <a href={`mailto:${FEEDBACK_EMAIL_ADRESS}`}>
+                    { FEEDBACK_EMAIL_ADRESS }
                 </a>
             </div>
         </UserSubPageLayout>
