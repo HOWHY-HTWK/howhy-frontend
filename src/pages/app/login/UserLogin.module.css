@@ -31,6 +31,7 @@
 
 .info {
     cursor: pointer;
+    padding-left: 4px;
 }
 
 .formwrapper {
@@ -77,7 +78,8 @@
 }
 
 .labelText {
-    padding: 0 20px;
+    padding: 0 16px;
+    font-size: 12px;
 }
 
 .hidden {

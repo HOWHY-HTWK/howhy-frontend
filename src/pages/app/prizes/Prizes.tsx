@@ -1,0 +1,192 @@
+import React, { useState } from "react"
+import styles from "./Prizes.module.css"
+
+import qrCode from "src/assets/QR-Code.svg"
+import qr_used from "src/assets/icons/qr_used.svg"
+import close from "src/assets/icons/close.svg"
+import { QRCodeSVG } from "qrcode.react"
+import ReactMarkdown from "react-markdown"
+import { useStateContext } from "../../../contexts/ContextProvider"
+import { getCode } from "../../../utils/api/api"
+import Loader from "../../shared/components/Loader"
+import { usePrize } from "./usePrize"
+import { useMessage } from "./useMessage"
+
+/**
+ * Displays all the won Prizes in the Tab View in the User Frontend.
+ * @returns
+ */
+export default function Prizes() {
+    const { user, setUser } = useStateContext()
+
+    const [qrOverlay, setQrOverlay] = useState(null)
+    const { prizes, isLoadingPrizes, prizesError } = usePrize()
+    const { message, isLoadingMessage, messageError } = useMessage()
+
+    function getValid() {
+        return getItemsList(
+            prizes.filter((prize) => {
+                return prize.valid && !prize.redeemed
+            })
+        )
+    }
+
+    function getNotYet() {
+        return getItemsList(
+            prizes.filter((prize) => {
+                return !prize.valid
+            })
+        )
+    }
+
+    function getRedeemed() {
+        return getItemsList(
+            prizes.filter((prize) => {
+                return prize.redeemed == true
+            })
+        )
+    }
+
+    function getItemsList(list) {
+        return list.map((prize, index) => {
+            return getPrizeListItem(prize, index)
+        })
+    }
+
+    function showQrCode(id) {
+        getCode(id).then((response) => {
+            setQrOverlay({ code: response.data.code, id: id })
+        })
+        setQrOverlay("loading")
+    }
+
+    function getPrizeListItem(prize, key) {
+        return prize.redeemed ? (
+            <div
+                key={key}
+                className={["center", styles.listItemWrap].join(" ")}
+            >
+                <div
+                    className={["center", styles.listItem, styles.used].join(
+                        " "
+                    )}
+                >
+                    <img className={[styles.qrImg].join(" ")} src={qr_used} />
+                    <div
+                        className={["centerVertical", styles.rightWrap].join(
+                            " "
+                        )}
+                    >
+                        <div className={[styles.name].join(" ")}>
+                            {prize.title}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        ) : (
+            <div
+                key={key}
+                className={["center", styles.listItemWrap].join(" ")}
+                onClick={prize.valid ? () => showQrCode(prize.id) : null}
+            >
+                <div
+                    className={[
+                        "center",
+                        styles.listItem,
+                        prize.valid ? null : styles.filter
+                    ].join(" ")}
+                >
+                    <img className={[styles.qrImg].join(" ")} src={qrCode} />
+                    <div
+                        className={["centerVertical", styles.rightWrap].join(
+                            " "
+                        )}
+                    >
+                        <div className={[styles.name].join(" ")}>
+                            {prize.title}
+                        </div>
+                    </div>
+                </div>
+                {prize.valid ? null : (
+                    <div className={[styles.progress].join(" ")}>
+                        noch {prize.points - user.score} Punkte
+                    </div>
+                )}
+            </div>
+        )
+    }
+
+    function closeOverlay() {
+        setQrOverlay(null)
+    }
+
+    function getQrOverlay() {
+        return (
+            <div className={["center", styles.overlay].join(" ")}>
+                <div className={["center", styles.bigQr].join(" ")}>
+                    <img
+                        className={[styles.close].join(" ")}
+                        src={close}
+                        onClick={closeOverlay}
+                    />
+                    {qrOverlay == "loading" ? (
+                        <Loader></Loader>
+                    ) : (
+                        <QRCodeSVG
+                            className={[styles.qrCode].join(" ")}
+                            value={makeQrCheckUrl(qrOverlay.code, qrOverlay.id)}
+                        />
+                    )}
+                </div>
+            </div>
+        )
+    }
+
+    function makeQrCheckUrl(code, id) {
+        return (
+            window.location.protocol +
+            "//" +
+            window.location.hostname +
+            "/qr/" +
+            code
+        )
+    }
+
+    return (
+        <>
+            {user ? (
+                <>
+                    <div className={[styles.banner].join(" ")}>
+                        <ReactMarkdown
+                            className={[styles.markdown].join(" ")}
+                            children={message}
+                        ></ReactMarkdown>
+                    </div>
+                    {user.email_verified_at ? (
+                        <div
+                            className={["centerVertical", styles.wrap].join(
+                                " "
+                            )}
+                        >
+                            {getValid()}
+                            {getNotYet()}
+                            <div className={[styles.redeemedLabel].join(" ")}>
+                                Bereits einglöst:
+                            </div>
+                            {getRedeemed()}
+                            {qrOverlay ? getQrOverlay() : null}
+                        </div>
+                    ) : (
+                        <div className={[styles.errorMessage].join(" ")}>
+                            Bitte verifiziere deine E-Mail um Preise einzulösen.
+                        </div>
+                    )}
+                </>
+            ) : (
+                <div className={[styles.errorMessage].join(" ")}>
+                    Bitte melde dich an um Preise zu sammeln.
+                </div>
+            )}
+        </>
+    )
+}
